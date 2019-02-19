@@ -23,7 +23,7 @@ export class PageAbout {
           <ion-buttons slot="start">
             <ion-menu-button></ion-menu-button>
           </ion-buttons>
-          <ion-title>About</ion-title>
+          <ion-title>Sobre</ion-title>
           <ion-buttons slot="end">
             <ion-button onClick={this.presentPopover.bind(this)}>
               <ion-icon slot="icon-only" name="more"></ion-icon>
@@ -37,7 +37,7 @@ export class PageAbout {
           <img src="assets/img/ionic-logo-white.svg" alt="ionic logo"/>
         </div>
         <div padding class="about-info">
-          <h4>Ionic Conference</h4>
+          <h4>Frete Fácil</h4>
 
           <ion-list no-lines>
             <ion-item>

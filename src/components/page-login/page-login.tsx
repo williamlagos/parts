@@ -18,6 +18,7 @@ export class PageLogin {
   @State() submitted = false;
   @Prop({ connect: 'ion-router' }) nav;
   @Event() userDidLogIn: EventEmitter;
+
   handleUsername(ev) {
     this.validateUsername();
     this.username = {
@@ -100,9 +101,10 @@ export class PageLogin {
       <ion-header>
         <ion-toolbar>
           <ion-buttons slot="start">
-            <ion-menu-button></ion-menu-button>
+            <ion-menu-toggle auto-hide={false}>
+              <ion-icon name="menu"></ion-icon>
+            </ion-menu-toggle>
           </ion-buttons>
-
           <ion-title>Login</ion-title>
         </ion-toolbar>
       </ion-header>,

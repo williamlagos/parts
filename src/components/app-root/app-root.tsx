@@ -20,22 +20,22 @@ export class AppRoot {
 
   appPages = [
     {
-      title: 'Schedule',
-      url: '/schedule',
-      icon: 'calendar'
-    },
-    {
-      title: 'Speakers',
-      url: '/speakers',
-      icon: 'contacts'
-    },
-    {
-      title: 'Map',
+      title: 'Mapa',
       url: '/map',
       icon: 'map'
     },
     {
-      title: 'About',
+      title: 'Agenda',
+      url: '/schedule',
+      icon: 'calendar'
+    },
+    {
+      title: 'Freteiros',
+      url: '/speakers',
+      icon: 'contacts'
+    },
+    {
+      title: 'Sobre',
       url: '/about',
       icon: 'information-circle'
     }
@@ -76,7 +76,7 @@ export class AppRoot {
   renderRouter() {
     return (
       <ion-router useHash={false}>
-        <ion-route-redirect from="/" to={this.hasSeenTutorial ? '/schedule' : '/tutorial'} />
+        <ion-route-redirect from="/" to={this.hasSeenTutorial ? '/map' : '/tutorial'} />
 
         <ion-route component="page-tabs">
           <ion-route url="/schedule" component="tab-schedule">
@@ -109,20 +109,22 @@ export class AppRoot {
     return (
       <ion-app>
         {this.renderRouter()}
-        <ion-split-pane>
-          <ion-menu>
+        <ion-split-pane when="lg">
+          <ion-menu menuId="first" type="push">
             <ion-header>
               <ion-toolbar>
-                <ion-title>Menu</ion-title>
+                <ion-title>
+                  <img src="assets/img/applogo.svg" height="42" alt="Frete Fácil" />
+                </ion-title>
               </ion-toolbar>
             </ion-header>
             <ion-content forceOverscroll={false}>
               <ion-list>
-                <ion-list-header>Navigate</ion-list-header>
+                <ion-list-header>Navegar</ion-list-header>
 
                 {this.appPages.map((p) => (
                   <ion-menu-toggle autoHide={false}>
-                    <ion-item href={p.url}>
+                    <ion-item lines="full" href={p.url}>
                       <ion-icon slot="start" name={p.icon}></ion-icon>
                       <ion-label>{p.title}</ion-label>
                     </ion-item>
@@ -131,18 +133,18 @@ export class AppRoot {
               </ion-list>
 
               <ion-list>
-                <ion-list-header>Account</ion-list-header>
+                <ion-list-header>Conta</ion-list-header>
 
                 <ion-menu-toggle autoHide={false}>
                   {this.loggedIn ? (
                     <ion-item href="account">
                       <ion-icon slot="start" name="person"></ion-icon>
-                      <ion-label>Account</ion-label>
+                      <ion-label>Perfil</ion-label>
                     </ion-item>
                   ) : (
                     <ion-item href="login">
                       <ion-icon slot="start" name="log-in"></ion-icon>
-                      <ion-label>Login</ion-label>
+                      <ion-label>Entrar</ion-label>
                     </ion-item>
                   )}
                 </ion-menu-toggle>
@@ -150,7 +152,7 @@ export class AppRoot {
                 <ion-menu-toggle autoHide={false}>
                   <ion-item href="support" button>
                     <ion-icon slot="start" name="help"></ion-icon>
-                    <ion-label>Support</ion-label>
+                    <ion-label>Ajuda</ion-label>
                   </ion-item>
                 </ion-menu-toggle>
 
@@ -158,12 +160,12 @@ export class AppRoot {
                   {this.loggedIn ? (
                     <ion-item onClick={() => this.logout()} button>
                       <ion-icon slot="start" name="log-out"></ion-icon>
-                      <ion-label>Logout</ion-label>
+                      <ion-label>Sair</ion-label>
                     </ion-item>
                   ) : (
                     <ion-item href="signup" button>
                       <ion-icon slot="start" name="person-add"></ion-icon>
-                      <ion-label>Signup</ion-label>
+                      <ion-label>Registrar</ion-label>
                     </ion-item>
                   )}
                 </ion-menu-toggle>
@@ -174,7 +176,7 @@ export class AppRoot {
                 <ion-menu-toggle autoHide={false}>
                   <ion-item href="tutorial">
                     <ion-icon slot="start" name="hammer"></ion-icon>
-                    <ion-label>Show Tutorial</ion-label>
+                    <ion-label>Mostrar Tutorial</ion-label>
                   </ion-item>
                 </ion-menu-toggle>
               </ion-list>

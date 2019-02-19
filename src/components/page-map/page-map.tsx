@@ -54,7 +54,7 @@ export class PageMap {
           <ion-buttons slot="start">
             <ion-menu-button></ion-menu-button>
           </ion-buttons>
-          <ion-title>Map</ion-title>
+          <ion-title>Mapa</ion-title>
         </ion-toolbar>
       </ion-header>,
 

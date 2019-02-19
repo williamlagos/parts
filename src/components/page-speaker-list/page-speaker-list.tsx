@@ -94,7 +94,7 @@ export class PageSpeakerList {
           <ion-buttons slot="start">
             <ion-menu-button></ion-menu-button>
           </ion-buttons>
-          <ion-title>Speakers</ion-title>
+          <ion-title>Freteiros</ion-title>
         </ion-toolbar>
       </ion-header>,
 

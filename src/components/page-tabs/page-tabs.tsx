@@ -27,19 +27,19 @@ export class PageTabs {
         <ion-tab-bar slot="bottom">
           <ion-tab-button tab="tab-schedule">
             <ion-icon name="calendar"></ion-icon>
-            <ion-label>Schedule</ion-label>
+            <ion-label>Agenda</ion-label>
           </ion-tab-button>
           <ion-tab-button tab="tab-speaker">
             <ion-icon name="contacts"></ion-icon>
-            <ion-label>Speakers</ion-label>
+            <ion-label>Freteiros</ion-label>
           </ion-tab-button>
           <ion-tab-button tab="tab-map">
             <ion-icon name="map"></ion-icon>
-            <ion-label>Map</ion-label>
+            <ion-label>Mapa</ion-label>
           </ion-tab-button>
           <ion-tab-button tab="tab-about">
             <ion-icon name="information-circle"></ion-icon>
-            <ion-label>About</ion-label>
+            <ion-label>Sobre</ion-label>
           </ion-tab-button>
         </ion-tab-bar>
       </ion-tabs>
