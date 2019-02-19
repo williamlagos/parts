@@ -48,3 +48,7 @@
 .item-sliding-track-navigation ion-label {
   border-left-color: var(--ion-color-navigation);
 }
+
+.aligned {
+  min-height: 56px;
+}

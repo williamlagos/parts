@@ -198,10 +198,6 @@ ion-menu, ion-menu ion-item {
   --border-style: transparent;
 }
 
-.aligned {
-  min-height: 56px;
-}
-
 @media (min-width: 992px){
   ion-tab-bar {
     display: none;
