@@ -105,50 +105,55 @@ export class PageLogin {
               <ion-icon name="menu"></ion-icon>
             </ion-menu-toggle>
           </ion-buttons>
-          <ion-title>Login</ion-title>
+          <ion-title>Entrar</ion-title>
         </ion-toolbar>
       </ion-header>,
 
       <ion-content padding>
-        <div class="login-logo">
-          <img src="assets/img/appicon.svg" alt="Ionic logo" />
-        </div>
+        <ion-grid>
+          <ion-row>
+            <ion-col size-md="4" offset-md="4">
+              <div class="login-logo">
+                <img src="assets/img/appicon.svg" alt="Ionic logo" />
+              </div>
 
-        <form novalidate="true" onSubmit={(e) => this.onLogin(e)}>
-          <ion-list no-lines>
-            <ion-item>
-              <ion-label position="stacked" color="primary">Username</ion-label>
-              <ion-input name="username" type="text" value={this.username.value} onInput={(ev) => this.handleUsername(ev)} spellcheck={false} autocapitalize="off" required></ion-input>
-            </ion-item>
+              <form novalidate="true" onSubmit={(e) => this.onLogin(e)}>
+                <ion-list no-lines>
+                  <ion-item>
+                    <ion-label position="stacked" color="primary">Usuário</ion-label>
+                    <ion-input name="username" type="text" value={this.username.value} onInput={(ev) => this.handleUsername(ev)} spellcheck={false} autocapitalize="off" required></ion-input>
+                  </ion-item>
 
-            <ion-text color="danger">
-              <p hidden={this.username.valid || this.submitted === false} padding-left>
-                Username is required
-              </p>
-            </ion-text>
+                  <ion-text color="danger">
+                    <p hidden={this.username.valid || this.submitted === false} padding-left>
+                      Nome do usuário é requerido
+                    </p>
+                  </ion-text>
 
-            <ion-item>
-              <ion-label position="stacked" color="primary">Password</ion-label>
-              <ion-input name="password" type="password" value={this.password.value} onInput={(ev) => this.handlePassword(ev)} required></ion-input>
-            </ion-item>
+                  <ion-item>
+                    <ion-label position="stacked" color="primary">Senha</ion-label>
+                    <ion-input name="password" type="password" value={this.password.value} onInput={(ev) => this.handlePassword(ev)} required></ion-input>
+                  </ion-item>
 
-            <ion-text color="danger">
-              <p hidden={this.password.valid || this.submitted === false} padding-left>
-                Password is required
-              </p>
-            </ion-text>
-          </ion-list>
+                  <ion-text color="danger">
+                    <p hidden={this.password.valid || this.submitted === false} padding-left>
+                      Senha é requerida
+                    </p>
+                  </ion-text>
+                </ion-list>
 
-          <ion-row responsive-sm>
-            <ion-col>
-              <ion-button type="submit" expand="block">Login</ion-button>
-            </ion-col>
-            <ion-col>
-              <ion-button onClick={(e) => this.onSignup(e)} color="light" expand="block">Signup</ion-button>
+                <ion-row responsive-sm>
+                  <ion-col>
+                    <ion-button type="submit" expand="block">Entrar</ion-button>
+                  </ion-col>
+                  <ion-col>
+                    <ion-button onClick={(e) => this.onSignup(e)} color="light" expand="block">Registrar</ion-button>
+                  </ion-col>
+                </ion-row>
+              </form>
             </ion-col>
           </ion-row>
-        </form>
-
+        </ion-grid>
       </ion-content>
 
     ];

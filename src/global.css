@@ -202,6 +202,12 @@ ion-menu, ion-menu ion-item {
   min-height: 56px;
 }
 
+@media (min-width: 992px){
+  ion-tab-bar {
+    display: none;
+  }
+}
+
 /* ion-header {
   text-align: center;
 } */
