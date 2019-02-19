@@ -160,13 +160,13 @@ export class PageSchedule {
 
   render() {
     return [
-      <ion-header>
-        <ion-toolbar>
+      <ion-header class="aligned">
+        <ion-toolbar class="aligned">
           <ion-buttons slot="start">
             <ion-menu-button></ion-menu-button>
           </ion-buttons>
 
-          <ion-segment value={this.segment}>
+          <ion-segment class="aligned" value={this.segment}>
             <ion-segment-button value="all">
               All
             </ion-segment-button>
@@ -181,13 +181,11 @@ export class PageSchedule {
             </ion-button>
           </ion-buttons>
         </ion-toolbar>
-        <ion-toolbar>
-          <ion-searchbar value={this.queryText} placeholder="Search">
-          </ion-searchbar>
-        </ion-toolbar>
       </ion-header>,
 
       <ion-content>
+      <ion-searchbar value={this.queryText} placeholder="Buscar">
+      </ion-searchbar>
         <ion-list id="scheduleList" hidden={this.shownSessions === 0}>
           {this.groups.map(group =>
             <ion-item-group hidden={group.hide}>
