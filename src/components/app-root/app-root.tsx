@@ -4,6 +4,9 @@ import { Component, Element, Listen, Prop, State } from '@stencil/core';
 import { UserData } from '../../providers/user-data';
 import { Plugins } from '@capacitor/core';
 
+import { Store } from '@stencil/redux';
+import { configureStore } from '../../store/index';
+
 const { SplashScreen } = Plugins;
 
 @Component({
@@ -17,6 +20,7 @@ export class AppRoot {
   @Element() el: HTMLElement;
 
   @Prop({ context: 'isServer' }) isServer: boolean;
+  @Prop({ context: 'store' }) store: Store;
 
   appPages = [
     {
@@ -42,6 +46,7 @@ export class AppRoot {
   ];
 
   async componentWillLoad() {
+    this.store.setStore(configureStore({}));
     this.hasSeenTutorial = this.isServer
       ? true
       : await UserData.checkHasSeenTutorial();
