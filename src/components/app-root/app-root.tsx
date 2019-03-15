@@ -81,7 +81,7 @@ export class AppRoot {
   renderRouter() {
     return (
       <ion-router useHash={false}>
-        <ion-route-redirect from="/" to={this.hasSeenTutorial ? '/map' : '/tutorial'} />
+        <ion-route-redirect from="/" to={this.hasSeenTutorial ? '/login' : '/tutorial'} />
 
         <ion-route component="page-tabs">
           <ion-route url="/schedule" component="tab-schedule">

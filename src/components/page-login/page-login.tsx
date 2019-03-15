@@ -1,6 +1,10 @@
 import { Component, Event, EventEmitter, Prop, State } from '@stencil/core';
 import { UserData } from '../../providers/user-data';
 
+import { appSetName } from '../../actions/app';
+
+import { Action, Store } from '@stencil/redux';
+
 
 @Component({
   tag: 'page-login',
@@ -17,7 +21,16 @@ export class PageLogin {
   };
   @State() submitted = false;
   @Prop({ connect: 'ion-router' }) nav;
+  @Prop({ context: 'store' }) store: Store;
   @Event() userDidLogIn: EventEmitter;
+
+  appSetName: Action;
+
+  componentWillLoad() {
+    this.store.mapDispatchToProps(this, {
+      appSetName
+    });
+  }
 
   handleUsername(ev) {
     this.validateUsername();
@@ -80,12 +93,14 @@ export class PageLogin {
 
     this.submitted = true;
 
+    this.appSetName('lpachecoquevedo@gmail.com');
+
     if (this.password.valid && this.username.valid) {
       await UserData.login(this.username.value);
 
       this.userDidLogIn.emit({ loginStatus: true });
-      console.log(navCtrl)
-      navCtrl.push('/schedule', 'root')
+      console.log(navCtrl);
+      navCtrl.push('/schedule', 'root');
     }
   }
 

@@ -14,6 +14,7 @@
     "@capacitor/ios": "^1.0.0-beta.7",
     "@ionic/core": "4.0.0",
     "@stencil/redux": "^0.1.1",
+    "axios": "^0.18.0",
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0"
@@ -25,6 +26,8 @@
     "@types/redux": "^3.6.0",
     "jest": "^22.4.3",
     "redux-devtools-extension": "^2.13.8",
+    "rollup-plugin-node-builtins": "^2.1.2",
+    "rollup-plugin-node-globals": "^1.4.0",
     "tslint": "^5.10.0",
     "tslint-ionic-rules": "0.0.17",
     "workbox-build": "3.4.1"

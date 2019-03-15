@@ -6,9 +6,9 @@ Object.defineProperty(exports, "__esModule", {
 exports.cancelOrder = exports.acceptOrderURL = exports.acceptOrder_TYPE = exports.acceptOrder_RAW_URL = exports.acceptOrder = exports.getOrderURL = exports.getOrder_TYPE = exports.getOrder_RAW_URL = exports.getOrder = exports.getOrdersByPeriodURL = exports.getOrdersByPeriod_TYPE = exports.getOrdersByPeriod_RAW_URL = exports.getOrdersByPeriod = exports.getOrdersURL = exports.getOrders_TYPE = exports.getOrders_RAW_URL = exports.getOrders = exports.createOrderURL = exports.createOrder_TYPE = exports.createOrder_RAW_URL = exports.createOrder = exports.getNearbyMerchantsByServiceURL = exports.getNearbyMerchantsByService_TYPE = exports.getNearbyMerchantsByService_RAW_URL = exports.getNearbyMerchantsByService = exports.getNearbyMerchantsURL = exports.getNearbyMerchants_TYPE = exports.getNearbyMerchants_RAW_URL = exports.getNearbyMerchants = exports.createMerchantURL = exports.createMerchant_TYPE = exports.createMerchant_RAW_URL = exports.createMerchant = exports.getMerchantByUsernameURL = exports.getMerchantByUsername_TYPE = exports.getMerchantByUsername_RAW_URL = exports.getMerchantByUsername = exports.getMerchantByIdURL = exports.getMerchantById_TYPE = exports.getMerchantById_RAW_URL = exports.getMerchantById = exports.getFavoritesListURL = exports.getFavoritesList_TYPE = exports.getFavoritesList_RAW_URL = exports.getFavoritesList = exports.removeFavoriteMerchantURL = exports.removeFavoriteMerchant_TYPE = exports.removeFavoriteMerchant_RAW_URL = exports.removeFavoriteMerchant = exports.getOrderBidsURL = exports.getOrderBids_TYPE = exports.getOrderBids_RAW_URL = exports.getOrderBids = exports.placeFinalBidURL = exports.placeFinalBid_TYPE = exports.placeFinalBid_RAW_URL = exports.placeFinalBid = exports.placeBidURL = exports.placeBid_TYPE = exports.placeBid_RAW_URL = exports.placeBid = exports.getLeadURL = exports.getLead_TYPE = exports.getLead_RAW_URL = exports.getLead = exports.getLeadsURL = exports.getLeads_TYPE = exports.getLeads_RAW_URL = exports.getLeads = exports.addLeadURL = exports.addLead_TYPE = exports.addLead_RAW_URL = exports.addLead = exports.getChatURL = exports.getChat_TYPE = exports.getChat_RAW_URL = exports.getChat = exports.getChatsURL = exports.getChats_TYPE = exports.getChats_RAW_URL = exports.getChats = exports.changeUserRoleURL = exports.changeUserRole_TYPE = exports.changeUserRole_RAW_URL = exports.changeUserRole = exports.activateUserAsAdminURL = exports.activateUserAsAdmin_TYPE = exports.activateUserAsAdmin_RAW_URL = exports.activateUserAsAdmin = exports.deactivateUserAsAdminURL = exports.deactivateUserAsAdmin_TYPE = exports.deactivateUserAsAdmin_RAW_URL = exports.deactivateUserAsAdmin = exports.getUsersAsAdminURL = exports.getUsersAsAdmin_TYPE = exports.getUsersAsAdmin_RAW_URL = exports.getUsersAsAdmin = exports.request = exports.setDomain = exports.getDomain = void 0;
 exports.addSkipURL = exports.addSkip_TYPE = exports.addSkip_RAW_URL = exports.addSkip = exports.updatePasswordURL = exports.updatePassword_TYPE = exports.updatePassword_RAW_URL = exports.updatePassword = exports.recoverPasswordURL = exports.recoverPassword_TYPE = exports.recoverPassword_RAW_URL = exports.recoverPassword = exports.updateUserURL = exports.updateUser_TYPE = exports.updateUser_RAW_URL = exports.updateUser = exports.authenticateUserURL = exports.authenticateUser_TYPE = exports.authenticateUser_RAW_URL = exports.authenticateUser = exports.getUserProfileURL = exports.getUserProfile_TYPE = exports.getUserProfile_RAW_URL = exports.getUserProfile = exports.isUniqueUsernameURL = exports.isUniqueUsername_TYPE = exports.isUniqueUsername_RAW_URL = exports.isUniqueUsername = exports.createUserURL = exports.createUser_TYPE = exports.createUser_RAW_URL = exports.createUser = exports.removePictureURL = exports.removePicture_TYPE = exports.removePicture_RAW_URL = exports.removePicture = exports.getLatestURL = exports.getLatest_TYPE = exports.getLatest_RAW_URL = exports.getLatest = exports.getPictureURL = exports.getPicture_TYPE = exports.getPicture_RAW_URL = exports.getPicture = exports.addPictureURL = exports.addPicture_TYPE = exports.addPicture_RAW_URL = exports.addPicture = exports.accessWithFacebookURL = exports.accessWithFacebook_TYPE = exports.accessWithFacebook_RAW_URL = exports.accessWithFacebook = exports.getNotificationURL = exports.getNotification_TYPE = exports.getNotification_RAW_URL = exports.getNotification = exports.getNotificationsURL = exports.getNotifications_TYPE = exports.getNotifications_RAW_URL = exports.getNotifications = exports.sendNotificationURL = exports.sendNotification_TYPE = exports.sendNotification_RAW_URL = exports.sendNotification = exports.startOrderURL = exports.startOrder_TYPE = exports.startOrder_RAW_URL = exports.startOrder = exports.setOrderMerchantURL = exports.setOrderMerchant_TYPE = exports.setOrderMerchant_RAW_URL = exports.setOrderMerchant = exports.getOrdersNearbyURL = exports.getOrdersNearby_TYPE = exports.getOrdersNearby_RAW_URL = exports.getOrdersNearby = exports.getPaymentModesURL = exports.getPaymentModes_TYPE = exports.getPaymentModes_RAW_URL = exports.getPaymentModes = exports.getReceivingModesURL = exports.getReceivingModes_TYPE = exports.getReceivingModes_RAW_URL = exports.getReceivingModes = exports.rateOrderURL = exports.rateOrder_TYPE = exports.rateOrder_RAW_URL = exports.rateOrder = exports.cancelOrderURL = exports.cancelOrder_TYPE = exports.cancelOrder_RAW_URL = void 0;
 
-var _axios = _interopRequireDefault(require("axios"));
+import qs from 'qs';
 
-var _qs = _interopRequireDefault(require("qs"));
+var _qs = _interopRequireDefault(qs);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21,36 +21,44 @@ const getDomain = () => {
 
 exports.getDomain = getDomain;
 
-const setDomain = $domain => {
+export function setDomain($domain) {
   domain = $domain;
 };
 
-exports.setDomain = setDomain;
-
 const request = (method, url, body, queryParameters, form, config) => {
-  method = method.toLowerCase();
+  method = method.toUpperCase();
   let keys = Object.keys(queryParameters);
   let queryUrl = url;
 
   if (keys.length > 0) {
     queryUrl = url + '?' + _qs.default.stringify(queryParameters);
-  } // let queryUrl = url+(keys.length > 0 ? '?' + (keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&')) : '')
-
-
-  if (body) {
-    return _axios.default[method](queryUrl, body, config);
-  } else if (method === 'get' || method === 'delete' || method === 'head' || method === 'option') {
-    return _axios.default[method](queryUrl, config);
-  } else {
-    return _axios.default[method](queryUrl, _qs.default.stringify(form), config);
   }
+  // let queryUrl = url+(keys.length > 0 ? '?' + (keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&')) : '')
+  // console.log(method);
+  // console.log(url);
+  // console.log(body);
+  // console.log(queryParameters);
+  // console.log(form);
+  // console.log(config);
+
+  config.method = method;
+  config.headers = {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  }
+  if (body) {
+    config.body = JSON.stringify(body);
+  } else if (form) {
+    config.body = _qs.default.stringify(form);
+  }
+  return fetch(queryUrl, config);
 };
 /*==========================================================
- *                    
+ *
  ==========================================================*/
 
 /**
- * 
+ *
  * request: getUsersAsAdmin
  * url: getUsersAsAdminURL
  * method: getUsersAsAdmin_TYPE
@@ -165,13 +173,13 @@ const getUsersAsAdminURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: deactivateUserAsAdmin
  * url: deactivateUserAsAdminURL
  * method: deactivateUserAsAdmin_TYPE
  * raw_url: deactivateUserAsAdmin_RAW_URL
  * @param xAccessToken - JWT created on user creation or authentication.
- * @param id - 
+ * @param id -
  */
 
 
@@ -240,13 +248,13 @@ const deactivateUserAsAdminURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: activateUserAsAdmin
  * url: activateUserAsAdminURL
  * method: activateUserAsAdmin_TYPE
  * raw_url: activateUserAsAdmin_RAW_URL
  * @param xAccessToken - JWT created on user creation or authentication.
- * @param id - 
+ * @param id -
  */
 
 
@@ -315,14 +323,14 @@ const activateUserAsAdminURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: changeUserRole
  * url: changeUserRoleURL
  * method: changeUserRole_TYPE
  * raw_url: changeUserRole_RAW_URL
  * @param xAccessToken - JWT created on user creation or authentication.
- * @param id - 
- * @param role - 
+ * @param id -
+ * @param role -
  */
 
 
@@ -398,7 +406,7 @@ const changeUserRoleURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: getChats
  * url: getChatsURL
  * method: getChats_TYPE
@@ -465,13 +473,13 @@ const getChatsURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: getChat
  * url: getChatURL
  * method: getChat_TYPE
  * raw_url: getChat_RAW_URL
  * @param xAccessToken - JWT created on user creation or authentication.
- * @param chat - 
+ * @param chat -
  */
 
 
@@ -540,7 +548,7 @@ const getChatURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: addLead
  * url: addLeadURL
  * method: addLead_TYPE
@@ -603,7 +611,7 @@ const addLeadURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: getLeads
  * url: getLeadsURL
  * method: getLeads_TYPE
@@ -670,13 +678,13 @@ const getLeadsURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: getLead
  * url: getLeadURL
  * method: getLead_TYPE
  * raw_url: getLead_RAW_URL
  * @param xAccessToken - JWT created on user creation or authentication.
- * @param id - 
+ * @param id -
  */
 
 
@@ -745,14 +753,14 @@ const getLeadURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: placeBid
  * url: placeBidURL
  * method: placeBid_TYPE
  * raw_url: placeBid_RAW_URL
  * @param xAccessToken - JWT created on user creation or authentication.
  * @param bid - JSON representation of the bid.
- * @param order - 
+ * @param order -
  */
 
 
@@ -825,14 +833,14 @@ const placeBidURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: placeFinalBid
  * url: placeFinalBidURL
  * method: placeFinalBid_TYPE
  * raw_url: placeFinalBid_RAW_URL
  * @param xAccessToken - JWT created on user creation or authentication.
  * @param bid - JSON representation of the bid.
- * @param order - 
+ * @param order -
  */
 
 
@@ -905,13 +913,13 @@ const placeFinalBidURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: getOrderBids
  * url: getOrderBidsURL
  * method: getOrderBids_TYPE
  * raw_url: getOrderBids_RAW_URL
  * @param xAccessToken - JWT created on user creation or authentication.
- * @param order - 
+ * @param order -
  */
 
 
@@ -980,13 +988,13 @@ const getOrderBidsURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: removeFavoriteMerchant
  * url: removeFavoriteMerchantURL
  * method: removeFavoriteMerchant_TYPE
  * raw_url: removeFavoriteMerchant_RAW_URL
  * @param xAccessToken - JWT created on user creation or authentication.
- * @param merchant - 
+ * @param merchant -
  */
 
 
@@ -1055,7 +1063,7 @@ const removeFavoriteMerchantURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: getFavoritesList
  * url: getFavoritesListURL
  * method: getFavoritesList_TYPE
@@ -1122,12 +1130,12 @@ const getFavoritesListURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: getMerchantById
  * url: getMerchantByIdURL
  * method: getMerchantById_TYPE
  * raw_url: getMerchantById_RAW_URL
- * @param id - 
+ * @param id -
  */
 
 
@@ -1187,12 +1195,12 @@ const getMerchantByIdURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: getMerchantByUsername
  * url: getMerchantByUsernameURL
  * method: getMerchantByUsername_TYPE
  * raw_url: getMerchantByUsername_RAW_URL
- * @param username - 
+ * @param username -
  */
 
 
@@ -1252,7 +1260,7 @@ const getMerchantByUsernameURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: createMerchant
  * url: createMerchantURL
  * method: createMerchant_TYPE
@@ -1324,7 +1332,7 @@ const createMerchantURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: getNearbyMerchants
  * url: getNearbyMerchantsURL
  * method: getNearbyMerchants_TYPE
@@ -1426,7 +1434,7 @@ const getNearbyMerchantsURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: getNearbyMerchantsByService
  * url: getNearbyMerchantsByServiceURL
  * method: getNearbyMerchantsByService_TYPE
@@ -1535,7 +1543,7 @@ const getNearbyMerchantsByServiceURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: createOrder
  * url: createOrderURL
  * method: createOrder_TYPE
@@ -1607,7 +1615,7 @@ const createOrderURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: getOrders
  * url: getOrdersURL
  * method: getOrders_TYPE
@@ -1683,7 +1691,7 @@ const getOrdersURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: getOrdersByPeriod
  * url: getOrdersByPeriodURL
  * method: getOrdersByPeriod_TYPE
@@ -1777,13 +1785,13 @@ const getOrdersByPeriodURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: getOrder
  * url: getOrderURL
  * method: getOrder_TYPE
  * raw_url: getOrder_RAW_URL
  * @param xAccessToken - JWT created on user creation or authentication.
- * @param id - 
+ * @param id -
  */
 
 
@@ -1852,13 +1860,13 @@ const getOrderURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: acceptOrder
  * url: acceptOrderURL
  * method: acceptOrder_TYPE
  * raw_url: acceptOrder_RAW_URL
  * @param xAccessToken - JWT created on user creation or authentication.
- * @param id - 
+ * @param id -
  */
 
 
@@ -1927,13 +1935,13 @@ const acceptOrderURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: cancelOrder
  * url: cancelOrderURL
  * method: cancelOrder_TYPE
  * raw_url: cancelOrder_RAW_URL
  * @param xAccessToken - JWT created on user creation or authentication.
- * @param id - 
+ * @param id -
  */
 
 
@@ -2002,14 +2010,14 @@ const cancelOrderURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: rateOrder
  * url: rateOrderURL
  * method: rateOrder_TYPE
  * raw_url: rateOrder_RAW_URL
  * @param xAccessToken - JWT created on user creation or authentication.
- * @param id - 
- * @param rate - 
+ * @param id -
+ * @param rate -
  */
 
 
@@ -2085,7 +2093,7 @@ const rateOrderURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: getReceivingModes
  * url: getReceivingModesURL
  * method: getReceivingModes_TYPE
@@ -2143,7 +2151,7 @@ const getReceivingModesURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: getPaymentModes
  * url: getPaymentModesURL
  * method: getPaymentModes_TYPE
@@ -2201,7 +2209,7 @@ const getPaymentModesURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: getOrdersNearby
  * url: getOrdersNearbyURL
  * method: getOrdersNearby_TYPE
@@ -2325,14 +2333,14 @@ const getOrdersNearbyURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: setOrderMerchant
  * url: setOrderMerchantURL
  * method: setOrderMerchant_TYPE
  * raw_url: setOrderMerchant_RAW_URL
  * @param xAccessToken - JWT created on user creation or authentication.
- * @param id - 
- * @param merchant - 
+ * @param id -
+ * @param merchant -
  */
 
 
@@ -2408,13 +2416,13 @@ const setOrderMerchantURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: startOrder
  * url: startOrderURL
  * method: startOrder_TYPE
  * raw_url: startOrder_RAW_URL
  * @param xAccessToken - JWT created on user creation or authentication.
- * @param id - 
+ * @param id -
  */
 
 
@@ -2483,7 +2491,7 @@ const startOrderURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: sendNotification
  * url: sendNotificationURL
  * method: sendNotification_TYPE
@@ -2550,7 +2558,7 @@ const sendNotificationURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: getNotifications
  * url: getNotificationsURL
  * method: getNotifications_TYPE
@@ -2617,13 +2625,13 @@ const getNotificationsURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: getNotification
  * url: getNotificationURL
  * method: getNotification_TYPE
  * raw_url: getNotification_RAW_URL
  * @param xAccessToken - JWT created on user creation or authentication.
- * @param id - 
+ * @param id -
  */
 
 
@@ -2692,7 +2700,7 @@ const getNotificationURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: accessWithFacebook
  * url: accessWithFacebookURL
  * method: accessWithFacebook_TYPE
@@ -2763,7 +2771,7 @@ const accessWithFacebookURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: addPicture
  * url: addPictureURL
  * method: addPicture_TYPE
@@ -2835,13 +2843,13 @@ const addPictureURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: getPicture
  * url: getPictureURL
  * method: getPicture_TYPE
  * raw_url: getPicture_RAW_URL
  * @param xAccessToken - JWT created on user creation or authentication.
- * @param id - 
+ * @param id -
  */
 
 
@@ -2910,13 +2918,13 @@ const getPictureURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: getLatest
  * url: getLatestURL
  * method: getLatest_TYPE
  * raw_url: getLatest_RAW_URL
  * @param xAccessToken - JWT created on user creation or authentication.
- * @param itemId - 
+ * @param itemId -
  */
 
 
@@ -2985,13 +2993,13 @@ const getLatestURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: removePicture
  * url: removePictureURL
  * method: removePicture_TYPE
  * raw_url: removePicture_RAW_URL
  * @param xAccessToken - JWT created on user creation or authentication.
- * @param id - 
+ * @param id -
  */
 
 
@@ -3060,7 +3068,7 @@ const removePictureURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: createUser
  * url: createUserURL
  * method: createUser_TYPE
@@ -3123,12 +3131,12 @@ const createUserURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: isUniqueUsername
  * url: isUniqueUsernameURL
  * method: isUniqueUsername_TYPE
  * raw_url: isUniqueUsername_RAW_URL
- * @param username - 
+ * @param username -
  */
 
 
@@ -3188,7 +3196,7 @@ const isUniqueUsernameURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: getUserProfile
  * url: getUserProfileURL
  * method: getUserProfile_TYPE
@@ -3255,7 +3263,7 @@ const getUserProfileURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: authenticateUser
  * url: authenticateUserURL
  * method: authenticateUser_TYPE
@@ -3266,7 +3274,7 @@ const getUserProfileURL = function (parameters = {}) {
 
 exports.getUserProfileURL = getUserProfileURL;
 
-const authenticateUser = function (parameters = {}) {
+export function authenticateUser(parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain();
   const config = parameters.$config || {
     headers: {}
@@ -3289,7 +3297,7 @@ const authenticateUser = function (parameters = {}) {
   return request('post', domain + path, body, queryParameters, form, config);
 };
 
-exports.authenticateUser = authenticateUser;
+// exports.authenticateUser = authenticateUser;
 
 const authenticateUser_RAW_URL = function () {
   return '/user/authenticate';
@@ -3318,7 +3326,7 @@ const authenticateUserURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: updateUser
  * url: updateUserURL
  * method: updateUser_TYPE
@@ -3390,12 +3398,12 @@ const updateUserURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: recoverPassword
  * url: recoverPasswordURL
  * method: recoverPassword_TYPE
  * raw_url: recoverPassword_RAW_URL
- * @param email - 
+ * @param email -
  */
 
 
@@ -3455,7 +3463,7 @@ const recoverPasswordURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: updatePassword
  * url: updatePasswordURL
  * method: updatePassword_TYPE
@@ -3527,7 +3535,7 @@ const updatePasswordURL = function (parameters = {}) {
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
 /**
- * 
+ *
  * request: addSkip
  * url: addSkipURL
  * method: addSkip_TYPE
