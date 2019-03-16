@@ -21,7 +21,7 @@ export class PageTutorial {
       <ion-header no-border>
         <ion-toolbar>
           <ion-buttons slot="end">
-            <ion-button color="primary" href="/login">Entrar</ion-button>
+            <ion-button color="primary" href="/">Sair</ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>,

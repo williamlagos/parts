@@ -106,9 +106,9 @@ export class PageLogin {
 
   async onSignup(e) {
     e.preventDefault();
-    const navCtrl: HTMLIonNavElement = await (this.nav as any).componentOnReady();
+    const navCtrl: HTMLIonRouterElement = await (this.nav as any).componentOnReady();
     console.log('Clicked signup');
-    navCtrl.push('page-signup');
+    navCtrl.push('/signup', 'root');
   }
 
   render() {
