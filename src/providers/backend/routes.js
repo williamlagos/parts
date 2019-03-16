@@ -6,53 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 exports.cancelOrder = exports.acceptOrderURL = exports.acceptOrder_TYPE = exports.acceptOrder_RAW_URL = exports.acceptOrder = exports.getOrderURL = exports.getOrder_TYPE = exports.getOrder_RAW_URL = exports.getOrder = exports.getOrdersByPeriodURL = exports.getOrdersByPeriod_TYPE = exports.getOrdersByPeriod_RAW_URL = exports.getOrdersByPeriod = exports.getOrdersURL = exports.getOrders_TYPE = exports.getOrders_RAW_URL = exports.getOrders = exports.createOrderURL = exports.createOrder_TYPE = exports.createOrder_RAW_URL = exports.createOrder = exports.getNearbyMerchantsByServiceURL = exports.getNearbyMerchantsByService_TYPE = exports.getNearbyMerchantsByService_RAW_URL = exports.getNearbyMerchantsByService = exports.getNearbyMerchantsURL = exports.getNearbyMerchants_TYPE = exports.getNearbyMerchants_RAW_URL = exports.getNearbyMerchants = exports.createMerchantURL = exports.createMerchant_TYPE = exports.createMerchant_RAW_URL = exports.createMerchant = exports.getMerchantByUsernameURL = exports.getMerchantByUsername_TYPE = exports.getMerchantByUsername_RAW_URL = exports.getMerchantByUsername = exports.getMerchantByIdURL = exports.getMerchantById_TYPE = exports.getMerchantById_RAW_URL = exports.getMerchantById = exports.getFavoritesListURL = exports.getFavoritesList_TYPE = exports.getFavoritesList_RAW_URL = exports.getFavoritesList = exports.removeFavoriteMerchantURL = exports.removeFavoriteMerchant_TYPE = exports.removeFavoriteMerchant_RAW_URL = exports.removeFavoriteMerchant = exports.getOrderBidsURL = exports.getOrderBids_TYPE = exports.getOrderBids_RAW_URL = exports.getOrderBids = exports.placeFinalBidURL = exports.placeFinalBid_TYPE = exports.placeFinalBid_RAW_URL = exports.placeFinalBid = exports.placeBidURL = exports.placeBid_TYPE = exports.placeBid_RAW_URL = exports.placeBid = exports.getLeadURL = exports.getLead_TYPE = exports.getLead_RAW_URL = exports.getLead = exports.getLeadsURL = exports.getLeads_TYPE = exports.getLeads_RAW_URL = exports.getLeads = exports.addLeadURL = exports.addLead_TYPE = exports.addLead_RAW_URL = exports.addLead = exports.getChatURL = exports.getChat_TYPE = exports.getChat_RAW_URL = exports.getChat = exports.getChatsURL = exports.getChats_TYPE = exports.getChats_RAW_URL = exports.getChats = exports.changeUserRoleURL = exports.changeUserRole_TYPE = exports.changeUserRole_RAW_URL = exports.changeUserRole = exports.activateUserAsAdminURL = exports.activateUserAsAdmin_TYPE = exports.activateUserAsAdmin_RAW_URL = exports.activateUserAsAdmin = exports.deactivateUserAsAdminURL = exports.deactivateUserAsAdmin_TYPE = exports.deactivateUserAsAdmin_RAW_URL = exports.deactivateUserAsAdmin = exports.getUsersAsAdminURL = exports.getUsersAsAdmin_TYPE = exports.getUsersAsAdmin_RAW_URL = exports.getUsersAsAdmin = exports.request = exports.setDomain = exports.getDomain = void 0;
 exports.addSkipURL = exports.addSkip_TYPE = exports.addSkip_RAW_URL = exports.addSkip = exports.updatePasswordURL = exports.updatePassword_TYPE = exports.updatePassword_RAW_URL = exports.updatePassword = exports.recoverPasswordURL = exports.recoverPassword_TYPE = exports.recoverPassword_RAW_URL = exports.recoverPassword = exports.updateUserURL = exports.updateUser_TYPE = exports.updateUser_RAW_URL = exports.updateUser = exports.authenticateUserURL = exports.authenticateUser_TYPE = exports.authenticateUser_RAW_URL = exports.authenticateUser = exports.getUserProfileURL = exports.getUserProfile_TYPE = exports.getUserProfile_RAW_URL = exports.getUserProfile = exports.isUniqueUsernameURL = exports.isUniqueUsername_TYPE = exports.isUniqueUsername_RAW_URL = exports.isUniqueUsername = exports.createUserURL = exports.createUser_TYPE = exports.createUser_RAW_URL = exports.createUser = exports.removePictureURL = exports.removePicture_TYPE = exports.removePicture_RAW_URL = exports.removePicture = exports.getLatestURL = exports.getLatest_TYPE = exports.getLatest_RAW_URL = exports.getLatest = exports.getPictureURL = exports.getPicture_TYPE = exports.getPicture_RAW_URL = exports.getPicture = exports.addPictureURL = exports.addPicture_TYPE = exports.addPicture_RAW_URL = exports.addPicture = exports.accessWithFacebookURL = exports.accessWithFacebook_TYPE = exports.accessWithFacebook_RAW_URL = exports.accessWithFacebook = exports.getNotificationURL = exports.getNotification_TYPE = exports.getNotification_RAW_URL = exports.getNotification = exports.getNotificationsURL = exports.getNotifications_TYPE = exports.getNotifications_RAW_URL = exports.getNotifications = exports.sendNotificationURL = exports.sendNotification_TYPE = exports.sendNotification_RAW_URL = exports.sendNotification = exports.startOrderURL = exports.startOrder_TYPE = exports.startOrder_RAW_URL = exports.startOrder = exports.setOrderMerchantURL = exports.setOrderMerchant_TYPE = exports.setOrderMerchant_RAW_URL = exports.setOrderMerchant = exports.getOrdersNearbyURL = exports.getOrdersNearby_TYPE = exports.getOrdersNearby_RAW_URL = exports.getOrdersNearby = exports.getPaymentModesURL = exports.getPaymentModes_TYPE = exports.getPaymentModes_RAW_URL = exports.getPaymentModes = exports.getReceivingModesURL = exports.getReceivingModes_TYPE = exports.getReceivingModes_RAW_URL = exports.getReceivingModes = exports.rateOrderURL = exports.rateOrder_TYPE = exports.rateOrder_RAW_URL = exports.rateOrder = exports.cancelOrderURL = exports.cancelOrder_TYPE = exports.cancelOrder_RAW_URL = void 0;
 
-import qs from 'qs';
-
-var _qs = _interopRequireDefault(qs);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/* eslint-disable */
-let domain = '';
-
-const getDomain = () => {
-  return domain;
-};
-
-exports.getDomain = getDomain;
-
-export function setDomain($domain) {
-  domain = $domain;
-};
-
-const request = (method, url, body, queryParameters, form, config) => {
-  method = method.toUpperCase();
-  let keys = Object.keys(queryParameters);
-  let queryUrl = url;
-
-  if (keys.length > 0) {
-    queryUrl = url + '?' + _qs.default.stringify(queryParameters);
-  }
-  // let queryUrl = url+(keys.length > 0 ? '?' + (keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&')) : '')
-  // console.log(method);
-  // console.log(url);
-  // console.log(body);
-  // console.log(queryParameters);
-  // console.log(form);
-  // console.log(config);
-
-  config.method = method;
-  config.headers = {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
-  }
-  if (body) {
-    config.body = JSON.stringify(body);
-  } else if (form) {
-    config.body = _qs.default.stringify(form);
-  }
-  return fetch(queryUrl, config);
-};
 /*==========================================================
  *
  ==========================================================*/
@@ -3262,81 +3215,6 @@ const getUserProfileURL = function (parameters = {}) {
   let keys = Object.keys(queryParameters);
   return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
 };
-/**
- *
- * request: authenticateUser
- * url: authenticateUserURL
- * method: authenticateUser_TYPE
- * raw_url: authenticateUser_RAW_URL
- * @param user - User credentials object.
- */
-
-
-exports.getUserProfileURL = getUserProfileURL;
-
-export function authenticateUser(parameters = {}) {
-  const domain = parameters.$domain ? parameters.$domain : getDomain();
-  const config = parameters.$config || {
-    headers: {}
-  };
-  let path = '/user/authenticate';
-  let body;
-  let queryParameters = {};
-  let form = {};
-
-  if (parameters['user'] !== undefined) {
-    body = parameters['user'];
-  }
-
-  if (parameters.$queryParameters) {
-    Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
-      queryParameters[parameterName] = parameters.$queryParameters[parameterName];
-    });
-  }
-
-  return request('post', domain + path, body, queryParameters, form, config);
-};
-
-// exports.authenticateUser = authenticateUser;
-
-const authenticateUser_RAW_URL = function () {
-  return '/user/authenticate';
-};
-
-exports.authenticateUser_RAW_URL = authenticateUser_RAW_URL;
-
-const authenticateUser_TYPE = function () {
-  return 'post';
-};
-
-exports.authenticateUser_TYPE = authenticateUser_TYPE;
-
-const authenticateUserURL = function (parameters = {}) {
-  let queryParameters = {};
-  const domain = parameters.$domain ? parameters.$domain : getDomain();
-  let path = '/user/authenticate';
-
-  if (parameters.$queryParameters) {
-    Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
-      queryParameters[parameterName] = parameters.$queryParameters[parameterName];
-    });
-  }
-
-  let keys = Object.keys(queryParameters);
-  return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
-};
-/**
- *
- * request: updateUser
- * url: updateUserURL
- * method: updateUser_TYPE
- * raw_url: updateUser_RAW_URL
- * @param xAccessToken - JWT created on user creation or authentication.
- * @param user - JSON representation of the user to be created.
- */
-
-
-exports.authenticateUserURL = authenticateUserURL;
 
 const updateUser = function (parameters = {}) {
   const domain = parameters.$domain ? parameters.$domain : getDomain();

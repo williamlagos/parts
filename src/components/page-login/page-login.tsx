@@ -100,7 +100,7 @@ export class PageLogin {
 
       this.userDidLogIn.emit({ loginStatus: true });
       console.log(navCtrl);
-      navCtrl.push('/schedule', 'root');
+      navCtrl.push('/schedule');
     }
   }
 

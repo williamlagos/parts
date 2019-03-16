@@ -1,5 +1,5 @@
 import { TypeKeys } from '../actions/index';
-import { Backend } from '../providers/backend/index';
+import { Backend } from '../providers/backend';
 
 export interface AppSetNameAction {
   type: TypeKeys.APP_SET_NAME;
@@ -29,6 +29,6 @@ export const appSetName = (name: string) => async (dispatch: any, _getState: any
   }).then((response) => console.log(response));*/
   return dispatch({
     type: TypeKeys.APP_SET_NAME,
-    name: d
+    name // : d
   });
 };
