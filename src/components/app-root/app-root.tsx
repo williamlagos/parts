@@ -102,7 +102,7 @@ export class AppRoot {
               <ion-route url="/session/:sessionId" component="page-session" componentProps={{ goback: '/schedule' }}></ion-route>
             </ion-route>
 
-            <ion-route url="/speakers" component="tab-speaker">
+            <ion-route url="/speakers" component="tab-speakers">
               <ion-route component="page-speaker-list"></ion-route>
               <ion-route url="/session/:sessionId" component="page-session" componentProps={{ goback: '/speakers' }}></ion-route>
               <ion-route url="/:speakerId" component="page-speaker-detail"></ion-route>
