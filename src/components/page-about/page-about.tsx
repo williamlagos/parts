@@ -24,11 +24,11 @@ export class PageAbout {
             <ion-menu-button></ion-menu-button>
           </ion-buttons>
           <ion-title>Sobre</ion-title>
-          <ion-buttons slot="end">
+          {/*<ion-buttons slot="end">
             <ion-button onClick={this.presentPopover.bind(this)}>
               <ion-icon slot="icon-only" name="more"></ion-icon>
             </ion-button>
-          </ion-buttons>
+          </ion-buttons>*/}
         </ion-toolbar>
       </ion-header>,
 
@@ -37,9 +37,9 @@ export class PageAbout {
           <img src="assets/img/ionic-logo-white.svg" alt="ionic logo"/>
         </div>
         <div padding class="about-info">
-          <h4>Frete Fácil</h4>
+          <h4>Frete Fácil App</h4>
 
-          <ion-list no-lines>
+          {/*<ion-list no-lines>
             <ion-item>
               <ion-icon name="calendar" slot="start"></ion-icon>
               <ion-label>Date</ion-label>
@@ -56,13 +56,11 @@ export class PageAbout {
                 <ion-select-option value="seattle">Seattle, WA</ion-select-option>
               </ion-select>
             </ion-item>
-          </ion-list>
+          </ion-list>*/}
 
           <p>
-            The Ionic Conference is a one-day conference featuring talks from the Ionic team. It is focused on Ionic applications being
-            built with Ionic 2. This includes migrating apps from Ionic 1 to Ionic 2, Angular concepts, Webpack, Sass, and many
-            other technologies used in Ionic 2. Tickets are completely sold out, and we’re expecting more than 1000 developers
-            – making this the largest Ionic conference ever!
+            O aplicativo Frete Fácil veio para facilitar seu dia-a-dia quando está precisando levar objetos,
+            de todos os tamanhos de um ponto para o outro, com a seleção dos melhores freteiros da plataforma.
           </p>
         </div>
       </ion-content>

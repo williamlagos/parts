@@ -78,7 +78,7 @@ export class PageAccount {
             <ion-back-button></ion-back-button>
           </ion-buttons>
 
-          <ion-title>Account</ion-title>
+          <ion-title>Conta</ion-title>
         </ion-toolbar>
       </ion-header>,
 
@@ -88,11 +88,11 @@ export class PageAccount {
           <img src="http://www.gravatar.com/avatar?d=mm&s=140" alt="avatar" />
           <h2>{this.user}</h2>
           <ion-list>
-            <ion-item onClick={() => this.updatePicture()}>Update Picture</ion-item>
-            <ion-item onClick={() => this.changeUsername()}>Change Username</ion-item>
-            <ion-item onClick={() => this.changePassword()}>Change Password</ion-item>
-            <ion-item onClick={() => this.support()}>Support</ion-item>
-            <ion-item onClick={() => this.logout()}>Logout</ion-item>
+            <ion-item onClick={() => this.updatePicture()}>Atualizar Foto</ion-item>
+            <ion-item onClick={() => this.changeUsername()}>Mudar Nome do Usuário</ion-item>
+            <ion-item onClick={() => this.changePassword()}>Mudar Senha</ion-item>
+            <ion-item onClick={() => this.support()}>Ajuda</ion-item>
+            <ion-item onClick={() => this.logout()}>Sair</ion-item>
           </ion-list>
         </div>
       </ion-content>

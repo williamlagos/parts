@@ -54,7 +54,7 @@ export class PageSession {
                     {track}
                   </span>
                 ))}
-                <div>Session {this.sessionId}</div>
+                <div>Sessão {this.sessionId}</div>
               </ion-col>
               <ion-col size="6" text-right class={this.isFavorite ? 'show-favorite' : ''} >
                 <ion-icon
@@ -87,19 +87,19 @@ export class PageSession {
 
         <ion-list>
           <ion-item onClick={() => this.sessionClick('watch')} button>
-            <ion-label color="primary">Watch</ion-label>
+            <ion-label color="primary">Seguir</ion-label>
           </ion-item>
           <ion-item onClick={() => this.sessionClick('add to calendar')} button>
-            <ion-label color="primary">Add to Calendar</ion-label>
+            <ion-label color="primary">Adicionar à Agenda</ion-label>
           </ion-item>
           <ion-item
             onClick={() => this.sessionClick('mark as unwatched')}
             button
           >
-            <ion-label color="primary">Mark as Unwatched</ion-label>
+            <ion-label color="primary">Deixar de Seguir</ion-label>
           </ion-item>
           <ion-item onClick={() => this.sessionClick('download video')} button>
-            <ion-label color="primary">Download Video</ion-label>
+            <ion-label color="primary">Baixar Fatura</ion-label>
             <ion-icon
               slot="end"
               color="primary"
@@ -108,7 +108,7 @@ export class PageSession {
             />
           </ion-item>
           <ion-item onClick={() => this.sessionClick('leave feedback')} button>
-            <ion-label color="primary">Leave Feedback</ion-label>
+            <ion-label color="primary">Enviar Feedback</ion-label>
           </ion-item>
         </ion-list>
       </ion-content>

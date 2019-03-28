@@ -168,10 +168,10 @@ export class PageSchedule {
 
           <ion-segment class="aligned" value={this.segment}>
             <ion-segment-button value="all">
-              All
+              Todos
             </ion-segment-button>
             <ion-segment-button value="favorites">
-              Favorites
+              Favoritos
             </ion-segment-button>
           </ion-segment>
 
@@ -208,11 +208,11 @@ export class PageSchedule {
                 <ion-item-options>
                   {session.isFavorite === false
                     ? <ion-item-option color="favorite" onClick={() => this.addFavorite(session)}>
-                        Favorite
+                        Favoritar
                       </ion-item-option>
 
                     : <ion-item-option color="danger" onClick={() => this.removeFavorite(session, 'Remove Favorite')}>
-                      Remove
+                      Remover
                     </ion-item-option>
                   }
 
@@ -224,10 +224,10 @@ export class PageSchedule {
         </ion-list>
 
         <ion-list-header hidden={this.shownSessions > 0}>
-          No Sessions Found
+          Não há sessões encontradas
         </ion-list-header>
 
-        <ion-fab id="socialFab" vertical="bottom" horizontal="end" slot="fixed">
+        {/*<ion-fab id="socialFab" vertical="bottom" horizontal="end" slot="fixed">
           <ion-fab-button onClick={() => this.toggleList()}>
             <ion-icon name="share"></ion-icon>
           </ion-fab-button>
@@ -246,7 +246,7 @@ export class PageSchedule {
               <ion-icon name="logo-facebook"></ion-icon>
             </ion-fab-button>
           </ion-fab-list>
-        </ion-fab>
+        </ion-fab>*/}
       </ion-content>
     ];
   }

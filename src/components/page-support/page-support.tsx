@@ -18,7 +18,7 @@ export class PageSupport {
 
   async componentDidLoad() {
     const toast = await this.toastCtrl.create({
-      message: 'This does not actually send a support request.',
+      message: 'O recurso ainda não está funcionando. Aguarde para utilizar.',
       duration: 3000
     });
     toast.present();
@@ -64,7 +64,7 @@ export class PageSupport {
       this.submitted = false;
 
       const toast = await this.toastCtrl.create({
-        message: 'Your support request has been sent.',
+        message: 'A requisição de suporte foi enviada.',
         duration: 3000
       });
       toast.present();
@@ -101,7 +101,7 @@ export class PageSupport {
             <ion-menu-button></ion-menu-button>
             <ion-back-button></ion-back-button>
           </ion-buttons>
-          <ion-title>Support</ion-title>
+          <ion-title>Ajuda</ion-title>
         </ion-toolbar>
       </ion-header>,
 
@@ -113,19 +113,19 @@ export class PageSupport {
         <form novalidate>
           <ion-list no-lines>
             <ion-item>
-              <ion-label position="stacked" color="primary">Enter your support message below</ion-label>
+              <ion-label position="stacked" color="primary">Entre sua mensagem de feedback para que possamos lhe responder</ion-label>
               <ion-textarea name="supportQuestion" value={this.supportQuestion.value} onInput={(ev) => this.handleSupportQuestion(ev)} rows={6} required></ion-textarea>
             </ion-item>
           </ion-list>
 
           <ion-text color="danger">
             <p hidden={this.supportQuestion.valid || this.submitted === false} padding-left>
-              Support message is required
+              A mensagem é requerida.
             </p>
           </ion-text>
 
           <div padding>
-            <ion-button onClick={(e) => this.submit(e)} expand="block" type="submit">Submit</ion-button>
+            <ion-button onClick={(e) => this.submit(e)} expand="block" type="submit">Enviar</ion-button>
           </div>
         </form>
       </ion-content>

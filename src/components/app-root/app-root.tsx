@@ -25,6 +25,11 @@ export class AppRoot {
 
   appPages = [
     {
+      title: 'Frete',
+      url: '/create',
+      icon: 'cube'
+    },
+    {
       title: 'Mapa',
       url: '/map',
       icon: 'map'
@@ -33,11 +38,6 @@ export class AppRoot {
       title: 'Agenda',
       url: '/schedule',
       icon: 'calendar'
-    },
-    {
-      title: 'Freteiros',
-      url: '/speakers',
-      icon: 'contacts'
     },
     {
       title: 'Sobre',
@@ -89,7 +89,7 @@ export class AppRoot {
           <ion-route url="/login" component="page-login"></ion-route>,
           <ion-route url="/signup" component="page-signup"></ion-route>
         ] : [
-          <ion-route-redirect from="/" to={this.hasSeenTutorial ? '/schedule' : '/tutorial'} />,
+          <ion-route-redirect from="/" to={this.hasSeenTutorial ? '/map' : '/tutorial'} />,
 
           <ion-route component="page-tabs">
             <ion-route url="/schedule" component="tab-schedule">
@@ -97,14 +97,10 @@ export class AppRoot {
               <ion-route url="/session/:sessionId" component="page-session" componentProps={{ goback: '/schedule' }}></ion-route>
             </ion-route>
 
-            <ion-route url="/speakers" component="tab-speaker">
-              <ion-route component="page-speaker-list"></ion-route>
-              <ion-route url="/session/:sessionId" component="page-session" componentProps={{ goback: '/speakers' }}></ion-route>
-              <ion-route url="/:speakerId" component="page-speaker-detail"></ion-route>
+            <ion-route url="/create" component="tab-create">
+              <ion-route component="page-create"></ion-route>
             </ion-route>
-
             <ion-route url="/map" component="tab-map"></ion-route>
-
             <ion-route url="/about" component="tab-about"></ion-route>
           </ion-route>,
 

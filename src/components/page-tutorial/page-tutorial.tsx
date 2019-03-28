@@ -32,34 +32,32 @@ export class PageTutorial {
           <ion-slide>
             <img src="assets/img/ica-slidebox-img-1.png" class="slide-image"/>
             <h2 class="slide-title">
-              Welcome to the <b>ICA</b>
+              Bem-vindo ao <b>Frete Fácil</b>
             </h2>
             <p>
-              The <b>ionic conference app</b> is a practical preview of the ionic framework in action, and a demonstration of proper code use.
+              O <b>Frete Fácil</b> é um aplicativo de serviços de mudança e fretagem, simples, prático e rápido.
             </p>
           </ion-slide>
 
           <ion-slide>
             <img src="assets/img/ica-slidebox-img-2.png" class="slide-image"/>
-            <h2 class="slide-title">What is Ionic?</h2>
+            <h2 class="slide-title">Por que usar o Frete Fácil?</h2>
             <p>
-              <b>Ionic Framework</b> is an open source SDK that enables developers to build high quality mobile apps with web technologies
-              like HTML, CSS, and JavaScript.</p>
+              <b>Frete Fácil</b> conta com prestadores de entrega e mudança bem selecionados e revisados pela nossa equipe.</p>
           </ion-slide>
 
           <ion-slide>
             <img src="assets/img/ica-slidebox-img-3.png" class="slide-image"/>
-            <h2 class="slide-title">What is Ionic Pro?</h2>
+            <h2 class="slide-title">Pago a mais para usar este serviço?</h2>
             <p>
-              <b>Ionic Pro</b> is a powerful set of services and features built on top of Ionic Framework that brings a totally new
-              level of app development agility to mobile dev teams.</p>
+              O aplicativo é <b>100% gratuito</b>, apenas é cobrado o valor que é combinado pela plataforma entre o freteiro e você.</p>
           </ion-slide>
 
           <ion-slide>
             <img src="assets/img/ica-slidebox-img-4.png" class="slide-image"/>
-            <h2 class="slide-title">Ready to Play?</h2>
+            <h2 class="slide-title">Pronto para Começar?</h2>
             <ion-button fill="clear" href="/schedule">
-              Continue
+              Continuar
               <ion-icon slot="end" name="arrow-forward"></ion-icon>
             </ion-button>
           </ion-slide>

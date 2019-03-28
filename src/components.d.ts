@@ -7,18 +7,15 @@
 
 import '@stencil/core';
 
-import '@stencil/redux';
 import '@ionic/core';
 import 'ionicons';
+import '@stencil/redux';
 
 
 export namespace Components {
 
   interface AppRoot {}
   interface AppRootAttributes extends StencilHTMLAttributes {}
-
-  interface PageAboutPopover {}
-  interface PageAboutPopoverAttributes extends StencilHTMLAttributes {}
 
   interface PageAbout {}
   interface PageAboutAttributes extends StencilHTMLAttributes {}
@@ -27,6 +24,9 @@ export namespace Components {
   interface PageAccountAttributes extends StencilHTMLAttributes {
     'onUserDidLogOut'?: (event: CustomEvent) => void;
   }
+
+  interface PageCreate {}
+  interface PageCreateAttributes extends StencilHTMLAttributes {}
 
   interface PageLogin {}
   interface PageLoginAttributes extends StencilHTMLAttributes {
@@ -81,9 +81,9 @@ export namespace Components {
 declare global {
   interface StencilElementInterfaces {
     'AppRoot': Components.AppRoot;
-    'PageAboutPopover': Components.PageAboutPopover;
     'PageAbout': Components.PageAbout;
     'PageAccount': Components.PageAccount;
+    'PageCreate': Components.PageCreate;
     'PageLogin': Components.PageLogin;
     'PageMap': Components.PageMap;
     'PageScheduleFilter': Components.PageScheduleFilter;
@@ -99,9 +99,9 @@ declare global {
 
   interface StencilIntrinsicElements {
     'app-root': Components.AppRootAttributes;
-    'page-about-popover': Components.PageAboutPopoverAttributes;
     'page-about': Components.PageAboutAttributes;
     'page-account': Components.PageAccountAttributes;
+    'page-create': Components.PageCreateAttributes;
     'page-login': Components.PageLoginAttributes;
     'page-map': Components.PageMapAttributes;
     'page-schedule-filter': Components.PageScheduleFilterAttributes;
@@ -122,12 +122,6 @@ declare global {
     new (): HTMLAppRootElement;
   };
 
-  interface HTMLPageAboutPopoverElement extends Components.PageAboutPopover, HTMLStencilElement {}
-  var HTMLPageAboutPopoverElement: {
-    prototype: HTMLPageAboutPopoverElement;
-    new (): HTMLPageAboutPopoverElement;
-  };
-
   interface HTMLPageAboutElement extends Components.PageAbout, HTMLStencilElement {}
   var HTMLPageAboutElement: {
     prototype: HTMLPageAboutElement;
@@ -138,6 +132,12 @@ declare global {
   var HTMLPageAccountElement: {
     prototype: HTMLPageAccountElement;
     new (): HTMLPageAccountElement;
+  };
+
+  interface HTMLPageCreateElement extends Components.PageCreate, HTMLStencilElement {}
+  var HTMLPageCreateElement: {
+    prototype: HTMLPageCreateElement;
+    new (): HTMLPageCreateElement;
   };
 
   interface HTMLPageLoginElement extends Components.PageLogin, HTMLStencilElement {}
@@ -208,9 +208,9 @@ declare global {
 
   interface HTMLElementTagNameMap {
     'app-root': HTMLAppRootElement
-    'page-about-popover': HTMLPageAboutPopoverElement
     'page-about': HTMLPageAboutElement
     'page-account': HTMLPageAccountElement
+    'page-create': HTMLPageCreateElement
     'page-login': HTMLPageLoginElement
     'page-map': HTMLPageMapElement
     'page-schedule-filter': HTMLPageScheduleFilterElement
@@ -226,9 +226,9 @@ declare global {
 
   interface ElementTagNameMap {
     'app-root': HTMLAppRootElement;
-    'page-about-popover': HTMLPageAboutPopoverElement;
     'page-about': HTMLPageAboutElement;
     'page-account': HTMLPageAccountElement;
+    'page-create': HTMLPageCreateElement;
     'page-login': HTMLPageLoginElement;
     'page-map': HTMLPageMapElement;
     'page-schedule-filter': HTMLPageScheduleFilterElement;
