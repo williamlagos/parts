@@ -94,7 +94,7 @@ export class PageSpeakerList {
           <ion-buttons slot="start">
             <ion-menu-button></ion-menu-button>
           </ion-buttons>
-          <ion-title>Freteiros</ion-title>
+          <ion-title>Ofertas</ion-title>
         </ion-toolbar>
       </ion-header>,
 
@@ -116,14 +116,15 @@ export class PageSpeakerList {
 
                     <ion-card-content>
                       <ion-list>
-                        {speaker.sessions.map(session => (
+                        {/*(speaker.sessions.map(session => (
                           <ion-item href={`/speakers/session/${session.id}`}>
                             <h3>{session.name}</h3>
                           </ion-item>
-                        ))}
+                        ))*/}
 
+                        <ion-item><p>R${speaker.id*5},00</p><br/></ion-item>
                         <ion-item href={`/speakers/${speaker.id}`}>
-                          <h3>About {speaker.name}</h3>
+                          <h3>Sobre {speaker.name}</h3>
                         </ion-item>
                       </ion-list>
                     </ion-card-content>
@@ -136,7 +137,7 @@ export class PageSpeakerList {
                           color="primary"
                           onClick={() => this.goToSpeakerTwitter(speaker)}>
                           <ion-icon name="logo-twitter" slot="start"></ion-icon>
-                          Tweet
+                          Contatar
                         </ion-button>
                       </ion-col>
                       <ion-col size="4" text-center>
@@ -146,7 +147,7 @@ export class PageSpeakerList {
                           color="primary"
                           onClick={() => this.openSpeakerShare(speaker)}>
                           <ion-icon name="share-alt" slot="start"></ion-icon>
-                          Share
+                          Compartilhar
                         </ion-button>
                       </ion-col>
                       <ion-col size="4" text-right>
@@ -156,7 +157,7 @@ export class PageSpeakerList {
                           color="primary"
                           onClick={() => this.openContact(speaker)}>
                           <ion-icon name="chatboxes" slot="start"></ion-icon>
-                          Contact
+                          Enviar
                         </ion-button>
                       </ion-col>
                     </ion-row>

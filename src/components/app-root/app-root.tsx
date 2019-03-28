@@ -35,6 +35,11 @@ export class AppRoot {
       icon: 'map'
     },
     {
+      title: 'Ofertas',
+      url: '/speakers',
+      icon: 'cash'
+    },
+    {
       title: 'Agenda',
       url: '/schedule',
       icon: 'calendar'
@@ -95,6 +100,12 @@ export class AppRoot {
             <ion-route url="/schedule" component="tab-schedule">
               <ion-route component="page-schedule"></ion-route>
               <ion-route url="/session/:sessionId" component="page-session" componentProps={{ goback: '/schedule' }}></ion-route>
+            </ion-route>
+
+            <ion-route url="/speakers" component="tab-speaker">
+              <ion-route component="page-speaker-list"></ion-route>
+              <ion-route url="/session/:sessionId" component="page-session" componentProps={{ goback: '/speakers' }}></ion-route>
+              <ion-route url="/:speakerId" component="page-speaker-detail"></ion-route>
             </ion-route>
 
             <ion-route url="/create" component="tab-create">

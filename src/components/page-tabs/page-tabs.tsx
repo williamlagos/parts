@@ -21,6 +21,9 @@ export class PageTabs {
         <ion-tab tab="tab-create">
           <ion-nav></ion-nav>
         </ion-tab>
+        <ion-tab tab="tab-speakers">
+          <ion-nav></ion-nav>
+        </ion-tab>
         <ion-tab tab="tab-map" component="page-map"></ion-tab>
         <ion-tab tab="tab-about" component="page-about"></ion-tab>
 
@@ -36,6 +39,10 @@ export class PageTabs {
           <ion-tab-button tab="tab-create">
             <ion-icon name="cube"></ion-icon>
             <ion-label>Frete</ion-label>
+          </ion-tab-button>
+          <ion-tab-button tab="tab-speakers">
+            <ion-icon name="cash"></ion-icon>
+            <ion-label>Oferta</ion-label>
           </ion-tab-button>
           <ion-tab-button tab="tab-about">
             <ion-icon name="information-circle"></ion-icon>

@@ -7,5 +7,8 @@ export const config: Config = {
   globalStyle: 'src/global.css',
   copy: [
     { src: 'robots.txt' }
-  ]
+  ],
+  devServer: {
+    openBrowser: false
+  }
 };
