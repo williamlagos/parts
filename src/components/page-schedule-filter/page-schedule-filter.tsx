@@ -61,22 +61,22 @@ export class PageScheduleFilter {
       <ion-header>
         <ion-toolbar>
           <ion-buttons slot={mode === 'md' ? 'end' : 'start'}>
-            <ion-button onClick={() => this.dismiss()}>Cancel</ion-button>
+            <ion-button onClick={() => this.dismiss()}>Cancelar</ion-button>
           </ion-buttons>
 
           <ion-title>
-            Filter Sessions
+            Filtrar Categorias
           </ion-title>
 
           <ion-buttons slot="end">
-            <ion-button onClick={() => this.applyFilters()} strong>Done</ion-button>
+            <ion-button onClick={() => this.applyFilters()} strong>Confirmar</ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>,
 
       <ion-content class="outer-content">
         <ion-list>
-          <ion-list-header>Tracks</ion-list-header>
+          <ion-list-header>Categorias</ion-list-header>
 
           {this.tracks.map(track =>
             <ion-item class={{ [`item-track-${track.name.toLowerCase()}`]: true, 'item-track': true }}>
@@ -90,7 +90,7 @@ export class PageScheduleFilter {
         <ion-list>
           <ion-item onClick={() => this.resetFilters()} detail-none>
             <ion-label color="danger">
-              Reset All Filters
+              Redefinir as categorias
             </ion-label>
           </ion-item>
         </ion-list>
