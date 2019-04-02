@@ -17,6 +17,11 @@ export namespace Components {
   interface AppRoot {}
   interface AppRootAttributes extends StencilHTMLAttributes {}
 
+  interface AppEntrance {}
+  interface AppEntranceAttributes extends StencilHTMLAttributes {
+    'onUserDidLogIn'?: (event: CustomEvent) => void;
+  }
+
   interface PageAbout {}
   interface PageAboutAttributes extends StencilHTMLAttributes {}
 
@@ -27,11 +32,6 @@ export namespace Components {
 
   interface PageCreate {}
   interface PageCreateAttributes extends StencilHTMLAttributes {}
-
-  interface PageLogin {}
-  interface PageLoginAttributes extends StencilHTMLAttributes {
-    'onUserDidLogIn'?: (event: CustomEvent) => void;
-  }
 
   interface PageMap {}
   interface PageMapAttributes extends StencilHTMLAttributes {}
@@ -54,9 +54,6 @@ export namespace Components {
     'goback'?: string;
     'sessionId'?: string;
   }
-
-  interface PageSignup {}
-  interface PageSignupAttributes extends StencilHTMLAttributes {}
 
   interface PageSpeakerDetail {
     'speakerId': string;
@@ -81,15 +78,14 @@ export namespace Components {
 declare global {
   interface StencilElementInterfaces {
     'AppRoot': Components.AppRoot;
+    'AppEntrance': Components.AppEntrance;
     'PageAbout': Components.PageAbout;
     'PageAccount': Components.PageAccount;
     'PageCreate': Components.PageCreate;
-    'PageLogin': Components.PageLogin;
     'PageMap': Components.PageMap;
     'PageScheduleFilter': Components.PageScheduleFilter;
     'PageSchedule': Components.PageSchedule;
     'PageSession': Components.PageSession;
-    'PageSignup': Components.PageSignup;
     'PageSpeakerDetail': Components.PageSpeakerDetail;
     'PageSpeakerList': Components.PageSpeakerList;
     'PageSupport': Components.PageSupport;
@@ -99,15 +95,14 @@ declare global {
 
   interface StencilIntrinsicElements {
     'app-root': Components.AppRootAttributes;
+    'app-entrance': Components.AppEntranceAttributes;
     'page-about': Components.PageAboutAttributes;
     'page-account': Components.PageAccountAttributes;
     'page-create': Components.PageCreateAttributes;
-    'page-login': Components.PageLoginAttributes;
     'page-map': Components.PageMapAttributes;
     'page-schedule-filter': Components.PageScheduleFilterAttributes;
     'page-schedule': Components.PageScheduleAttributes;
     'page-session': Components.PageSessionAttributes;
-    'page-signup': Components.PageSignupAttributes;
     'page-speaker-detail': Components.PageSpeakerDetailAttributes;
     'page-speaker-list': Components.PageSpeakerListAttributes;
     'page-support': Components.PageSupportAttributes;
@@ -120,6 +115,12 @@ declare global {
   var HTMLAppRootElement: {
     prototype: HTMLAppRootElement;
     new (): HTMLAppRootElement;
+  };
+
+  interface HTMLAppEntranceElement extends Components.AppEntrance, HTMLStencilElement {}
+  var HTMLAppEntranceElement: {
+    prototype: HTMLAppEntranceElement;
+    new (): HTMLAppEntranceElement;
   };
 
   interface HTMLPageAboutElement extends Components.PageAbout, HTMLStencilElement {}
@@ -138,12 +139,6 @@ declare global {
   var HTMLPageCreateElement: {
     prototype: HTMLPageCreateElement;
     new (): HTMLPageCreateElement;
-  };
-
-  interface HTMLPageLoginElement extends Components.PageLogin, HTMLStencilElement {}
-  var HTMLPageLoginElement: {
-    prototype: HTMLPageLoginElement;
-    new (): HTMLPageLoginElement;
   };
 
   interface HTMLPageMapElement extends Components.PageMap, HTMLStencilElement {}
@@ -168,12 +163,6 @@ declare global {
   var HTMLPageSessionElement: {
     prototype: HTMLPageSessionElement;
     new (): HTMLPageSessionElement;
-  };
-
-  interface HTMLPageSignupElement extends Components.PageSignup, HTMLStencilElement {}
-  var HTMLPageSignupElement: {
-    prototype: HTMLPageSignupElement;
-    new (): HTMLPageSignupElement;
   };
 
   interface HTMLPageSpeakerDetailElement extends Components.PageSpeakerDetail, HTMLStencilElement {}
@@ -208,15 +197,14 @@ declare global {
 
   interface HTMLElementTagNameMap {
     'app-root': HTMLAppRootElement
+    'app-entrance': HTMLAppEntranceElement
     'page-about': HTMLPageAboutElement
     'page-account': HTMLPageAccountElement
     'page-create': HTMLPageCreateElement
-    'page-login': HTMLPageLoginElement
     'page-map': HTMLPageMapElement
     'page-schedule-filter': HTMLPageScheduleFilterElement
     'page-schedule': HTMLPageScheduleElement
     'page-session': HTMLPageSessionElement
-    'page-signup': HTMLPageSignupElement
     'page-speaker-detail': HTMLPageSpeakerDetailElement
     'page-speaker-list': HTMLPageSpeakerListElement
     'page-support': HTMLPageSupportElement
@@ -226,15 +214,14 @@ declare global {
 
   interface ElementTagNameMap {
     'app-root': HTMLAppRootElement;
+    'app-entrance': HTMLAppEntranceElement;
     'page-about': HTMLPageAboutElement;
     'page-account': HTMLPageAccountElement;
     'page-create': HTMLPageCreateElement;
-    'page-login': HTMLPageLoginElement;
     'page-map': HTMLPageMapElement;
     'page-schedule-filter': HTMLPageScheduleFilterElement;
     'page-schedule': HTMLPageScheduleElement;
     'page-session': HTMLPageSessionElement;
-    'page-signup': HTMLPageSignupElement;
     'page-speaker-detail': HTMLPageSpeakerDetailElement;
     'page-speaker-list': HTMLPageSpeakerListElement;
     'page-support': HTMLPageSupportElement;

@@ -15,15 +15,9 @@ export class PageTabs {
   render() {
     return [
       <ion-tabs>
-        <ion-tab tab="tab-schedule">
-          <ion-nav></ion-nav>
-        </ion-tab>
-        <ion-tab tab="tab-create">
-          <ion-nav></ion-nav>
-        </ion-tab>
-        <ion-tab tab="tab-speakers">
-          <ion-nav></ion-nav>
-        </ion-tab>
+        <ion-tab tab="tab-schedule" component="page-schedule"></ion-tab>
+        <ion-tab tab="tab-create" component="page-create"></ion-tab>
+        <ion-tab tab="tab-speakers" component="page-speaker-list"></ion-tab>
         <ion-tab tab="tab-map" component="page-map"></ion-tab>
         <ion-tab tab="tab-about" component="page-about"></ion-tab>
 
