@@ -20,7 +20,8 @@ export class Entrance {
     value: ''
   };
   @State() submitted = false;
-  @Prop({ connect: 'ion-router' }) nav;
+  @State() needSignup = false;
+  @State() step = 1;
   @Prop({ context: 'store' }) store: Store;
   @Event() userDidLogIn: EventEmitter;
 
@@ -90,92 +91,11 @@ export class Entrance {
     this.validateUsername();
 
     this.submitted = true;
+    this.needSignup = false;
 
     if (this.password.valid && this.username.valid) {
       UserData.signup(this.username.value);
     }
-  }
-
-  renderSignup() {
-    return [
-      <ion-header>
-        <ion-toolbar>
-          <ion-buttons slot="start">
-            <ion-menu-button></ion-menu-button>
-          </ion-buttons>
-          <ion-title>Registro</ion-title>
-        </ion-toolbar>
-      </ion-header>,
-
-      <ion-content padding>
-
-        <div class="signup-logo">
-          <img src="assets/img/appicon.svg" alt="Ionic Logo"/>
-        </div>
-
-        <form novalidate>
-          <ion-list no-lines>
-            <ion-item>
-              <ion-label position="stacked" color="primary">Digite seu nome completo</ion-label>
-              <ion-input name="address"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="stacked" color="primary">Digite o usuário</ion-label>
-              <ion-input name="username" type="text" value={this.username.value} onInput={(ev) => this.handleUsername(ev)} required>
-              </ion-input>
-            </ion-item>
-            <ion-text color="danger">
-              <p hidden={this.username.valid || this.submitted === false} padding-left>
-                Nome do usuário é requerido
-              </p>
-            </ion-text>
-
-            <ion-item>
-              <ion-label position="stacked" color="primary">Digite sua senha</ion-label>
-              <ion-input name="password" type="password" value={this.password.value} onInput={(ev) => this.handlePassword(ev)} required>
-              </ion-input>
-            </ion-item>
-            <ion-text color="danger">
-              <p hidden={this.password.valid || this.submitted === false} padding-left>
-                Senha é requerida
-              </p>
-            </ion-text>
-
-            <ion-item>
-              <ion-label position="stacked" color="primary">Digite sua senha novamente</ion-label>
-              <ion-input name="scpassword"></ion-input>
-            </ion-item>
-
-            <ion-item>
-              <ion-label position="stacked" color="primary">Insira imagens</ion-label>
-              <input type="file"></input>
-            </ion-item>
-
-            <ion-item>
-              <ion-label position="stacked" color="primary">Digite seu endereço</ion-label>
-              <ion-input name="address"></ion-input>
-            </ion-item>
-
-            <ion-item>
-              <ion-label position="stacked" color="primary">Digite seu telefone para contato</ion-label>
-              <ion-input name="phone"></ion-input>
-            </ion-item>
-
-            <ion-item>
-              <ion-label position="stacked" color="primary">Informações adicionais</ion-label>
-              <ion-textarea rows={4}></ion-textarea>
-            </ion-item>
-          </ion-list>
-
-          <div padding>
-            <ion-button onClick={(e) => this.onSignup(e)} type="submit" expand="block">Registrar</ion-button>
-          </div>
-        </form>
-
-      </ion-content>
-
-
-    ];
   }
 
   async onLogin(e) {
@@ -201,12 +121,118 @@ export class Entrance {
 
   async onSignup(e) {
     e.preventDefault();
-    const navCtrl: HTMLIonRouterElement = await (this.nav as any).componentOnReady();
+    // const navCtrl: HTMLIonRouterElement = await (this.nav as any).componentOnReady();
     console.log('Clicked signup');
-    navCtrl.push('/signup', 'root');
+    // navCtrl.push('/signup', 'root');
+    this.needSignup = true;
   }
 
-  render() {
+  outSignup(e) {
+    e.preventDefault();
+    this.needSignup = false;
+  }
+
+  wizard() {
+    switch (this.step) {
+      case 1:
+        return [
+          <ion-item>
+            <ion-label position="stacked" color="primary">Digite seu nome completo</ion-label>
+            <ion-input name="address"></ion-input>
+          </ion-item>,
+          <ion-item>
+            <ion-label position="stacked" color="primary">Digite seu endereço</ion-label>
+            <ion-input name="address"></ion-input>
+          </ion-item>,
+          <ion-item>
+            <ion-label position="stacked" color="primary">Digite seu telefone para contato</ion-label>
+            <ion-input name="phone"></ion-input>
+          </ion-item>,
+        ];
+      case 2:
+        return [
+          <ion-item>
+            <ion-label position="stacked" color="primary">Informações adicionais</ion-label>
+            <ion-textarea rows={4}></ion-textarea>
+          </ion-item>,
+          <ion-item>
+            <ion-label position="stacked" color="primary">Insira imagens</ion-label>
+            <ion-button href="#" onClick={() => document.getElementById('file').click()}>
+              <span>Selecionar imagens</span>
+              <input type="file" id="file" class="upload" style={{ "display": "none"}} />
+            </ion-button>
+          </ion-item>
+        ]
+      case 3:
+        return [
+          <ion-item>
+            <ion-label position="stacked" color="primary">Digite o usuário</ion-label>
+            <ion-input name="username" type="text" value={this.username.value} onInput={(ev) => this.handleUsername(ev)} required>
+            </ion-input>
+          </ion-item>,
+          <ion-text color="danger">
+            <p hidden={this.username.valid || this.submitted === false} padding-left>
+              Nome do usuário é requerido
+            </p>
+          </ion-text>,
+          <ion-item>
+            <ion-label position="stacked" color="primary">Digite sua senha</ion-label>
+            <ion-input name="password" type="password" value={this.password.value} onInput={(ev) => this.handlePassword(ev)} required>
+            </ion-input>
+          </ion-item>,
+          <ion-text color="danger">
+            <p hidden={this.password.valid || this.submitted === false} padding-left>
+              Senha é requerida
+            </p>
+          </ion-text>,
+          <ion-item>
+            <ion-label position="stacked" color="primary">Digite sua senha novamente</ion-label>
+            <ion-input name="scpassword"></ion-input>
+          </ion-item>
+        ];
+
+    }
+  }
+
+  next(e) {
+    e.preventDefault();
+    this.step += 1;
+    this.step %= 4;
+  }
+
+  renderSignup() {
+    return [
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-back-button onClick={e => this.outSignup(e)}defaultHref="/"></ion-back-button>
+          </ion-buttons>
+          <ion-title>Registro</ion-title>
+        </ion-toolbar>
+      </ion-header>,
+
+      <ion-content padding>
+
+        <div class="signup-logo">
+          <img src="assets/img/appicon.svg" alt="Ionic Logo"/>
+        </div>
+
+        <form method="POST" novalidate>
+          <ion-list no-lines>{this.wizard()}</ion-list>
+
+          <div padding>
+            {this.step === 3 && <ion-button onClick={(e) => this.onSignup(e)} type="submit" expand="block">Registrar</ion-button>}
+            {this.step < 3 && <ion-button onClick={(e) => this.next(e)}>Próximo</ion-button>}
+          </div>
+        </form>
+
+      </ion-content>
+
+
+    ];
+  }
+
+  renderLogin() {
     return [
       <ion-header>
         <ion-toolbar>
@@ -267,5 +293,9 @@ export class Entrance {
       </ion-content>
 
     ];
+  }
+
+  render() {
+    return this.needSignup ? this.renderSignup() : this.renderLogin();
   }
 }
