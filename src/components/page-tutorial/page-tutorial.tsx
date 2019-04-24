@@ -56,7 +56,7 @@ export class PageTutorial {
           <ion-slide>
             <img src="assets/img/ica-slidebox-img-4.png" class="slide-image"/>
             <h2 class="slide-title">Pronto para Começar?</h2>
-            <ion-button fill="clear" href="/schedule">
+            <ion-button fill="clear" href="#schedule">
               Continuar
               <ion-icon slot="end" name="arrow-forward"></ion-icon>
             </ion-button>

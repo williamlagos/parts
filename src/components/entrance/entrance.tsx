@@ -19,6 +19,7 @@ export class Entrance {
     valid: false,
     value: ''
   };
+  @State() name = '';
   @State() submitted = false;
   @State() needSignup = false;
   @State() step = 1;
@@ -28,12 +29,16 @@ export class Entrance {
   appSetName: Action;
 
   componentWillLoad() {
+    this.store.mapStateToProps(this, (state) => {
+      const { app: { name } } = state;
+      return { name };
+    });
     this.store.mapDispatchToProps(this, {
       appSetName
     });
   }
 
-  handleUsername(ev) {
+  handleUsername(ev: any) {
     this.validateUsername();
     this.username = {
       ...this.username,
@@ -41,7 +46,7 @@ export class Entrance {
     };
   }
 
-  handlePassword(ev) {
+  handlePassword(ev: any) {
     this.validatePassword();
     this.password.value = ev.target.value;
     this.password = {
@@ -84,7 +89,7 @@ export class Entrance {
     };
   }
 
-  async onRegisterSignup(e) {
+  async onRegisterSignup(e: any) {
     e.preventDefault();
     console.log('clicked signup');
     this.validatePassword();
@@ -98,7 +103,7 @@ export class Entrance {
     }
   }
 
-  async onLogin(e) {
+  async onLogin(e: any) {
     e.preventDefault();
     // const navCtrl: HTMLIonRouterElement = await (this.nav as any).componentOnReady();
 
@@ -108,7 +113,9 @@ export class Entrance {
 
     this.submitted = true;
 
+    console.log(this.name);
     this.appSetName('lpachecoquevedo@gmail.com');
+    console.log(this.name);
 
     if (this.password.valid && this.username.valid) {
       await UserData.login(this.username.value);
@@ -119,7 +126,7 @@ export class Entrance {
     }
   }
 
-  async onSignup(e) {
+  async onSignup(e: any) {
     e.preventDefault();
     // const navCtrl: HTMLIonRouterElement = await (this.nav as any).componentOnReady();
     console.log('Clicked signup');
@@ -127,7 +134,7 @@ export class Entrance {
     this.needSignup = true;
   }
 
-  outSignup(e) {
+  outSignup(e: any) {
     e.preventDefault();
     this.needSignup = false;
   }
@@ -156,13 +163,13 @@ export class Entrance {
             <ion-textarea rows={4}></ion-textarea>
           </ion-item>,
           <ion-item>
-            <ion-label position="stacked" color="primary">Insira imagens</ion-label>
+            <ion-label position="stacked" color="primary">Insira imagens</ion-label>,
             <ion-button href="#" onClick={() => document.getElementById('file').click()}>
               <span>Selecionar imagens</span>
-              <input type="file" id="file" class="upload" style={{ "display": "none"}} />
+              <input type="file" id="file" class="upload" style={ {  'display': 'none' } } />
             </ion-button>
           </ion-item>
-        ]
+        ];
       case 3:
         return [
           <ion-item>
@@ -194,7 +201,7 @@ export class Entrance {
     }
   }
 
-  next(e) {
+  next(e: any) {
     e.preventDefault();
     this.step += 1;
     this.step %= 4;

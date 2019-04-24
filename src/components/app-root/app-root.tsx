@@ -21,32 +21,32 @@ export class AppRoot {
 
   @Prop({ context: 'isServer' }) isServer: boolean;
   @Prop({ context: 'store' }) store: Store;
-  @Prop({ connect: 'ion-router' }) nav;
+  // @Prop({ connect: 'ion-router' }) nav;
 
   appPages = [
     {
       title: 'Frete',
-      url: '/create',
+      url: '#create',
       icon: 'cube'
     },
     {
       title: 'Mapa',
-      url: '/map',
+      url: '#map',
       icon: 'map'
     },
     {
       title: 'Ofertas',
-      url: '/speakers',
+      url: '#speakers',
       icon: 'cash'
     },
     {
       title: 'Agenda',
-      url: '/schedule',
+      url: '#schedule',
       icon: 'calendar'
     },
     {
       title: 'Sobre',
-      url: '/about',
+      url: '#about',
       icon: 'information-circle'
     }
   ];
@@ -75,14 +75,14 @@ export class AppRoot {
   async logout() {
     await UserData.logout();
     this.loggedIn = false;
-    const navCtrl: HTMLIonRouterElement = await (this.nav as any).componentOnReady();
-    navCtrl.push('/login', 'root');
+    // const navCtrl: HTMLIonRouterElement = await (this.nav as any).componentOnReady();
+    // navCtrl.push('/login', 'root');
   }
 
 
   @Listen('userDidLogIn')
   @Listen('userDidLogOut')
-  updateLoggedInStatus(loggedEvent) {
+  updateLoggedInStatus(loggedEvent: any) {
     this.loggedIn = loggedEvent.detail.loginStatus;
   }
 
@@ -146,12 +146,12 @@ export class AppRoot {
 
               <ion-menu-toggle autoHide={false}>
                 {this.loggedIn ? (
-                  <ion-item href="account">
+                  <ion-item href="#account">
                     <ion-icon slot="start" name="person"></ion-icon>
                     <ion-label>Perfil</ion-label>
                   </ion-item>
                 ) : (
-                  <ion-item href="login">
+                  <ion-item href="#login">
                     <ion-icon slot="start" name="log-in"></ion-icon>
                     <ion-label>Entrar</ion-label>
                   </ion-item>
@@ -159,7 +159,7 @@ export class AppRoot {
               </ion-menu-toggle>
 
               <ion-menu-toggle autoHide={false}>
-                <ion-item href="support" button>
+                <ion-item href="#support" button>
                   <ion-icon slot="start" name="help"></ion-icon>
                   <ion-label>Ajuda</ion-label>
                 </ion-item>
@@ -172,7 +172,7 @@ export class AppRoot {
                     <ion-label>Sair</ion-label>
                   </ion-item>
                 ) : (
-                  <ion-item href="signup" button>
+                  <ion-item href="#signup" button>
                     <ion-icon slot="start" name="person-add"></ion-icon>
                     <ion-label>Registrar</ion-label>
                   </ion-item>
@@ -183,7 +183,7 @@ export class AppRoot {
             <ion-list>
               <ion-list-header>Tutorial</ion-list-header>
               <ion-menu-toggle autoHide={false}>
-                <ion-item href="tutorial">
+                <ion-item href="#tutorial">
                   <ion-icon slot="start" name="hammer"></ion-icon>
                   <ion-label>Mostrar Tutorial</ion-label>
                 </ion-item>
@@ -202,7 +202,7 @@ export class AppRoot {
     return (
       <ion-app>
         {this.loggedIn ? [
-          //this.renderRouter(),
+          // this.renderRouter(),
           this.renderSplitPane()
         ] : (
           <app-entrance />
