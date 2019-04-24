@@ -68,7 +68,9 @@ export namespace Components {
   interface PageSupport {}
   interface PageSupportAttributes extends StencilHTMLAttributes {}
 
-  interface PageTabs {}
+  interface PageTabs {
+    'select': (tab: string) => Promise<void>;
+  }
   interface PageTabsAttributes extends StencilHTMLAttributes {}
 
   interface PageTutorial {}

@@ -22,31 +22,32 @@ export class AppRoot {
   @Prop({ context: 'isServer' }) isServer: boolean;
   @Prop({ context: 'store' }) store: Store;
   // @Prop({ connect: 'ion-router' }) nav;
+  @Prop({ connect: 'page-tabs' }) tabs: any;
 
   appPages = [
     {
       title: 'Frete',
-      url: '#create',
+      url: 'create',
       icon: 'cube'
     },
     {
       title: 'Mapa',
-      url: '#map',
+      url: 'map',
       icon: 'map'
     },
     {
       title: 'Ofertas',
-      url: '#speakers',
+      url: 'speakers',
       icon: 'cash'
     },
     {
       title: 'Agenda',
-      url: '#schedule',
+      url: 'schedule',
       icon: 'calendar'
     },
     {
       title: 'Sobre',
-      url: '#about',
+      url: 'about',
       icon: 'information-circle'
     }
   ];
@@ -65,6 +66,13 @@ export class AppRoot {
     } catch {
       return;
     }
+  }
+
+  async changeTab(tab: string) {
+    // const tab: any = document.querySelector('page-tabs');
+    // await tab.select('tab-map');
+    const tabCtrl: HTMLPageTabsElement = await (this.tabs as any).componentOnReady();
+    await tabCtrl.select(tab);
   }
 
   async checkLoginStatus() {
@@ -133,7 +141,7 @@ export class AppRoot {
 
               {this.appPages.map((p) => (
                 <ion-menu-toggle autoHide={false}>
-                  <ion-item lines="full" href={p.url}>
+                  <ion-item lines="full" href="#" onClick={() => this.changeTab(p.url)}>
                     <ion-icon slot="start" name={p.icon}></ion-icon>
                     <ion-label>{p.title}</ion-label>
                   </ion-item>
@@ -183,7 +191,7 @@ export class AppRoot {
             <ion-list>
               <ion-list-header>Tutorial</ion-list-header>
               <ion-menu-toggle autoHide={false}>
-                <ion-item href="#tutorial">
+                <ion-item href="#tutorial" onClick={(e) => this.showTutorial(e)}>
                   <ion-icon slot="start" name="hammer"></ion-icon>
                   <ion-label>Mostrar Tutorial</ion-label>
                 </ion-item>
@@ -195,6 +203,10 @@ export class AppRoot {
         <ion-nav main><page-tabs/></ion-nav>
       </ion-split-pane>
     );
+  }
+
+  showTutorial(event: any) {
+    event.preventDefault();
   }
 
   // TODO ion-menu should be split out
