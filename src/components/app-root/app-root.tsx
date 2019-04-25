@@ -15,14 +15,15 @@ const { SplashScreen } = Plugins;
 })
 export class AppRoot {
   @State() loggedIn = false;
+  @State() toggled = false;
   hasSeenTutorial = false;
 
   @Element() el: HTMLElement;
 
   @Prop({ context: 'isServer' }) isServer: boolean;
   @Prop({ context: 'store' }) store: Store;
-  // @Prop({ connect: 'ion-router' }) nav;
-  @Prop({ connect: 'page-tabs' }) tabs: any;
+  @Prop({ connect: 'ion-nav' }) nav: HTMLIonNavElement;
+  @Prop({ connect: 'page-tabs' }) tabs: HTMLPageTabsElement;
 
   appPages = [
     {
@@ -154,7 +155,7 @@ export class AppRoot {
 
               <ion-menu-toggle autoHide={false}>
                 {this.loggedIn ? (
-                  <ion-item href="#account">
+                  <ion-item href="#" onClick={(e) => this.showPage(e, 'account')}>
                     <ion-icon slot="start" name="person"></ion-icon>
                     <ion-label>Perfil</ion-label>
                   </ion-item>
@@ -167,7 +168,7 @@ export class AppRoot {
               </ion-menu-toggle>
 
               <ion-menu-toggle autoHide={false}>
-                <ion-item href="#support" button>
+                <ion-item href="#support" button onClick={(e) => this.showPage(e, 'support')}>
                   <ion-icon slot="start" name="help"></ion-icon>
                   <ion-label>Ajuda</ion-label>
                 </ion-item>
@@ -191,7 +192,7 @@ export class AppRoot {
             <ion-list>
               <ion-list-header>Tutorial</ion-list-header>
               <ion-menu-toggle autoHide={false}>
-                <ion-item href="#tutorial" onClick={(e) => this.showTutorial(e)}>
+                <ion-item href="#" onClick={(e) => this.showPage(e, 'tutorial')}>
                   <ion-icon slot="start" name="hammer"></ion-icon>
                   <ion-label>Mostrar Tutorial</ion-label>
                 </ion-item>
@@ -205,8 +206,14 @@ export class AppRoot {
     );
   }
 
-  showTutorial(event: any) {
+  async showPage(event: any, page: string) {
     event.preventDefault();
+    // this.toggled = !this.toggled;
+    // const navCtrl: HTMLIonNavElement = (this.nav as any).componentOnReady();
+    const navCtrl = document.querySelector('ion-nav');
+    await navCtrl.setRoot('page-tabs');
+    await navCtrl.push('page-' + page);
+    // console.log('menu closed');
   }
 
   // TODO ion-menu should be split out
