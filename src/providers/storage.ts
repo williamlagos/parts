@@ -1,5 +1,5 @@
-
 const storage = window.localStorage;
+export const Storage = storage;
 
 export function set(key: string, value: any): Promise<void> {
   return new Promise((resolve, reject) => {

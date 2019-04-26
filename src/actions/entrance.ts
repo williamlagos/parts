@@ -1,3 +1,4 @@
+import { Storage } from '../providers/storage';
 import { TypeKeys } from '../actions/index';
 import { Backend } from '../providers/backend';
 
@@ -8,7 +9,7 @@ export interface AppSetNameAction {
 
 export interface SkipIntroAction {
   type: TypeKeys.SKIP_INTRO;
-  skipIntro: boolean;
+  skipIntro: number;
 }
 
 export const appSetName = (name: string) => async (dispatch: any, _getState: any) => {
@@ -38,9 +39,10 @@ export const appSetName = (name: string) => async (dispatch: any, _getState: any
   });
 };
 
-export const skipIntro = () => async (dispatch: any, _getState: any) => {
+export const toggleIntro = (option: boolean) => async (dispatch: any, _getState: any) => {
+  Storage.setItem('skipIntro', String(+ option));
   return dispatch({
     type: TypeKeys.SKIP_INTRO,
-    skipIntro: true
+    skipIntro: + option
   });
 };
