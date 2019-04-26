@@ -13,7 +13,7 @@ export class PageMap {
   @Element() private el: HTMLElement;
 
   async componentWillLoad() {
-    await getGoogleMaps('AIzaSyBe2oU4RM5Jc40GMBKesGUlEceZebKyruY');
+    await getGoogleMaps('AIzaSyC8B5IrTvSbGt9Akb5f00CiDmO86RTb1ec');
     this.mapData = await ConferenceData.getMap();
   }
 
