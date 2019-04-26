@@ -7,8 +7,8 @@
 
 import '@stencil/core';
 
-import '@ionic/core';
 import '@stencil/redux';
+import '@ionic/core';
 import 'ionicons';
 
 
@@ -16,6 +16,9 @@ export namespace Components {
 
   interface AppRoot {}
   interface AppRootAttributes extends StencilHTMLAttributes {}
+
+  interface GenericCarousel {}
+  interface GenericCarouselAttributes extends StencilHTMLAttributes {}
 
   interface AppEntrance {}
   interface AppEntranceAttributes extends StencilHTMLAttributes {
@@ -72,14 +75,12 @@ export namespace Components {
     'select': (tab: string) => Promise<void>;
   }
   interface PageTabsAttributes extends StencilHTMLAttributes {}
-
-  interface PageTutorial {}
-  interface PageTutorialAttributes extends StencilHTMLAttributes {}
 }
 
 declare global {
   interface StencilElementInterfaces {
     'AppRoot': Components.AppRoot;
+    'GenericCarousel': Components.GenericCarousel;
     'AppEntrance': Components.AppEntrance;
     'PageAbout': Components.PageAbout;
     'PageAccount': Components.PageAccount;
@@ -92,11 +93,11 @@ declare global {
     'PageSpeakerList': Components.PageSpeakerList;
     'PageSupport': Components.PageSupport;
     'PageTabs': Components.PageTabs;
-    'PageTutorial': Components.PageTutorial;
   }
 
   interface StencilIntrinsicElements {
     'app-root': Components.AppRootAttributes;
+    'generic-carousel': Components.GenericCarouselAttributes;
     'app-entrance': Components.AppEntranceAttributes;
     'page-about': Components.PageAboutAttributes;
     'page-account': Components.PageAccountAttributes;
@@ -109,7 +110,6 @@ declare global {
     'page-speaker-list': Components.PageSpeakerListAttributes;
     'page-support': Components.PageSupportAttributes;
     'page-tabs': Components.PageTabsAttributes;
-    'page-tutorial': Components.PageTutorialAttributes;
   }
 
 
@@ -117,6 +117,12 @@ declare global {
   var HTMLAppRootElement: {
     prototype: HTMLAppRootElement;
     new (): HTMLAppRootElement;
+  };
+
+  interface HTMLGenericCarouselElement extends Components.GenericCarousel, HTMLStencilElement {}
+  var HTMLGenericCarouselElement: {
+    prototype: HTMLGenericCarouselElement;
+    new (): HTMLGenericCarouselElement;
   };
 
   interface HTMLAppEntranceElement extends Components.AppEntrance, HTMLStencilElement {}
@@ -191,14 +197,9 @@ declare global {
     new (): HTMLPageTabsElement;
   };
 
-  interface HTMLPageTutorialElement extends Components.PageTutorial, HTMLStencilElement {}
-  var HTMLPageTutorialElement: {
-    prototype: HTMLPageTutorialElement;
-    new (): HTMLPageTutorialElement;
-  };
-
   interface HTMLElementTagNameMap {
     'app-root': HTMLAppRootElement
+    'generic-carousel': HTMLGenericCarouselElement
     'app-entrance': HTMLAppEntranceElement
     'page-about': HTMLPageAboutElement
     'page-account': HTMLPageAccountElement
@@ -211,11 +212,11 @@ declare global {
     'page-speaker-list': HTMLPageSpeakerListElement
     'page-support': HTMLPageSupportElement
     'page-tabs': HTMLPageTabsElement
-    'page-tutorial': HTMLPageTutorialElement
   }
 
   interface ElementTagNameMap {
     'app-root': HTMLAppRootElement;
+    'generic-carousel': HTMLGenericCarouselElement;
     'app-entrance': HTMLAppEntranceElement;
     'page-about': HTMLPageAboutElement;
     'page-account': HTMLPageAccountElement;
@@ -228,7 +229,6 @@ declare global {
     'page-speaker-list': HTMLPageSpeakerListElement;
     'page-support': HTMLPageSupportElement;
     'page-tabs': HTMLPageTabsElement;
-    'page-tutorial': HTMLPageTutorialElement;
   }
 
 

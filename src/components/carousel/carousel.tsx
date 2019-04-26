@@ -1,14 +1,20 @@
 import { Component, Element, Prop } from '@stencil/core';
+import { Action, Store } from '@stencil/redux';
 import { UserData } from '../../providers/user-data';
 
+import { skipIntro } from '../../actions/entrance';
+
 @Component({
-  tag: 'page-tutorial',
-  styleUrl: 'page-tutorial.css',
+  tag: 'generic-carousel',
+  styleUrl: 'carousel.css',
 })
-export class PageTutorial {
+export class Carousel {
   @Element() el: HTMLElement;
   @Prop({ connect: 'ion-menu-controller' }) menuCtrl: HTMLIonMenuControllerElement;
   @Prop({ connect: 'ion-nav' }) navCtrl: HTMLIonNavElement;
+  @Prop({ context: 'store' }) store: Store;
+
+  skipIntro: Action;
 
   async componentDidLoad() {
     UserData.hasSeenTutorial(true);
@@ -17,18 +23,17 @@ export class PageTutorial {
     setTimeout(() => this.el.querySelector('ion-slides').update(), 100);
   }
 
-  async componentWillUnload() {
-    // let menu: HTMLIonMenuControllerElement;
-    // menu = await this.menuCtrl.componentOnReady();
-    // await menu.enable(true);
+  componentWillLoad() {
+    this.store.mapDispatchToProps(this, { skipIntro });
   }
 
-  async finishTutorial(event: any) {
+  finishTutorial(event: any) {
     event.preventDefault();
-    let navi: HTMLIonNavElement;
-    navi = await this.navCtrl.componentOnReady();
-    await navi.pop();
-    console.log('tutorial closed');
+    this.skipIntro();
+    // let navi: HTMLIonNavElement;
+    // navi = await this.navCtrl.componentOnReady();
+    // await navi.pop();
+    // console.log('tutorial closed');
   }
 
   render() {

@@ -189,7 +189,7 @@ export class AppRoot {
               </ion-menu-toggle>
             </ion-list>
 
-            <ion-list>
+            {/*<ion-list>
               <ion-list-header>Tutorial</ion-list-header>
               <ion-menu-toggle autoHide={false}>
                 <ion-item href="#" onClick={(e) => this.showPage(e, 'tutorial')}>
@@ -197,7 +197,7 @@ export class AppRoot {
                   <ion-label>Mostrar Tutorial</ion-label>
                 </ion-item>
               </ion-menu-toggle>
-            </ion-list>
+            </ion-list>*/}
           </ion-content>
         </ion-menu>
 

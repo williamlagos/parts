@@ -1,7 +1,7 @@
 import { Component, Event, EventEmitter, Prop, State } from '@stencil/core';
 import { UserData } from '../../providers/user-data';
 
-import { appSetName } from '../../actions/app';
+import { appSetName } from '../../actions/entrance';
 
 import { Action, Store } from '@stencil/redux';
 
@@ -20,6 +20,7 @@ export class Entrance {
     value: ''
   };
   @State() name = '';
+  @State() skipIntro: boolean;
   @State() submitted = false;
   @State() needSignup = false;
   @State() step = 1;
@@ -30,8 +31,8 @@ export class Entrance {
 
   componentWillLoad() {
     this.store.mapStateToProps(this, (state) => {
-      const { app: { name } } = state;
-      return { name };
+      const { entrance: { name, skipIntro } } = state;
+      return { name, skipIntro };
     });
     this.store.mapDispatchToProps(this, {
       appSetName
@@ -303,6 +304,7 @@ export class Entrance {
   }
 
   render() {
+    if (!this.skipIntro) return <generic-carousel/>;
     return this.needSignup ? this.renderSignup() : this.renderLogin();
   }
 }

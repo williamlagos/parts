@@ -1,9 +1,9 @@
-import app from './app';
+import entrance from './entrance';
 
 import { combineReducers } from 'redux';
 
 const rootReducer = (combineReducers as any)({
-  app
+  entrance
 });
 
 export default rootReducer;

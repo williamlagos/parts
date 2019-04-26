@@ -3,7 +3,12 @@ import { Backend } from '../providers/backend';
 
 export interface AppSetNameAction {
   type: TypeKeys.APP_SET_NAME;
-  name: any;
+  name: string;
+}
+
+export interface SkipIntroAction {
+  type: TypeKeys.SKIP_INTRO;
+  skipIntro: boolean;
 }
 
 export const appSetName = (name: string) => async (dispatch: any, _getState: any) => {
@@ -30,5 +35,12 @@ export const appSetName = (name: string) => async (dispatch: any, _getState: any
   return dispatch({
     type: TypeKeys.APP_SET_NAME,
     name // : d
+  });
+};
+
+export const skipIntro = () => async (dispatch: any, _getState: any) => {
+  return dispatch({
+    type: TypeKeys.SKIP_INTRO,
+    skipIntro: true
   });
 };
