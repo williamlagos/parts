@@ -75,6 +75,9 @@ export namespace Components {
     'select': (tab: string) => Promise<void>;
   }
   interface PageTabsAttributes extends StencilHTMLAttributes {}
+
+  interface GenericWizard {}
+  interface GenericWizardAttributes extends StencilHTMLAttributes {}
 }
 
 declare global {
@@ -93,6 +96,7 @@ declare global {
     'PageSpeakerList': Components.PageSpeakerList;
     'PageSupport': Components.PageSupport;
     'PageTabs': Components.PageTabs;
+    'GenericWizard': Components.GenericWizard;
   }
 
   interface StencilIntrinsicElements {
@@ -110,6 +114,7 @@ declare global {
     'page-speaker-list': Components.PageSpeakerListAttributes;
     'page-support': Components.PageSupportAttributes;
     'page-tabs': Components.PageTabsAttributes;
+    'generic-wizard': Components.GenericWizardAttributes;
   }
 
 
@@ -197,6 +202,12 @@ declare global {
     new (): HTMLPageTabsElement;
   };
 
+  interface HTMLGenericWizardElement extends Components.GenericWizard, HTMLStencilElement {}
+  var HTMLGenericWizardElement: {
+    prototype: HTMLGenericWizardElement;
+    new (): HTMLGenericWizardElement;
+  };
+
   interface HTMLElementTagNameMap {
     'app-root': HTMLAppRootElement
     'generic-carousel': HTMLGenericCarouselElement
@@ -212,6 +223,7 @@ declare global {
     'page-speaker-list': HTMLPageSpeakerListElement
     'page-support': HTMLPageSupportElement
     'page-tabs': HTMLPageTabsElement
+    'generic-wizard': HTMLGenericWizardElement
   }
 
   interface ElementTagNameMap {
@@ -229,6 +241,7 @@ declare global {
     'page-speaker-list': HTMLPageSpeakerListElement;
     'page-support': HTMLPageSupportElement;
     'page-tabs': HTMLPageTabsElement;
+    'generic-wizard': HTMLGenericWizardElement;
   }
 
 
