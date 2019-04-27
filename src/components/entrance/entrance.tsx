@@ -1,7 +1,7 @@
 import { Component, Event, EventEmitter, Prop, State } from '@stencil/core';
 import { UserData } from '../../providers/user-data';
 
-import { appSetName, toggleIntro } from '../../actions/entrance';
+import { appSetName, closeRegister, openRegister, toggleIntro } from '../../actions/entrance';
 
 import { Action, Store } from '@stencil/redux';
 
@@ -22,22 +22,25 @@ export class Entrance {
   @State() name = '';
   @State() skipIntro: boolean;
   @State() submitted = false;
-  @State() needSignup = false;
-  @State() step = 1;
+  @State() registerOpened = false;
   @Prop({ context: 'store' }) store: Store;
   @Event() userDidLogIn: EventEmitter;
 
   appSetName: Action;
   toggleIntro: Action;
+  openRegister: Action;
+  closeRegister: Action;
 
   componentWillLoad() {
     this.store.mapStateToProps(this, (state) => {
-      const { entrance: { name, skipIntro } } = state;
-      return { name, skipIntro };
+      const { entrance: { name, skipIntro, registerOpened } } = state;
+      return { name, skipIntro, registerOpened };
     });
     this.store.mapDispatchToProps(this, {
       appSetName,
-      toggleIntro
+      toggleIntro,
+      openRegister,
+      closeRegister
     });
   }
 
@@ -99,7 +102,7 @@ export class Entrance {
     this.validateUsername();
 
     this.submitted = true;
-    this.needSignup = false;
+    this.registerOpened = false;
 
     if (this.password.valid && this.username.valid) {
       UserData.signup(this.username.value);
@@ -131,7 +134,7 @@ export class Entrance {
 
   onSignup(event: any) {
     event.preventDefault();
-    this.needSignup = true;
+    this.registerOpened = true;
   }
 
   renderLogin() {
@@ -185,7 +188,7 @@ export class Entrance {
                     <ion-button type="submit" expand="block">Entrar</ion-button>
                   </ion-col>
                   <ion-col>
-                    <ion-button onClick={(e) => this.onSignup(e)} color="light" expand="block">Registrar</ion-button>
+                    <ion-button onClick={() => this.openRegister()} color="light" expand="block">Registrar</ion-button>
                   </ion-col>
                 </ion-row>
               </form>
@@ -197,27 +200,15 @@ export class Entrance {
     ];
   }
 
-  finishTutorial(event: any) {
-    event.preventDefault();
-    this.toggleIntro(true);
+  register(data: any) {
+    console.log(data);
+    return data;
   }
 
   render() {
-    if (!this.skipIntro) {
-      const slides = ['1', '2', '3', '4'];
-      return (
-        <generic-carousel>
-          {slides.map((item) => {
-            return (
-              <ion-button slot={item} fill="clear" href="#" onClick={(e) => this.finishTutorial(e)}>
-                Começar
-                <ion-icon slot="end" name="arrow-forward"></ion-icon>
-              </ion-button>
-            );
-          })}
-        </generic-carousel>
-      );
-    }
-    return this.needSignup ? <generic-wizard/> : this.renderLogin();
+    if (!this.skipIntro) return <generic-carousel action={() => this.toggleIntro(true)}/>;
+    return this.registerOpened ?
+      <generic-wizard action={(d: any) => this.register(d)} exit={() => this.closeRegister()}/> :
+      this.renderLogin();
   }
 }

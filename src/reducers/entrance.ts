@@ -4,12 +4,14 @@ import { ActionTypes, TypeKeys } from '../actions/index';
 interface AppState {
   name: string;
   skipIntro: number;
+  registerOpened: boolean;
 }
 
 const prepareState = () => {
   const defaultState = {
     name: 'Stencil Redux',
-    skipIntro: false
+    skipIntro: false,
+    registerOpened: false
   };
   return {
     ...defaultState,
@@ -24,6 +26,12 @@ const entrance = (state: AppState = prepareState(), action: ActionTypes) => {
     }
     case TypeKeys.SKIP_INTRO: {
       return { ...state, skipIntro: action.skipIntro };
+    }
+    case TypeKeys.OPEN_REGISTER: {
+      return { ...state, registerOpened: action.registerOpened };
+    }
+    case TypeKeys.CLOSE_REGISTER: {
+      return { ...state, registerOpened: action.registerOpened };
     }
   }
 

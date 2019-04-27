@@ -1,4 +1,4 @@
-import { Component, /*Event, EventEmitter, Prop,*/ State } from '@stencil/core';
+import { Component, /*Event, EventEmitter,*/ Prop, State } from '@stencil/core';
 
 // import { appSetName, toggleIntro } from '../../actions/entrance';
 
@@ -18,6 +18,15 @@ export class Wizard {
     valid: false,
     value: ''
   };
+
+  @State() data = {};
+
+  @Prop() exit: any;
+  @Prop() action: any;
+
+  handleInput(ev: any) {
+    this.data[ev.target.name] = ev.target.value;
+  }
 
   handleUsername(ev: any) {
     this.validateUsername();
@@ -76,22 +85,22 @@ export class Wizard {
         return [
           <ion-item>
             <ion-label position="stacked" color="primary">Digite seu nome completo</ion-label>
-            <ion-input name="address"></ion-input>
+            <ion-input name="name" onInput={(ev) => this.handleInput(ev)}></ion-input>
           </ion-item>,
           <ion-item>
             <ion-label position="stacked" color="primary">Digite seu endereço</ion-label>
-            <ion-input name="address"></ion-input>
+            <ion-input name="address" onInput={(ev) => this.handleInput(ev)}></ion-input>
           </ion-item>,
           <ion-item>
             <ion-label position="stacked" color="primary">Digite seu telefone para contato</ion-label>
-            <ion-input name="phone"></ion-input>
+            <ion-input name="phone" onInput={(ev) => this.handleInput(ev)}></ion-input>
           </ion-item>,
         ];
       case 2:
         return [
           <ion-item>
             <ion-label position="stacked" color="primary">Informações adicionais</ion-label>
-            <ion-textarea rows={4}></ion-textarea>
+            <ion-textarea rows={4} onInput={(ev) => this.handleInput(ev)}></ion-textarea>
           </ion-item>,
           <ion-item>
             <ion-label position="stacked" color="primary">Insira imagens</ion-label>,
@@ -146,9 +155,19 @@ export class Wizard {
     this.needSignup = true;
   }
 
-  outSignup(e: any) {
+  unload(e: any) {
     e.preventDefault();
-    this.needSignup = false;
+    this.exit();
+  }
+
+  submit(e: any) {
+    e.preventDefault();
+    const data = {
+      ...this.data,
+      username: this.username,
+      password: this.password
+    };
+    this.action(data);
   }
 
   render() {
@@ -156,7 +175,7 @@ export class Wizard {
       <ion-header>
         <ion-toolbar>
           <ion-buttons slot="start">
-            <ion-back-button onClick={e => this.outSignup(e)}defaultHref="/"></ion-back-button>
+            <ion-back-button onClick={e => this.unload(e)}defaultHref="/"></ion-back-button>
           </ion-buttons>
           <ion-title>Registro</ion-title>
         </ion-toolbar>
@@ -168,11 +187,11 @@ export class Wizard {
           <img src="assets/img/appicon.svg" alt="Ionic Logo"/>
         </div>
 
-        <form method="POST" novalidate>
+        <form method="POST" action="#">
           <ion-list no-lines>{this.wizard()}</ion-list>
 
           <div padding>
-            {this.step === 3 && <ion-button onClick={(e) => this.onSignup(e)} type="submit" expand="block">Registrar</ion-button>}
+            {this.step === 3 && <ion-button onClick={(e) => this.submit(e)} expand="block">Registrar</ion-button>}
             {this.step < 3 && <ion-button onClick={(e) => this.next(e)}>Próximo</ion-button>}
           </div>
         </form>

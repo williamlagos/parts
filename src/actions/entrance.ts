@@ -12,6 +12,16 @@ export interface SkipIntroAction {
   skipIntro: number;
 }
 
+export interface OpenRegisterAction {
+  type: TypeKeys.OPEN_REGISTER;
+  registerOpened: boolean;
+}
+
+export interface CloseRegisterAction {
+  type: TypeKeys.CLOSE_REGISTER;
+  registerOpened: boolean;
+}
+
 export const appSetName = (name: string) => async (dispatch: any, _getState: any) => {
   Backend.setDomain('http://localhost:3000');
   const u = {
@@ -44,5 +54,19 @@ export const toggleIntro = (option: boolean) => async (dispatch: any, _getState:
   return dispatch({
     type: TypeKeys.SKIP_INTRO,
     skipIntro: + option
+  });
+};
+
+export const openRegister = () => async (dispatch: any, _getState: any) => {
+  return dispatch({
+    type: TypeKeys.OPEN_REGISTER,
+    registerOpened: true
+  });
+};
+
+export const closeRegister = () => async (dispatch: any, _getState: any) => {
+  return dispatch({
+    type: TypeKeys.CLOSE_REGISTER,
+    registerOpened: false
   });
 };

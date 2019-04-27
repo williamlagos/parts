@@ -17,8 +17,12 @@ export namespace Components {
   interface AppRoot {}
   interface AppRootAttributes extends StencilHTMLAttributes {}
 
-  interface GenericCarousel {}
-  interface GenericCarouselAttributes extends StencilHTMLAttributes {}
+  interface GenericCarousel {
+    'action': any;
+  }
+  interface GenericCarouselAttributes extends StencilHTMLAttributes {
+    'action'?: any;
+  }
 
   interface AppEntrance {}
   interface AppEntranceAttributes extends StencilHTMLAttributes {
@@ -76,8 +80,14 @@ export namespace Components {
   }
   interface PageTabsAttributes extends StencilHTMLAttributes {}
 
-  interface GenericWizard {}
-  interface GenericWizardAttributes extends StencilHTMLAttributes {}
+  interface GenericWizard {
+    'action': any;
+    'exit': any;
+  }
+  interface GenericWizardAttributes extends StencilHTMLAttributes {
+    'action'?: any;
+    'exit'?: any;
+  }
 }
 
 declare global {

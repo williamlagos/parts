@@ -16,7 +16,7 @@ const { SplashScreen } = Plugins;
 export class AppRoot {
   @State() loggedIn = false;
   @State() toggled = false;
-  hasSeenTutorial = false;
+  // hasSeenTutorial = false;
 
   @Element() el: HTMLElement;
 
@@ -55,9 +55,9 @@ export class AppRoot {
 
   async componentWillLoad() {
     this.store.setStore(configureStore({}));
-    this.hasSeenTutorial = this.isServer
+    /*this.hasSeenTutorial = this.isServer
       ? true
-      : await UserData.checkHasSeenTutorial();
+      : await UserData.checkHasSeenTutorial();*/
   }
 
   async componentDidLoad() {
