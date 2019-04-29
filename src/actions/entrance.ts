@@ -2,6 +2,9 @@ import { Storage } from '../providers/storage';
 import { TypeKeys } from '../actions/index';
 import { Backend } from '../providers/backend';
 
+// const endpoint = 'http://localhost:3000';
+const endpoint = 'https://api.fretefacil.net';
+
 export interface AppSetNameAction {
   type: TypeKeys.APP_SET_NAME;
   name: string;
@@ -28,7 +31,7 @@ export interface RegisterAction {
 }
 
 export const appSetName = (name: string) => async (dispatch: any, _getState: any) => {
-  Backend.setDomain('http://localhost:3000');
+  Backend.setDomain(endpoint);
   const u = {
     user: {
       email: name,
@@ -79,7 +82,7 @@ export const closeRegister = () => async (dispatch: any, _getState: any) => {
 export const register = (data: any) => async (dispatch: any, _getState: any) => {
   const file = data.file;
   delete data.file;
-  Backend.setDomain('http://localhost:3000');
+  Backend.setDomain(endpoint);
   const d = await (await Backend.createUser({ 'user': data })).json();
   /*const formData = new FormData();
   formData.append('files[]', file);
