@@ -5,13 +5,15 @@ interface AppState {
   name: string;
   skipIntro: number;
   registerOpened: boolean;
+  option: number;
 }
 
 const prepareState = () => {
   const defaultState = {
     name: 'Stencil Redux',
     skipIntro: false,
-    registerOpened: false
+    registerOpened: false,
+    option: -1
   };
   return {
     ...defaultState,
@@ -32,6 +34,9 @@ const entrance = (state: AppState = prepareState(), action: ActionTypes) => {
     }
     case TypeKeys.CLOSE_REGISTER: {
       return { ...state, registerOpened: action.registerOpened };
+    }
+    case TypeKeys.REGISTER: {
+      return { ...state, option: action.option };
     }
   }
 

@@ -2,6 +2,7 @@ import {
   AppSetNameAction,
   CloseRegisterAction,
   OpenRegisterAction,
+  RegisterAction,
   SkipIntroAction
 } from './entrance';
 
@@ -16,6 +17,7 @@ export type ActionTypes =
   | SkipIntroAction
   | OpenRegisterAction
   | CloseRegisterAction
+  | RegisterAction
 ;
 
 export enum TypeKeys {
@@ -24,5 +26,6 @@ export enum TypeKeys {
   APP_SET_NAME = 'APP_SET_NAME',
   SKIP_INTRO = 'SKIP_INTRO',
   OPEN_REGISTER = 'OPEN_REGISTER',
-  CLOSE_REGISTER = 'CLOSE_REGISTER'
+  CLOSE_REGISTER = 'CLOSE_REGISTER',
+  REGISTER = 'REGISTER'
 }

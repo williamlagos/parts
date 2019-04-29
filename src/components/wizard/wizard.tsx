@@ -23,9 +23,14 @@ export class Wizard {
 
   @Prop() exit: any;
   @Prop() action: any;
+  @Prop() images: any;
 
   handleInput(ev: any) {
     this.data[ev.target.name] = ev.target.value;
+  }
+
+  handleFile(file: any) {
+    this.data['file'] = file;
   }
 
   handleUsername(ev: any) {
@@ -95,19 +100,24 @@ export class Wizard {
             <ion-label position="stacked" color="primary">Digite seu telefone para contato</ion-label>
             <ion-input name="phone" onInput={(ev) => this.handleInput(ev)}></ion-input>
           </ion-item>,
+          <ion-item>
+            <ion-label position="stacked" color="primary">Digite seu e-mail para contato</ion-label>
+            <ion-input name="email" onInput={(ev) => this.handleInput(ev)}></ion-input>
+          </ion-item>
         ];
       case 2:
         return [
           <ion-item>
             <ion-label position="stacked" color="primary">Informações adicionais</ion-label>
-            <ion-textarea rows={4} onInput={(ev) => this.handleInput(ev)}></ion-textarea>
+            <ion-textarea name="info" rows={4} onInput={(ev) => this.handleInput(ev)}></ion-textarea>
           </ion-item>,
           <ion-item>
-            <ion-label position="stacked" color="primary">Insira imagens</ion-label>,
-            <ion-button href="#" onClick={() => document.getElementById('file').click()}>
+            <ion-label position="stacked" color="primary">Insira imagens</ion-label>
+            <image-uploader send={(file: any) => this.handleFile(file)} id="file"/>
+            {/*<ion-button href="#" onClick={() => document.getElementById('file').click()}>
               <span>Selecionar imagens</span>
-              <input type="file" id="file" class="upload" style={ {  'display': 'none' } } />
-            </ion-button>
+              <input type="file" name="files[]" id="file" accept="image/*" class="image-upload__input" onChange={($event: any) => this.handleFile($event.target.files)} style={{ 'display': 'none' }}/>
+            </ion-button>*/}
           </ion-item>
         ];
       case 3:
@@ -134,7 +144,7 @@ export class Wizard {
           </ion-text>,
           <ion-item>
             <ion-label position="stacked" color="primary">Digite sua senha novamente</ion-label>
-            <ion-input name="scpassword"></ion-input>
+            <ion-input type="password" name="scpassword"></ion-input>
           </ion-item>
         ];
 
@@ -164,8 +174,8 @@ export class Wizard {
     e.preventDefault();
     const data = {
       ...this.data,
-      username: this.username,
-      password: this.password
+      username: this.username.value,
+      password: this.password.value
     };
     this.action(data);
   }

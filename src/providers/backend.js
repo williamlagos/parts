@@ -18,15 +18,8 @@ class Backend {
     let queryUrl = url;
 
     if (keys.length > 0) {
-      queryUrl = url + '?' + _qs.default.stringify(queryParameters);
+      queryUrl = url + '?' + _qs.stringify(queryParameters);
     }
-    // let queryUrl = url+(keys.length > 0 ? '?' + (keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&')) : '')
-    // console.log(method);
-    // console.log(url);
-    // console.log(body);
-    // console.log(queryParameters);
-    // console.log(form);
-    // console.log(config);
 
     config.method = method;
     config.headers = {
@@ -36,10 +29,24 @@ class Backend {
     if (body) {
       config.body = JSON.stringify(body);
     } else if (form) {
-      config.body = _qs.default.stringify(form);
+      config.body = _qs.stringify(form);
     }
     return fetch(queryUrl, config);
   };
+
+  static multipartRequest(method, url, form, config) {
+    var formData  = new FormData();
+    formData.append('files[]', form['files']);
+    let options = {
+      method: method,
+      headers: {
+        // 'content-type': 'multipart/form-data; boundary=---011000010111000001101001',
+        'x-access-token': config.headers['x-access-token']
+      },
+      body: formData
+    };
+    return fetch(url, options);
+  }
 
   /**
    *
@@ -72,18 +79,19 @@ class Backend {
     return Backend.request('post', domain + path, body, queryParameters, form, config);
   };
 
-  static authenticateUser_RAW_URL() {
-    return '/user/authenticate';
-  };
-
-  static authenticateUser_TYPE() {
-    return 'post';
-  };
-
-  static authenticateUserURL(parameters = {}) {
-    let queryParameters = {};
+  static createUser(parameters = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
-    let path = '/user/authenticate';
+    const config = parameters.$config || {
+      headers: {}
+    };
+    let path = '/user/create';
+    let body;
+    let queryParameters = {};
+    let form = {};
+
+    if (parameters['user'] !== undefined) {
+      body = parameters['user'];
+    }
 
     if (parameters.$queryParameters) {
       Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
@@ -91,8 +99,38 @@ class Backend {
       });
     }
 
-    let keys = Object.keys(queryParameters);
-    return domain + path + (keys.length > 0 ? '?' + keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&') : '');
+    return Backend.request('post', domain + path, body, queryParameters, form, config);
+  };
+
+  static addPicture(parameters = {}) {
+    const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
+    const config = parameters.$config || {
+      headers: {}
+    };
+    let path = '/picture/save';
+    let body;
+    let queryParameters = {};
+    let form = {};
+
+    if (parameters['xAccessToken'] !== undefined) {
+      config.headers['x-access-token'] = parameters['xAccessToken'];
+    }
+
+    if (parameters['xAccessToken'] === undefined) {
+      return Promise.reject(new Error('Missing required  parameter: xAccessToken'));
+    }
+
+    if (parameters['files'] !== undefined) {
+      form['files'] = parameters['files'];
+    }
+
+    if (parameters.$queryParameters) {
+      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+        queryParameters[parameterName] = parameters.$queryParameters[parameterName];
+      });
+    }
+
+    return Backend.multipartRequest('POST', domain + path, form, config);
   };
 }
 

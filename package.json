@@ -1,8 +1,8 @@
 {
-  "name": "ionic-stencil-conference-app",
+  "name": "clipper",
   "private": true,
-  "version": "0.0.1",
-  "description": "Stencil App Starter",
+  "version": "0.5.0",
+  "description": "Frete Facil Transition App",
   "scripts": {
     "build": "stencil build",
     "start": "stencil build --dev --watch --serve",

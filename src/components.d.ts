@@ -7,9 +7,12 @@
 
 import '@stencil/core';
 
-import '@stencil/redux';
 import '@ionic/core';
 import 'ionicons';
+import '@stencil/redux';
+import {
+  EventEmitter,
+} from '@stencil/core';
 
 
 export namespace Components {
@@ -80,13 +83,23 @@ export namespace Components {
   }
   interface PageTabsAttributes extends StencilHTMLAttributes {}
 
+  interface ImageUploader {
+    'send': any;
+  }
+  interface ImageUploaderAttributes extends StencilHTMLAttributes {
+    'onOnUploadCompleted'?: (event: CustomEvent<Blob>) => void;
+    'send'?: any;
+  }
+
   interface GenericWizard {
     'action': any;
     'exit': any;
+    'images': any;
   }
   interface GenericWizardAttributes extends StencilHTMLAttributes {
     'action'?: any;
     'exit'?: any;
+    'images'?: any;
   }
 }
 
@@ -106,6 +119,7 @@ declare global {
     'PageSpeakerList': Components.PageSpeakerList;
     'PageSupport': Components.PageSupport;
     'PageTabs': Components.PageTabs;
+    'ImageUploader': Components.ImageUploader;
     'GenericWizard': Components.GenericWizard;
   }
 
@@ -124,6 +138,7 @@ declare global {
     'page-speaker-list': Components.PageSpeakerListAttributes;
     'page-support': Components.PageSupportAttributes;
     'page-tabs': Components.PageTabsAttributes;
+    'image-uploader': Components.ImageUploaderAttributes;
     'generic-wizard': Components.GenericWizardAttributes;
   }
 
@@ -212,6 +227,12 @@ declare global {
     new (): HTMLPageTabsElement;
   };
 
+  interface HTMLImageUploaderElement extends Components.ImageUploader, HTMLStencilElement {}
+  var HTMLImageUploaderElement: {
+    prototype: HTMLImageUploaderElement;
+    new (): HTMLImageUploaderElement;
+  };
+
   interface HTMLGenericWizardElement extends Components.GenericWizard, HTMLStencilElement {}
   var HTMLGenericWizardElement: {
     prototype: HTMLGenericWizardElement;
@@ -233,6 +254,7 @@ declare global {
     'page-speaker-list': HTMLPageSpeakerListElement
     'page-support': HTMLPageSupportElement
     'page-tabs': HTMLPageTabsElement
+    'image-uploader': HTMLImageUploaderElement
     'generic-wizard': HTMLGenericWizardElement
   }
 
@@ -251,6 +273,7 @@ declare global {
     'page-speaker-list': HTMLPageSpeakerListElement;
     'page-support': HTMLPageSupportElement;
     'page-tabs': HTMLPageTabsElement;
+    'image-uploader': HTMLImageUploaderElement;
     'generic-wizard': HTMLGenericWizardElement;
   }
 

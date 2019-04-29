@@ -1,7 +1,7 @@
 import { Component, Event, EventEmitter, Prop, State } from '@stencil/core';
 import { UserData } from '../../providers/user-data';
 
-import { appSetName, closeRegister, openRegister, toggleIntro } from '../../actions/entrance';
+import { appSetName, closeRegister, openRegister, register, toggleIntro } from '../../actions/entrance';
 
 import { Action, Store } from '@stencil/redux';
 
@@ -26,6 +26,7 @@ export class Entrance {
   @Prop({ context: 'store' }) store: Store;
   @Event() userDidLogIn: EventEmitter;
 
+  register: Action;
   appSetName: Action;
   toggleIntro: Action;
   openRegister: Action;
@@ -40,7 +41,8 @@ export class Entrance {
       appSetName,
       toggleIntro,
       openRegister,
-      closeRegister
+      closeRegister,
+      register
     });
   }
 
@@ -198,11 +200,6 @@ export class Entrance {
       </ion-content>
 
     ];
-  }
-
-  register(data: any) {
-    console.log(data);
-    return data;
   }
 
   render() {
