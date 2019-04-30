@@ -2,8 +2,8 @@ import { Storage } from '../providers/storage';
 import { TypeKeys } from '../actions/index';
 import { Backend } from '../providers/backend';
 
-const endpoint = 'http://localhost:3000';
-// const endpoint = 'https://api.fretefacil.net';
+// const endpoint = 'http://localhost:3000';
+const endpoint = 'https://api.fretefacil.net';
 
 export interface SetTokenAction {
   type: TypeKeys.SET_TOKEN;
