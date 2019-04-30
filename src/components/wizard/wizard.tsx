@@ -31,7 +31,6 @@ export class Wizard {
 
   handleFile(files: FileList) {
     this.data['files'] = files;
-    console.log(this.data['files']);
   }
 
   handleUsername(ev: any) {
@@ -82,16 +81,8 @@ export class Wizard {
       case 2:
         return [
           <ion-item>
-            <ion-label position="stacked" color="primary">Informações adicionais</ion-label>
-            <ion-textarea name="info" rows={4} onInput={(ev) => this.handleInput(ev)}></ion-textarea>
-          </ion-item>,
-          <ion-item>
             <ion-label position="stacked" color="primary">Insira imagens</ion-label>
             <image-uploader send={(file: any) => this.handleFile(file)} id="file"/>
-            {/*<ion-button href="#" onClick={() => document.getElementById('file').click()}>
-              <span>Selecionar imagens</span>
-              <input type="file" name="files[]" id="file" accept="image/*" class="image-upload__input" onChange={($event: any) => this.handleFile($event.target.files)} style={{ 'display': 'none' }}/>
-            </ion-button>*/}
           </ion-item>
         ];
       case 3:
@@ -125,6 +116,13 @@ export class Wizard {
             <ion-input type="password" name="scpassword"></ion-input>
           </ion-item>
         ];
+      case 4:
+        return [
+          <ion-item>
+            <ion-label position="stacked" color="primary">Informações adicionais</ion-label>
+            <ion-textarea name="info" rows={4} onInput={(ev) => this.handleInput(ev)}></ion-textarea>
+          </ion-item>,
+        ];
 
     }
   }
@@ -132,7 +130,7 @@ export class Wizard {
   next(e: any) {
     e.preventDefault();
     this.step += 1;
-    this.step %= 4;
+    this.step %= 5;
   }
 
   async onSignup(e: any) {
@@ -179,8 +177,8 @@ export class Wizard {
           <ion-list no-lines>{this.wizard()}</ion-list>
 
           <div padding>
-            {this.step === 3 && <ion-button onClick={(e) => this.submit(e)} expand="block">Registrar</ion-button>}
-            {this.step < 3 && <ion-button onClick={(e) => this.next(e)}>Próximo</ion-button>}
+            {this.step === 4 && <ion-button onClick={(e) => this.submit(e)} expand="block">Registrar</ion-button>}
+            {this.step < 4 && <ion-button onClick={(e) => this.next(e)}>Próximo</ion-button>}
           </div>
         </form>
 

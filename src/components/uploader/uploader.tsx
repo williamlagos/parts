@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Prop } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Prop, State } from '@stencil/core';
 
 const MAX_UPLOAD_SIZE = 1024; // bytes
 const ALLOWED_FILE_TYPES = 'image.*';
@@ -12,6 +12,9 @@ export class MyComponent {
 
   @Element() private elementHost: HTMLElement;
   @Event() onUploadCompleted: EventEmitter<Blob>;
+  @State() previews: FileList;
+  @State() index = 0;
+  @State() list = [];
   @Prop() send: any;
 
   onInputChange(files: FileList) {
@@ -32,6 +35,11 @@ export class MyComponent {
         // upload image
         this.uploadImage(imageFile);
       }
+      this.list = [];
+      this.index = 0;
+      this.previews = files;
+      for (let i = 0; i < files.length; i++) this.list.push(i);
+      // console.log(this.list);
       this.send(files);
     } else {
       console.error(files.length === 0 ? 'NO IMAGE UPLOADED' : 'YOU CAN ONLY UPLOAD ONE IMAGE AT THE TIME');
@@ -45,19 +53,22 @@ export class MyComponent {
     const reader = new FileReader();
 
     reader.onloadstart = () => {
-      console.log('started uploading');
+      // console.log('started uploading');
     };
 
     reader.onload = () => {
-      const imagePreviewContainer: HTMLElement = this.elementHost.shadowRoot.querySelector('#image-preview');
+      let imagePreviewContainer: HTMLElement;
+      // console.log(this.index);
+      imagePreviewContainer = this.elementHost.shadowRoot.querySelector('#preview' + this.index);
       imagePreviewContainer.style.backgroundImage = `url(${reader.result})`;
+      this.index++;
 
-      console.log('uploading finished, emitting an image blob to the outside world');
+      // console.log('uploading finished, emitting an image blob to the outside world');
       this.onUploadCompleted.emit(file);
     };
 
     reader.onloadend = () => {
-      console.log('upload finished');
+      // console.log('upload finished');
     };
 
     reader.onerror = (err) => {
@@ -81,10 +92,18 @@ export class MyComponent {
         <input type="file" name="files[]" id="file" accept="image/*" class="image-upload__input"
           onChange={($event: any) => this.onInputChange($event.target.files)} multiple />
       </div>
-
-      <div class="image-upload__preview">
-        <div id="image-preview"></div>
-      </div>
+      {this.list.length > 0 ?
+        this.list.map((preview: any) => {
+          return (
+            <div class="image-upload__multiple-preview">
+              <div id={ 'preview' + preview }></div>
+            </div>
+          );
+        }) :
+        <div class="image-upload__multiple-preview">
+          <div id={ 'preview0' }></div>
+        </div>
+      }
     </div>;
   }
 }

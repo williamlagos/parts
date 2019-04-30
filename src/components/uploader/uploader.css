@@ -1,6 +1,13 @@
+image-uploader {
+  min-width:100%;
+}
+
 .image-upload {
   position: relative;
-  max-width: 205px;
+  /* max-width: 205px; */
+  min-width: 100%;
+  display: flex;
+  flex-wrap: wrap;
   margin: 50px auto;
 }
 
@@ -69,10 +76,19 @@ label:active{
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
 }
 
-.image-upload__preview > div {
+.image-upload__multiple-preview {
+  width: 128px;
+  height: 128px;
+  /* border-radius: 100%; */
+  border: 6px solid #F8F8F8;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+  margin: 5px;
+}
+
+.image-upload__preview > div, .image-upload__multiple-preview > div {
   height: 100%;
   width: 100%;
-  border-radius: 100%;
+  /* border-radius: 100%; */
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
