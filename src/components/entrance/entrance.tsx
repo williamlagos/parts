@@ -1,7 +1,7 @@
-import { Component, Event, EventEmitter, Prop, State } from '@stencil/core';
-import { UserData } from '../../providers/user-data';
+import { Component, Prop, State } from '@stencil/core';
+// import { UserData } from '../../providers/user-data';
 
-import { appSetName, closeRegister, openRegister, register, toggleIntro } from '../../actions/entrance';
+import { closeRegister, openRegister, register, setToken, toggleIntro } from '../../actions/entrance';
 
 import { Action, Store } from '@stencil/redux';
 
@@ -24,8 +24,9 @@ export class Entrance {
   @State() submitted = false;
   @State() registerOpened = false;
   @Prop({ context: 'store' }) store: Store;
-  @Event() userDidLogIn: EventEmitter;
+  // @Event() userDidLogIn: EventEmitter;
 
+  setToken: Action;
   register: Action;
   appSetName: Action;
   toggleIntro: Action;
@@ -38,7 +39,7 @@ export class Entrance {
       return { name, skipIntro, registerOpened };
     });
     this.store.mapDispatchToProps(this, {
-      appSetName,
+      setToken,
       toggleIntro,
       openRegister,
       closeRegister,
@@ -57,44 +58,24 @@ export class Entrance {
   handlePassword(ev: any) {
     this.validatePassword();
     this.password.value = ev.target.value;
-    this.password = {
-      ...this.password,
-      value: ev.target.value
-    };
+    this.password = { ...this.password, value: ev.target.value };
   }
 
   validateUsername() {
     if (this.username.value && this.username.value.length > 0) {
-      this.username = {
-        ...this.username,
-        valid: true
-      };
-
+      this.username = { ...this.username, valid: true };
       return;
     }
-
-    this.username = {
-      ...this.username,
-      valid: false
-    };
+    this.username = { ...this.username, valid: false };
   }
 
   validatePassword() {
     if (this.password.value && this.password.value.length > 0) {
       this.password.valid = true;
-
-      this.password = {
-        ...this.password,
-        valid: true
-      };
-
+      this.password = { ...this.password, valid: true };
       return;
     }
-
-    this.password = {
-      ...this.password,
-      valid: false
-    };
+    this.password = { ...this.password, valid: false };
   }
 
   async onRegisterSignup(e: any) {
@@ -106,29 +87,26 @@ export class Entrance {
     this.submitted = true;
     this.registerOpened = false;
 
-    if (this.password.valid && this.username.valid) {
+    /*if (this.password.valid && this.username.valid) {
       UserData.signup(this.username.value);
-    }
+    }*/
   }
 
   async onLogin(e: any) {
     e.preventDefault();
-    // const navCtrl: HTMLIonRouterElement = await (this.nav as any).componentOnReady();
-
-    console.log('Clicked login');
     this.validatePassword();
     this.validateUsername();
 
     this.submitted = true;
 
     console.log(this.name);
-    this.appSetName('lpachecoquevedo@gmail.com');
     console.log(this.name);
 
     if (this.password.valid && this.username.valid) {
-      await UserData.login(this.username.value);
+      // await UserData.login(this.username.value);
+      this.setToken(this.username.value, this.password.value);
 
-      this.userDidLogIn.emit({ loginStatus: true });
+      // this.userDidLogIn.emit({ loginStatus: true });
       // console.log(navCtrl);
       // navCtrl.push('/schedule');
     }
@@ -163,7 +141,7 @@ export class Entrance {
               <form novalidate="true" onSubmit={(e) => this.onLogin(e)}>
                 <ion-list no-lines>
                   <ion-item>
-                    <ion-label position="stacked" color="primary">Usuário</ion-label>
+                    <ion-label position="stacked" color="primary">E-mail</ion-label>
                     <ion-input name="username" type="text" value={this.username.value} onInput={(ev) => this.handleUsername(ev)} spellcheck={false} autocapitalize="off" required></ion-input>
                   </ion-item>
 

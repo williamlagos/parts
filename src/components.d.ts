@@ -7,9 +7,9 @@
 
 import '@stencil/core';
 
+import '@stencil/redux';
 import '@ionic/core';
 import 'ionicons';
-import '@stencil/redux';
 import {
   EventEmitter,
 } from '@stencil/core';
@@ -28,9 +28,7 @@ export namespace Components {
   }
 
   interface AppEntrance {}
-  interface AppEntranceAttributes extends StencilHTMLAttributes {
-    'onUserDidLogIn'?: (event: CustomEvent) => void;
-  }
+  interface AppEntranceAttributes extends StencilHTMLAttributes {}
 
   interface PageAbout {}
   interface PageAboutAttributes extends StencilHTMLAttributes {}

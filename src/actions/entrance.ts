@@ -2,12 +2,17 @@ import { Storage } from '../providers/storage';
 import { TypeKeys } from '../actions/index';
 import { Backend } from '../providers/backend';
 
-// const endpoint = 'http://localhost:3000';
-const endpoint = 'https://api.fretefacil.net';
+const endpoint = 'http://localhost:3000';
+// const endpoint = 'https://api.fretefacil.net';
 
-export interface AppSetNameAction {
-  type: TypeKeys.APP_SET_NAME;
-  name: string;
+export interface SetTokenAction {
+  type: TypeKeys.SET_TOKEN;
+  token: string;
+}
+
+export interface RevokeTokenAction {
+  type: TypeKeys.REVOKE_TOKEN;
+  token: string;
 }
 
 export interface SkipIntroAction {
@@ -30,30 +35,22 @@ export interface RegisterAction {
   option: number;
 }
 
-export const appSetName = (name: string) => async (dispatch: any, _getState: any) => {
+export const setToken = (email: string, password: string) => async (dispatch: any, _getState: any) => {
   Backend.setDomain(endpoint);
-  const u = {
-    user: {
-      email: name,
-      password: '123456'
-    }
-  };
+  const u = { user: { email, password } };
   const d = await (await Backend.authenticateUser(u)).json();
-  console.log(d);
-  /*fetch('http://localhost:3000/user/authenticate/', {
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    method: 'POST',
-    body: JSON.stringify({
-      email: 'lpachecoquevedo@gmail.com',
-      password: '123456'
-    })
-  }).then((response) => console.log(response));*/
+  Storage.setItem('token', String(d.token));
   return dispatch({
-    type: TypeKeys.APP_SET_NAME,
-    name // : d
+    type: TypeKeys.SET_TOKEN,
+    token: d.token
+  });
+};
+
+export const revokeToken = () => (dispatch: any, _getState: any) => {
+  Storage.removeItem('token');
+  return dispatch({
+    type: TypeKeys.REVOKE_TOKEN,
+    token: ''
   });
 };
 
@@ -84,18 +81,7 @@ export const register = (data: any) => async (dispatch: any, _getState: any) => 
   delete data.file;
   Backend.setDomain(endpoint);
   const d = await (await Backend.createUser({ 'user': data })).json();
-  /*const formData = new FormData();
-  formData.append('files[]', file);
-  await fetch('http://localhost:3000/picture/save', {
-    method: 'POST',
-    headers: {
-      'x-access-token': d.token
-    },
-    body: formData
-  });*/
   await (await Backend.addPicture({ 'xAccessToken': d.token, 'files': file })); // .json();
-  // console.log(d);
-  // console.log(f);
   const option = 0;
   dispatch({ type: TypeKeys.REGISTER, option });
   return dispatch({

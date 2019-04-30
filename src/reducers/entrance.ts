@@ -2,7 +2,7 @@ import { Storage } from '../providers/storage';
 import { ActionTypes, TypeKeys } from '../actions/index';
 
 interface AppState {
-  name: string;
+  token: string;
   skipIntro: number;
   registerOpened: boolean;
   option: number;
@@ -10,21 +10,25 @@ interface AppState {
 
 const prepareState = () => {
   const defaultState = {
-    name: 'Stencil Redux',
+    token: '',
     skipIntro: false,
     registerOpened: false,
     option: -1
   };
   return {
     ...defaultState,
-    skipIntro: + Storage.getItem('skipIntro')
+    token: Storage.getItem('token') || defaultState.token,
+    skipIntro: + Storage.getItem('skipIntro') || + defaultState.skipIntro
   };
 };
 
 const entrance = (state: AppState = prepareState(), action: ActionTypes) => {
   switch (action.type) {
-    case TypeKeys.APP_SET_NAME: {
-      return { ...state, name: action.name };
+    case TypeKeys.SET_TOKEN: {
+      return { ...state, token: action.token };
+    }
+    case TypeKeys.REVOKE_TOKEN: {
+      return { ...state, token: action.token };
     }
     case TypeKeys.SKIP_INTRO: {
       return { ...state, skipIntro: action.skipIntro };

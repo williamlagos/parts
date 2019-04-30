@@ -99,10 +99,6 @@ export class Wizard {
           <ion-item>
             <ion-label position="stacked" color="primary">Digite seu telefone para contato</ion-label>
             <ion-input name="phone" onInput={(ev) => this.handleInput(ev)}></ion-input>
-          </ion-item>,
-          <ion-item>
-            <ion-label position="stacked" color="primary">Digite seu e-mail para contato</ion-label>
-            <ion-input name="email" onInput={(ev) => this.handleInput(ev)}></ion-input>
           </ion-item>
         ];
       case 2:
@@ -123,7 +119,11 @@ export class Wizard {
       case 3:
         return [
           <ion-item>
-            <ion-label position="stacked" color="primary">Digite o usuário</ion-label>
+            <ion-label position="stacked" color="primary">Digite seu e-mail para o login</ion-label>
+            <ion-input name="email" onInput={(ev) => this.handleInput(ev)}></ion-input>
+          </ion-item>,
+          <ion-item>
+            <ion-label position="stacked" color="primary">Digite um nome de usuário</ion-label>
             <ion-input name="username" type="text" value={this.username.value} onInput={(ev) => this.handleUsername(ev)} required>
             </ion-input>
           </ion-item>,

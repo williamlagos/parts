@@ -1,8 +1,9 @@
 import {
-  AppSetNameAction,
   CloseRegisterAction,
   OpenRegisterAction,
   RegisterAction,
+  RevokeTokenAction,
+  SetTokenAction,
   SkipIntroAction
 } from './entrance';
 
@@ -13,17 +14,19 @@ export interface NullAction {
 // Keep this type updated with each known action
 export type ActionTypes =
   | NullAction
-  | AppSetNameAction
+  | SetTokenAction
   | SkipIntroAction
   | OpenRegisterAction
   | CloseRegisterAction
   | RegisterAction
+  | RevokeTokenAction
 ;
 
 export enum TypeKeys {
   NULL = 'NULL',
   ERROR = 'ERROR',
-  APP_SET_NAME = 'APP_SET_NAME',
+  SET_TOKEN = 'SET_TOKEN',
+  REVOKE_TOKEN = 'REVOKE_TOKEN',
   SKIP_INTRO = 'SKIP_INTRO',
   OPEN_REGISTER = 'OPEN_REGISTER',
   CLOSE_REGISTER = 'CLOSE_REGISTER',

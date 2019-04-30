@@ -1,11 +1,13 @@
 import '@ionic/core';
 
-import { Component, Element, Listen, Prop, State } from '@stencil/core';
-import { UserData } from '../../providers/user-data';
+import { Component, Element, Prop, State } from '@stencil/core';
+// import { UserData } from '../../providers/user-data';
 import { Plugins } from '@capacitor/core';
 
-import { Store } from '@stencil/redux';
+import { Action, Store } from '@stencil/redux';
 import { configureStore } from '../../store/index';
+
+import { revokeToken } from '../../actions/entrance';
 
 const { SplashScreen } = Plugins;
 
@@ -14,9 +16,8 @@ const { SplashScreen } = Plugins;
   styleUrl: 'app-root.css'
 })
 export class AppRoot {
-  @State() loggedIn = false;
+  @State() token: string;
   @State() toggled = false;
-  // hasSeenTutorial = false;
 
   @Element() el: HTMLElement;
 
@@ -24,6 +25,8 @@ export class AppRoot {
   @Prop({ context: 'store' }) store: Store;
   @Prop({ connect: 'ion-nav' }) nav: HTMLIonNavElement;
   @Prop({ connect: 'page-tabs' }) tabs: HTMLPageTabsElement;
+
+  revokeToken: Action;
 
   appPages = [
     {
@@ -55,9 +58,11 @@ export class AppRoot {
 
   async componentWillLoad() {
     this.store.setStore(configureStore({}));
-    /*this.hasSeenTutorial = this.isServer
-      ? true
-      : await UserData.checkHasSeenTutorial();*/
+    this.store.mapStateToProps(this, (state) => {
+      const { entrance: { token } } = state;
+      return { token };
+    });
+    this.store.mapDispatchToProps(this, { revokeToken });
   }
 
   async componentDidLoad() {
@@ -76,24 +81,22 @@ export class AppRoot {
     await tabCtrl.select(tab);
   }
 
-  async checkLoginStatus() {
-    const loggedIn = this.loggedIn = await UserData.isLoggedIn();
-    return loggedIn;
+  checkLoginStatus() {
+    // Checks if the token is empty for login status
+    return Boolean(this.token);
   }
 
-  async logout() {
-    await UserData.logout();
-    this.loggedIn = false;
-    // const navCtrl: HTMLIonRouterElement = await (this.nav as any).componentOnReady();
-    // navCtrl.push('/login', 'root');
+  logout() {
+    // Dispatches an action to revoke the token in state
+    this.revokeToken();
   }
 
 
-  @Listen('userDidLogIn')
+  /*@Listen('userDidLogIn')
   @Listen('userDidLogOut')
   updateLoggedInStatus(loggedEvent: any) {
     this.loggedIn = loggedEvent.detail.loginStatus;
-  }
+  }*/
 
   renderRouter() {
     return (
@@ -154,7 +157,7 @@ export class AppRoot {
               <ion-list-header>Conta</ion-list-header>
 
               <ion-menu-toggle autoHide={false}>
-                {this.loggedIn ? (
+                {this.checkLoginStatus() ? (
                   <ion-item href="#" onClick={(e) => this.showPage(e, 'account')}>
                     <ion-icon slot="start" name="person"></ion-icon>
                     <ion-label>Perfil</ion-label>
@@ -175,7 +178,7 @@ export class AppRoot {
               </ion-menu-toggle>
 
               <ion-menu-toggle autoHide={false}>
-                {this.loggedIn ? (
+                {this.checkLoginStatus() ? (
                   <ion-item onClick={() => this.logout()} button>
                     <ion-icon slot="start" name="log-out"></ion-icon>
                     <ion-label>Sair</ion-label>
@@ -208,19 +211,16 @@ export class AppRoot {
 
   async showPage(event: any, page: string) {
     event.preventDefault();
-    // this.toggled = !this.toggled;
-    // const navCtrl: HTMLIonNavElement = (this.nav as any).componentOnReady();
     const navCtrl = document.querySelector('ion-nav');
     await navCtrl.setRoot('page-tabs');
     await navCtrl.push('page-' + page);
-    // console.log('menu closed');
   }
 
   // TODO ion-menu should be split out
   render() {
     return (
       <ion-app>
-        {this.loggedIn ? [
+        {this.checkLoginStatus() ? [
           // this.renderRouter(),
           this.renderSplitPane()
         ] : (
