@@ -77,11 +77,11 @@ export const closeRegister = () => async (dispatch: any, _getState: any) => {
 };
 
 export const register = (data: any) => async (dispatch: any, _getState: any) => {
-  const file = data.file;
-  delete data.file;
+  const files = data.files;
+  delete data.files;
   Backend.setDomain(endpoint);
   const d = await (await Backend.createUser({ 'user': data })).json();
-  await (await Backend.addPicture({ 'xAccessToken': d.token, 'files': file })); // .json();
+  await (await Backend.addPicture({ 'xAccessToken': d.token, 'files': files })); // .json();
   const option = 0;
   dispatch({ type: TypeKeys.REGISTER, option });
   return dispatch({

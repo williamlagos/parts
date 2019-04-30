@@ -19,7 +19,7 @@ export class Wizard {
     value: ''
   };
 
-  @State() data = {};
+  @State() data = { };
 
   @Prop() exit: any;
   @Prop() action: any;
@@ -29,59 +29,37 @@ export class Wizard {
     this.data[ev.target.name] = ev.target.value;
   }
 
-  handleFile(file: any) {
-    this.data['file'] = file;
+  handleFile(files: FileList) {
+    this.data['files'] = files;
+    console.log(this.data['files']);
   }
 
   handleUsername(ev: any) {
     this.validateUsername();
-    this.username = {
-      ...this.username,
-      value: ev.target.value
-    };
+    this.username = { ...this.username, value: ev.target.value };
   }
 
   handlePassword(ev: any) {
     this.validatePassword();
     this.password.value = ev.target.value;
-    this.password = {
-      ...this.password,
-      value: ev.target.value
-    };
+    this.password = { ...this.password, value: ev.target.value };
   }
 
   validateUsername() {
     if (this.username.value && this.username.value.length > 0) {
-      this.username = {
-        ...this.username,
-        valid: true
-      };
-
+      this.username = { ...this.username, valid: true };
       return;
     }
-
-    this.username = {
-      ...this.username,
-      valid: false
-    };
+    this.username = { ...this.username, valid: false };
   }
 
   validatePassword() {
     if (this.password.value && this.password.value.length > 0) {
       this.password.valid = true;
-
-      this.password = {
-        ...this.password,
-        valid: true
-      };
-
+      this.password = { ...this.password, valid: true };
       return;
     }
-
-    this.password = {
-      ...this.password,
-      valid: false
-    };
+    this.password = { ...this.password, valid: false };
   }
 
   wizard() {

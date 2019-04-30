@@ -16,21 +16,23 @@ export class MyComponent {
 
   onInputChange(files: FileList) {
     // check if 1 image is uploaded
-    if (files.length === 1) {
-      const imageFile = files[0];
-      // check if the user isn't trying to upload a file larger then the MAX_UPLOAD_SIZE
-      if (!this.checkFileSize(imageFile.size)) {
-        console.error('Maximum file size exceeded. Max file size is: ' + MAX_UPLOAD_SIZE);
-        return false;
-      } else if (!this.checkFileType(imageFile.type)) {
-        // check if the user isn't trying to upload anything else then an image
-        console.error('File type is not allowed');
-        return false;
-      }
+    if (files.length >= 1) {
+      for (let i = 0; i < files.length; i++) {
+        const imageFile = files[i];
+        // check if the user isn't trying to upload a file larger then the MAX_UPLOAD_SIZE
+        if (!this.checkFileSize(imageFile.size)) {
+          console.error('Maximum file size exceeded. Max file size is: ' + MAX_UPLOAD_SIZE);
+          return false;
+        } else if (!this.checkFileType(imageFile.type)) {
+          // check if the user isn't trying to upload anything else then an image
+          console.error('File type is not allowed');
+          return false;
+        }
 
-      // upload image
-      this.uploadImage(imageFile);
-      this.send(imageFile);
+        // upload image
+        this.uploadImage(imageFile);
+      }
+      this.send(files);
     } else {
       console.error(files.length === 0 ? 'NO IMAGE UPLOADED' : 'YOU CAN ONLY UPLOAD ONE IMAGE AT THE TIME');
       return false;
@@ -77,7 +79,7 @@ export class MyComponent {
       <div class="image-upload__edit">
         <label htmlFor="file"></label>
         <input type="file" name="files[]" id="file" accept="image/*" class="image-upload__input"
-          onChange={($event: any) => this.onInputChange($event.target.files)} />
+          onChange={($event: any) => this.onInputChange($event.target.files)} multiple />
       </div>
 
       <div class="image-upload__preview">

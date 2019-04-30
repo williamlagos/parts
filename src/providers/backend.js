@@ -35,8 +35,11 @@ class Backend {
   };
 
   static multipartRequest(method, url, form, config) {
-    var formData  = new FormData();
-    formData.append('files[]', form['files']);
+    const formData  = new FormData();
+    const files = form['files'];
+    for(let i = 0; i < files.length; i++) {
+      formData.append('files[]', files[i]);
+    }
     let options = {
       method: method,
       headers: {
