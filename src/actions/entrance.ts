@@ -79,10 +79,12 @@ export const closeRegister = () => async (dispatch: any, _getState: any) => {
 export const register = (data: any) => async (dispatch: any, _getState: any) => {
   const files = data.files;
   delete data.files;
+  data['role'] = data.option === 0 ? 'CUSTOMER' : 'MERCHANT';
+  const option = data.option === 0 ? 0 : 1;
+  console.log(data);
   Backend.setDomain(endpoint);
   const d = await (await Backend.createUser({ 'user': data })).json();
   await (await Backend.addPicture({ 'xAccessToken': d.token, 'files': files })); // .json();
-  const option = 0;
   dispatch({ type: TypeKeys.REGISTER, option });
   return dispatch({
     type: TypeKeys.CLOSE_REGISTER,

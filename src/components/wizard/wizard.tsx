@@ -33,6 +33,12 @@ export class Wizard {
     this.data['files'] = files;
   }
 
+  handleAddress(ev: any) {
+    this.data['address'] = {
+      'street': ev.target.value
+    };
+  }
+
   handleUsername(ev: any) {
     this.validateUsername();
     this.username = { ...this.username, value: ev.target.value };
@@ -71,7 +77,7 @@ export class Wizard {
           </ion-item>,
           <ion-item>
             <ion-label position="stacked" color="primary">Digite seu endereço</ion-label>
-            <ion-input name="address" onInput={(ev) => this.handleInput(ev)}></ion-input>
+            <ion-input name="address" onInput={(ev) => this.handleAddress(ev)}></ion-input>
           </ion-item>,
           <ion-item>
             <ion-label position="stacked" color="primary">Digite seu telefone para contato</ion-label>
@@ -151,7 +157,8 @@ export class Wizard {
     const data = {
       ...this.data,
       username: this.username.value,
-      password: this.password.value
+      password: this.password.value,
+      option: 0 // CUSTOMER
     };
     this.action(data);
   }

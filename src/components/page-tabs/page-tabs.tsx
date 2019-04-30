@@ -8,6 +8,7 @@ export class PageTabs {
 
   @Prop({ connect: 'ion-menu-controller' }) menuCtrl: HTMLIonMenuControllerElement;
   @Prop({ connect: 'ion-tabs' }) tabCtrl: HTMLIonTabsElement;
+  @Prop() role: any;
 
   async componentDidLoad() {
     const menuCtlr: HTMLIonMenuControllerElement = await (this.menuCtrl as any).componentOnReady();
@@ -21,6 +22,7 @@ export class PageTabs {
   }
 
   render() {
+    console.log(this.role);
     return [
       <ion-tabs>
         <ion-tab tab="tab-map" component="page-map"></ion-tab>
@@ -30,22 +32,26 @@ export class PageTabs {
         <ion-tab tab="tab-about" component="page-about"></ion-tab>
 
         <ion-tab-bar slot="bottom">
-          <ion-tab-button tab="tab-map">
-            <ion-icon name="map"></ion-icon>
-            <ion-label>Mapa</ion-label>
-          </ion-tab-button>
-          <ion-tab-button tab="tab-schedule">
-            <ion-icon name="calendar"></ion-icon>
-            <ion-label>Agenda</ion-label>
-          </ion-tab-button>
-          <ion-tab-button tab="tab-create">
-            <ion-icon name="cube"></ion-icon>
-            <ion-label>Frete</ion-label>
-          </ion-tab-button>
-          <ion-tab-button tab="tab-speakers">
-            <ion-icon name="cash"></ion-icon>
-            <ion-label>Oferta</ion-label>
-          </ion-tab-button>
+          {this.role === 'CUSTOMER' && [
+            <ion-tab-button tab="tab-map">
+              <ion-icon name="map"></ion-icon>
+              <ion-label>Mapa</ion-label>
+            </ion-tab-button>,
+            <ion-tab-button tab="tab-create">
+              <ion-icon name="cube"></ion-icon>
+              <ion-label>Frete</ion-label>
+            </ion-tab-button>
+          ]}
+          {this.role === 'MERCHANT' && [
+            <ion-tab-button tab="tab-schedule">
+              <ion-icon name="calendar"></ion-icon>
+              <ion-label>Agenda</ion-label>
+            </ion-tab-button>,
+            <ion-tab-button tab="tab-speakers">
+              <ion-icon name="cash"></ion-icon>
+              <ion-label>Oferta</ion-label>
+            </ion-tab-button>
+          ]}
           <ion-tab-button tab="tab-about">
             <ion-icon name="information-circle"></ion-icon>
             <ion-label>Sobre</ion-label>

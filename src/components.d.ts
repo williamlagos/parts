@@ -7,8 +7,8 @@
 
 import '@stencil/core';
 
-import '@stencil/redux';
 import '@ionic/core';
+import '@stencil/redux';
 import 'ionicons';
 import {
   EventEmitter,
@@ -26,6 +26,9 @@ export namespace Components {
   interface GenericCarouselAttributes extends StencilHTMLAttributes {
     'action'?: any;
   }
+
+  interface AppDrawer {}
+  interface AppDrawerAttributes extends StencilHTMLAttributes {}
 
   interface AppEntrance {}
   interface AppEntranceAttributes extends StencilHTMLAttributes {}
@@ -77,9 +80,12 @@ export namespace Components {
   interface PageSupportAttributes extends StencilHTMLAttributes {}
 
   interface PageTabs {
+    'role': any;
     'select': (tab: string) => Promise<void>;
   }
-  interface PageTabsAttributes extends StencilHTMLAttributes {}
+  interface PageTabsAttributes extends StencilHTMLAttributes {
+    'role'?: any;
+  }
 
   interface ImageUploader {
     'send': any;
@@ -105,6 +111,7 @@ declare global {
   interface StencilElementInterfaces {
     'AppRoot': Components.AppRoot;
     'GenericCarousel': Components.GenericCarousel;
+    'AppDrawer': Components.AppDrawer;
     'AppEntrance': Components.AppEntrance;
     'PageAbout': Components.PageAbout;
     'PageAccount': Components.PageAccount;
@@ -124,6 +131,7 @@ declare global {
   interface StencilIntrinsicElements {
     'app-root': Components.AppRootAttributes;
     'generic-carousel': Components.GenericCarouselAttributes;
+    'app-drawer': Components.AppDrawerAttributes;
     'app-entrance': Components.AppEntranceAttributes;
     'page-about': Components.PageAboutAttributes;
     'page-account': Components.PageAccountAttributes;
@@ -151,6 +159,12 @@ declare global {
   var HTMLGenericCarouselElement: {
     prototype: HTMLGenericCarouselElement;
     new (): HTMLGenericCarouselElement;
+  };
+
+  interface HTMLAppDrawerElement extends Components.AppDrawer, HTMLStencilElement {}
+  var HTMLAppDrawerElement: {
+    prototype: HTMLAppDrawerElement;
+    new (): HTMLAppDrawerElement;
   };
 
   interface HTMLAppEntranceElement extends Components.AppEntrance, HTMLStencilElement {}
@@ -240,6 +254,7 @@ declare global {
   interface HTMLElementTagNameMap {
     'app-root': HTMLAppRootElement
     'generic-carousel': HTMLGenericCarouselElement
+    'app-drawer': HTMLAppDrawerElement
     'app-entrance': HTMLAppEntranceElement
     'page-about': HTMLPageAboutElement
     'page-account': HTMLPageAccountElement
@@ -259,6 +274,7 @@ declare global {
   interface ElementTagNameMap {
     'app-root': HTMLAppRootElement;
     'generic-carousel': HTMLGenericCarouselElement;
+    'app-drawer': HTMLAppDrawerElement;
     'app-entrance': HTMLAppEntranceElement;
     'page-about': HTMLPageAboutElement;
     'page-account': HTMLPageAccountElement;
