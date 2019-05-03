@@ -7,6 +7,14 @@ import {
   SkipIntroAction
 } from './entrance';
 
+import {
+  RegisterOrderAction
+} from './customer';
+
+import {
+  SelectOrderAction
+} from './merchant';
+
 export interface NullAction {
   type: TypeKeys.NULL;
 }
@@ -20,6 +28,8 @@ export type ActionTypes =
   | CloseRegisterAction
   | RegisterAction
   | RevokeTokenAction
+  | RegisterOrderAction
+  | SelectOrderAction
 ;
 
 export enum TypeKeys {
@@ -30,5 +40,7 @@ export enum TypeKeys {
   SKIP_INTRO = 'SKIP_INTRO',
   OPEN_REGISTER = 'OPEN_REGISTER',
   CLOSE_REGISTER = 'CLOSE_REGISTER',
-  REGISTER = 'REGISTER'
+  REGISTER = 'REGISTER',
+  REGISTER_ORDER = 'REGISTER_ORDER',
+  SELECT_ORDER = 'SELECT_ORDER'
 }
