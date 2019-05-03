@@ -2,8 +2,9 @@ import { Storage } from '../providers/storage';
 import { TypeKeys } from '../actions/index';
 import { Backend } from '../providers/backend';
 
-// const endpoint = 'http://localhost:3000';
-const endpoint = 'https://api.fretefacil.net';
+
+const hostname = window && window.location && window.location.hostname;
+const endpoint = hostname === 'localhost' ? 'http://localhost:3000' : 'https://api.fretefacil.net';
 
 export interface SetTokenAction {
   type: TypeKeys.SET_TOKEN;
@@ -78,10 +79,11 @@ export const closeRegister = () => async (dispatch: any, _getState: any) => {
 
 export const register = (data: any) => async (dispatch: any, _getState: any) => {
   const files = data.files;
+  data['role'] = data.option === 'customer' ? ['CUSTOMER'] : ['MERCHANT'];
+  const option = data.option === 'merchant' ? 1 : 0;
   delete data.files;
-  data['role'] = data.option === 0 ? 'CUSTOMER' : 'MERCHANT';
-  const option = data.option === 0 ? 0 : 1;
-  console.log(data);
+  delete data.option;
+  // console.log(data);
   Backend.setDomain(endpoint);
   const d = await (await Backend.createUser({ 'user': data })).json();
   await (await Backend.addPicture({ 'xAccessToken': d.token, 'files': files })); // .json();

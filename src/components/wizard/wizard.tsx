@@ -72,33 +72,46 @@ export class Wizard {
       case 1:
         return [
           <ion-item>
-            <ion-label position="stacked" color="primary">Digite seu nome completo</ion-label>
+            <ion-label position="stacked">Digite seu nome completo</ion-label>
             <ion-input name="name" onInput={(ev) => this.handleInput(ev)}></ion-input>
           </ion-item>,
           <ion-item>
-            <ion-label position="stacked" color="primary">Digite seu endereço</ion-label>
+            <ion-label position="stacked">Digite seu endereço</ion-label>
             <ion-input name="address" onInput={(ev) => this.handleAddress(ev)}></ion-input>
           </ion-item>,
           <ion-item>
-            <ion-label position="stacked" color="primary">Digite seu telefone para contato</ion-label>
+            <ion-label position="stacked">Digite seu telefone para contato</ion-label>
             <ion-input name="phone" onInput={(ev) => this.handleInput(ev)}></ion-input>
-          </ion-item>
+          </ion-item>,
+          <ion-radio-group name="option" >
+            <ion-list-header>
+              <ion-label>Você é freteiro ou busca por frete?</ion-label>
+            </ion-list-header>
+            <ion-item>
+              <ion-label>Cliente</ion-label>
+              <ion-radio onClick={(ev) => this.handleInput(ev)} slot="start" value="CUSTOMER" checked></ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-label>Freteiro</ion-label>
+              <ion-radio onClick={(ev) => this.handleInput(ev)} slot="start" value="MERCHANT"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
         ];
       case 2:
         return [
           <ion-item>
-            <ion-label position="stacked" color="primary">Insira imagens</ion-label>
+            <ion-label position="stacked">Insira imagens</ion-label>
             <image-uploader send={(file: any) => this.handleFile(file)} id="file"/>
           </ion-item>
         ];
       case 3:
         return [
           <ion-item>
-            <ion-label position="stacked" color="primary">Digite seu e-mail para o login</ion-label>
+            <ion-label position="stacked">Digite seu e-mail para o login</ion-label>
             <ion-input name="email" onInput={(ev) => this.handleInput(ev)}></ion-input>
           </ion-item>,
           <ion-item>
-            <ion-label position="stacked" color="primary">Digite um nome de usuário</ion-label>
+            <ion-label position="stacked">Digite um nome de usuário</ion-label>
             <ion-input name="username" type="text" value={this.username.value} onInput={(ev) => this.handleUsername(ev)} required>
             </ion-input>
           </ion-item>,
@@ -108,7 +121,7 @@ export class Wizard {
             </p>
           </ion-text>,
           <ion-item>
-            <ion-label position="stacked" color="primary">Digite sua senha</ion-label>
+            <ion-label position="stacked">Digite sua senha</ion-label>
             <ion-input name="password" type="password" value={this.password.value} onInput={(ev) => this.handlePassword(ev)} required>
             </ion-input>
           </ion-item>,
@@ -118,14 +131,14 @@ export class Wizard {
             </p>
           </ion-text>,
           <ion-item>
-            <ion-label position="stacked" color="primary">Digite sua senha novamente</ion-label>
+            <ion-label position="stacked">Digite sua senha novamente</ion-label>
             <ion-input type="password" name="scpassword"></ion-input>
           </ion-item>
         ];
       case 4:
         return [
           <ion-item>
-            <ion-label position="stacked" color="primary">Informações adicionais</ion-label>
+            <ion-label position="stacked">Informações adicionais</ion-label>
             <ion-textarea name="info" rows={4} onInput={(ev) => this.handleInput(ev)}></ion-textarea>
           </ion-item>,
         ];
@@ -157,8 +170,8 @@ export class Wizard {
     const data = {
       ...this.data,
       username: this.username.value,
-      password: this.password.value,
-      option: 0 // CUSTOMER
+      password: this.password.value
+      // option: 0 // CUSTOMER
     };
     this.action(data);
   }

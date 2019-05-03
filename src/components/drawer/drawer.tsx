@@ -46,7 +46,7 @@ export class Menu {
       title: 'Sobre',
       url: 'about',
       icon: 'information-circle',
-      role: 'CUSTOMER'
+      role: 'ALL'
     }
   ];
 
@@ -83,6 +83,7 @@ export class Menu {
 
   renderMenu() {
     const role = this.parseJwt(this.token)['_role'];
+    console.log(this.parseJwt(this.token));
     return (
       <ion-menu contentId="app" menuId="first" type="push">
         <ion-header>
@@ -97,7 +98,7 @@ export class Menu {
             <ion-list-header>Navegar</ion-list-header>
 
             {this.appPages.map((p) => (
-              p.role === role &&
+              (p.role === role || p.role === 'ALL') &&
                 <ion-menu-toggle autoHide={false}>
                   <ion-item lines="full" href="#" onClick={() => this.changeTab(p.url)}>
                     <ion-icon slot="start" name={p.icon}></ion-icon>
