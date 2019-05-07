@@ -32,14 +32,14 @@ export class PageAccount {
     const navCtrl: HTMLIonRouterElement = await (this.nav as any).componentOnReady();
     await UserData.logout();
     this.userDidLogOut.emit({ loginStatus: false });
-    navCtrl.push('/schedule', 'root')
+    navCtrl.push('/schedule', 'root');
     // navCtrl.setRoot('page-tabs', null, { animated: true, direction: 'forward' });
   }
 
   async support() {
     const navCtrl: HTMLIonRouterElement = await (this.nav as any).componentOnReady();
     // navCtrl.setRoot('page-support');
-    navCtrl.push('/support', 'root')
+    navCtrl.push('/support', 'root');
   }
 
   async changeUsername() {

@@ -10,7 +10,8 @@ export interface RegisterOrderAction {
   orderId: string;
 }
 
-export const registerOrder = () => async (dispatch: any, _getState: any) => {
+export const registerOrder = (data: any) => async (dispatch: any, _getState: any) => {
+  console.log(data);
   console.log(endpoint);
   return dispatch({
     type: TypeKeys.REGISTER_ORDER,
