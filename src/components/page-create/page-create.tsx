@@ -1,4 +1,9 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, Listen, Prop, State } from '@stencil/core';
+import { Action, Store } from '@stencil/redux';
+
+import { registerOrder } from '../../actions/customer';
+
+const mapURL = ;https://nominatim.openstreetmap.org/search?'
 
 @Component({
   tag: 'page-create',
@@ -7,12 +12,56 @@ import { Component, Prop } from '@stencil/core';
 export class PageCreate {
 
   @Prop({ connect: 'ion-router' }) nav;
+  @Prop({ context: 'store' }) store: Store;
+  @State() token;
+  @State() data = {};
 
-  async handleSubmit(e) {
+  registerOrder: Action;
+
+  componentWillLoad() {
+    this.store.mapStateToProps(this, (state) => {
+      const { entrance: { token } } = state;
+      return { token };
+    });
+    this.store.mapDispatchToProps(this, { registerOrder });
+  }
+
+  parseJwt(token: string) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    return JSON.parse(window.atob(base64));
+  }
+
+  async handleSubmit(e: any) {
     e.preventDefault();
-    const navCtrl: HTMLIonRouterElement = await (this.nav as any).componentOnReady();
-    console.log('Clicked signup');
-    navCtrl.push('/map', 'root');
+    this.data['customer'] = this.parseJwt(this.token)['_id'];
+    const res = await fetch(mapURL + 'street=847 Rua Duque de Caxias&city=Porto Alegre&limit=1&format=json');
+    const place = await res.json()[0];
+    this.data['address']['location'] = { lat: place.lat, lng: place.lon };
+    this.registerOrder(this.data);
+    // const navCtrl: HTMLIonRouterElement = await (this.nav as any).componentOnReady();
+    // console.log('Clicked signup');
+    // navCtrl.push('/map', 'root');
+  }
+
+  handleAddress(e: any, data: any, type: string) {
+    e.preventDefault();
+    /* Code for autocomplete API on Google Maps
+     * const apiKey = 'AIzaSyC8B5IrTvSbGt9Akb5f00CiDmO86RTb1ec';
+     * const urlReq = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?key=' + apiKey +
+     *               '&input=' + e.target.value.split(' ').join('+') + '&type=geocode';
+     * fetch(urlReq).then(response => console.log(response)); */
+    // this.data[e.target.name] = e.target.value;
+    this.data[type] = data;
+  }
+
+  handleFile(files: FileList) {
+    this.data['files'] = files;
+  }
+
+  @Listen('ionChange')
+  handleInput(ev: any) {
+    this.data[ev.target.name] = ev.target.value;
   }
 
   render() {
@@ -28,16 +77,15 @@ export class PageCreate {
 
       <ion-content padding>
 
-        <form novalidate>
+        <form method="POST" action="#" novalidate>
           <ion-list>
             <ion-item>
               <ion-label position="stacked" color="primary">Insira imagens do produto</ion-label>
-              <input name="file" type="file"/>
-              {/*<ion-button expand="block" size="small" href="#">Selecionar imagens</ion-button></label>*/}
+              <image-uploader send={(files: any) => this.handleFile(files)}/>
             </ion-item>
             <ion-item>
               <ion-label position="stacked" color="primary">Insira o título do seu anúncio</ion-label>
-              <ion-input name="username" type="text" required></ion-input>
+              <ion-input name="title" type="text" onInput={(e) => this.handleInput(e)} required></ion-input>
             </ion-item>
             {/*<ion-text color="danger">
               <p padding-left>Username is required</p>
@@ -45,24 +93,19 @@ export class PageCreate {
 
             <ion-item>
               <ion-label position="stacked" color="primary">Descreva a operação que você precisa</ion-label>
-              <ion-textarea rows={3} name="password" required></ion-textarea>
+              <ion-textarea rows={2} name="description" onInput={(e) => this.handleInput(e)} required></ion-textarea>
             </ion-item>
             {/*<ion-text color="danger">
               <p padding-left>Password is required</p>
             </ion-text>*/}
+
             <ion-item>
               <ion-label position="stacked" color="primary">Data de saída</ion-label>
-              <ion-datetime display-format="MMM DD, YYYY HH:mm"></ion-datetime>
+              <ion-datetime display-format="MMM DD, YYYY HH:mm" name="scheduledTo"></ion-datetime>
             </ion-item>
-            <ion-item>
-              <ion-label position="stacked" color="primary">Endereço de saída</ion-label>
-              <ion-input name="departure" type="text" required></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="stacked" color="primary">Endereço de chegada</ion-label>
-              <ion-input name="arrival" type="text" required></ion-input>
-            </ion-item>
-            <ion-item>
+            <address-input input={(e: any, d: any) => this.handleAddress(e, d, 'origin')} label="Endereço de saída"/>
+            <address-input input={(e: any, d: any) => this.handleAddress(e, d, 'destination')} label="Endereço de chegada"/>
+            {/*<ion-item>
               <ion-label position="stacked" color="primary">Selecione categorias</ion-label>
               <ion-chip><ion-label>Trabalho</ion-label></ion-chip>
               <ion-chip><ion-label>Quarto</ion-label></ion-chip>
@@ -72,11 +115,11 @@ export class PageCreate {
               <ion-chip><ion-label>Perecível</ion-label></ion-chip>
               <ion-chip><ion-label>Equipamento</ion-label></ion-chip>
               <ion-chip><ion-label>Eletrônico</ion-label></ion-chip>
-            </ion-item>
+            </ion-item>*/}
           </ion-list>
 
           <div padding>
-            <ion-button onClick={e => this.handleSubmit(e)}type="submit" expand="block">Criar</ion-button>
+            <ion-button onClick={async (e) => { await this.handleSubmit(e); }} expand="block">Criar</ion-button>
           </div>
         </form>
 

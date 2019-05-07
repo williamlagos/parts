@@ -32,7 +32,7 @@ export interface CloseRegisterAction {
 
 export interface RegisterAction {
   type: TypeKeys.REGISTER;
-  option: number;
+  registerOption: number;
 }
 
 export const setToken = (email: string, password: string) => async (dispatch: any, _getState: any) => {
@@ -86,7 +86,7 @@ export const register = (data: any) => async (dispatch: any, _getState: any) => 
   Backend.setDomain(endpoint);
   const d = await (await Backend.createUser({ 'user': data })).json();
   await (await Backend.addPicture({ 'xAccessToken': d.token, 'files': files })); // .json();
-  dispatch({ type: TypeKeys.REGISTER, option });
+  dispatch({ type: TypeKeys.REGISTER, registerOption: option });
   return dispatch({
     type: TypeKeys.CLOSE_REGISTER,
     registerOpened: false

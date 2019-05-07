@@ -7,8 +7,8 @@
 
 import '@stencil/core';
 
-import '@ionic/core';
 import '@stencil/redux';
+import '@ionic/core';
 import 'ionicons';
 import {
   EventEmitter,
@@ -16,6 +16,17 @@ import {
 
 
 export namespace Components {
+
+  interface AddressInput {
+    'input': any;
+    'label': string;
+    'name': string;
+  }
+  interface AddressInputAttributes extends StencilHTMLAttributes {
+    'input'?: any;
+    'label'?: string;
+    'name'?: string;
+  }
 
   interface AppRoot {}
   interface AppRootAttributes extends StencilHTMLAttributes {}
@@ -40,9 +51,6 @@ export namespace Components {
   interface PageAccountAttributes extends StencilHTMLAttributes {
     'onUserDidLogOut'?: (event: CustomEvent) => void;
   }
-
-  interface PageCreate {}
-  interface PageCreateAttributes extends StencilHTMLAttributes {}
 
   interface PageMap {}
   interface PageMapAttributes extends StencilHTMLAttributes {}
@@ -109,13 +117,13 @@ export namespace Components {
 
 declare global {
   interface StencilElementInterfaces {
+    'AddressInput': Components.AddressInput;
     'AppRoot': Components.AppRoot;
     'GenericCarousel': Components.GenericCarousel;
     'AppDrawer': Components.AppDrawer;
     'AppEntrance': Components.AppEntrance;
     'PageAbout': Components.PageAbout;
     'PageAccount': Components.PageAccount;
-    'PageCreate': Components.PageCreate;
     'PageMap': Components.PageMap;
     'PageScheduleFilter': Components.PageScheduleFilter;
     'PageSchedule': Components.PageSchedule;
@@ -129,13 +137,13 @@ declare global {
   }
 
   interface StencilIntrinsicElements {
+    'address-input': Components.AddressInputAttributes;
     'app-root': Components.AppRootAttributes;
     'generic-carousel': Components.GenericCarouselAttributes;
     'app-drawer': Components.AppDrawerAttributes;
     'app-entrance': Components.AppEntranceAttributes;
     'page-about': Components.PageAboutAttributes;
     'page-account': Components.PageAccountAttributes;
-    'page-create': Components.PageCreateAttributes;
     'page-map': Components.PageMapAttributes;
     'page-schedule-filter': Components.PageScheduleFilterAttributes;
     'page-schedule': Components.PageScheduleAttributes;
@@ -148,6 +156,12 @@ declare global {
     'generic-wizard': Components.GenericWizardAttributes;
   }
 
+
+  interface HTMLAddressInputElement extends Components.AddressInput, HTMLStencilElement {}
+  var HTMLAddressInputElement: {
+    prototype: HTMLAddressInputElement;
+    new (): HTMLAddressInputElement;
+  };
 
   interface HTMLAppRootElement extends Components.AppRoot, HTMLStencilElement {}
   var HTMLAppRootElement: {
@@ -183,12 +197,6 @@ declare global {
   var HTMLPageAccountElement: {
     prototype: HTMLPageAccountElement;
     new (): HTMLPageAccountElement;
-  };
-
-  interface HTMLPageCreateElement extends Components.PageCreate, HTMLStencilElement {}
-  var HTMLPageCreateElement: {
-    prototype: HTMLPageCreateElement;
-    new (): HTMLPageCreateElement;
   };
 
   interface HTMLPageMapElement extends Components.PageMap, HTMLStencilElement {}
@@ -252,13 +260,13 @@ declare global {
   };
 
   interface HTMLElementTagNameMap {
+    'address-input': HTMLAddressInputElement
     'app-root': HTMLAppRootElement
     'generic-carousel': HTMLGenericCarouselElement
     'app-drawer': HTMLAppDrawerElement
     'app-entrance': HTMLAppEntranceElement
     'page-about': HTMLPageAboutElement
     'page-account': HTMLPageAccountElement
-    'page-create': HTMLPageCreateElement
     'page-map': HTMLPageMapElement
     'page-schedule-filter': HTMLPageScheduleFilterElement
     'page-schedule': HTMLPageScheduleElement
@@ -272,13 +280,13 @@ declare global {
   }
 
   interface ElementTagNameMap {
+    'address-input': HTMLAddressInputElement;
     'app-root': HTMLAppRootElement;
     'generic-carousel': HTMLGenericCarouselElement;
     'app-drawer': HTMLAppDrawerElement;
     'app-entrance': HTMLAppEntranceElement;
     'page-about': HTMLPageAboutElement;
     'page-account': HTMLPageAccountElement;
-    'page-create': HTMLPageCreateElement;
     'page-map': HTMLPageMapElement;
     'page-schedule-filter': HTMLPageScheduleFilterElement;
     'page-schedule': HTMLPageScheduleElement;

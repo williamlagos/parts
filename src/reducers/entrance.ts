@@ -5,7 +5,7 @@ interface AppState {
   token: string;
   skipIntro: number;
   registerOpened: boolean;
-  option: number;
+  registerOption: number;
 }
 
 const prepareState = () => {
@@ -13,7 +13,7 @@ const prepareState = () => {
     token: '',
     skipIntro: false,
     registerOpened: false,
-    option: -1
+    registerOption: -1
   };
   return {
     ...defaultState,
@@ -40,7 +40,7 @@ const entrance = (state: AppState = prepareState(), action: ActionTypes) => {
       return { ...state, registerOpened: action.registerOpened };
     }
     case TypeKeys.REGISTER: {
-      return { ...state, option: action.option };
+      return { ...state, registerOption: action.registerOption };
     }
   }
 

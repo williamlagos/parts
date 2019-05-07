@@ -166,6 +166,7 @@ export class Menu {
     return (<ion-nav id="app" main><page-tabs role={role}/></ion-nav>);
   }
 
+  // TODO: Add new carousel to tour customers and merchants
   render() {
     return (
       <ion-split-pane when="lg">
