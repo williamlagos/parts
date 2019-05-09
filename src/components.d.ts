@@ -52,6 +52,9 @@ export namespace Components {
     'onUserDidLogOut'?: (event: CustomEvent) => void;
   }
 
+  interface PageCreate {}
+  interface PageCreateAttributes extends StencilHTMLAttributes {}
+
   interface PageMap {}
   interface PageMapAttributes extends StencilHTMLAttributes {}
 
@@ -124,6 +127,7 @@ declare global {
     'AppEntrance': Components.AppEntrance;
     'PageAbout': Components.PageAbout;
     'PageAccount': Components.PageAccount;
+    'PageCreate': Components.PageCreate;
     'PageMap': Components.PageMap;
     'PageScheduleFilter': Components.PageScheduleFilter;
     'PageSchedule': Components.PageSchedule;
@@ -144,6 +148,7 @@ declare global {
     'app-entrance': Components.AppEntranceAttributes;
     'page-about': Components.PageAboutAttributes;
     'page-account': Components.PageAccountAttributes;
+    'page-create': Components.PageCreateAttributes;
     'page-map': Components.PageMapAttributes;
     'page-schedule-filter': Components.PageScheduleFilterAttributes;
     'page-schedule': Components.PageScheduleAttributes;
@@ -197,6 +202,12 @@ declare global {
   var HTMLPageAccountElement: {
     prototype: HTMLPageAccountElement;
     new (): HTMLPageAccountElement;
+  };
+
+  interface HTMLPageCreateElement extends Components.PageCreate, HTMLStencilElement {}
+  var HTMLPageCreateElement: {
+    prototype: HTMLPageCreateElement;
+    new (): HTMLPageCreateElement;
   };
 
   interface HTMLPageMapElement extends Components.PageMap, HTMLStencilElement {}
@@ -267,6 +278,7 @@ declare global {
     'app-entrance': HTMLAppEntranceElement
     'page-about': HTMLPageAboutElement
     'page-account': HTMLPageAccountElement
+    'page-create': HTMLPageCreateElement
     'page-map': HTMLPageMapElement
     'page-schedule-filter': HTMLPageScheduleFilterElement
     'page-schedule': HTMLPageScheduleElement
@@ -287,6 +299,7 @@ declare global {
     'app-entrance': HTMLAppEntranceElement;
     'page-about': HTMLPageAboutElement;
     'page-account': HTMLPageAccountElement;
+    'page-create': HTMLPageCreateElement;
     'page-map': HTMLPageMapElement;
     'page-schedule-filter': HTMLPageScheduleFilterElement;
     'page-schedule': HTMLPageScheduleElement;

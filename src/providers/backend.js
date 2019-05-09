@@ -24,7 +24,8 @@ class Backend {
     config.method = method;
     config.headers = {
       'Accept': 'application/json',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'x-access-token': config.headers['x-access-token']
     }
     if (body) {
       config.body = JSON.stringify(body);
