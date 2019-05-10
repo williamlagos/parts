@@ -2,6 +2,7 @@ import { Component, /*Listen,*/ Prop, State } from '@stencil/core';
 import { Action, Store } from '@stencil/redux';
 
 import { registerOrder } from '../../actions/customer';
+import { close } from '../../actions/session';
 
 // const omapURL = 'https://nominatim.openstreetmap.org/search?';
 const gmapURL = 'https://maps.googleapis.com/maps/api/geocode/json?';
@@ -12,8 +13,9 @@ const gmapURL = 'https://maps.googleapis.com/maps/api/geocode/json?';
 })
 export class PageCreate {
 
-  @Prop({ connect: 'ion-router' }) nav: any;
   @Prop({ context: 'store' }) store: Store;
+  @Prop({ connect: 'ion-tabs' }) tab: HTMLIonTabsElement;
+  @State() directions: any[];
   @State() token: any;
   @State() data = {
     job: {
@@ -22,14 +24,16 @@ export class PageCreate {
     }
   };
 
+  open: Action;
+  close: Action;
   registerOrder: Action;
 
   componentWillLoad() {
     this.store.mapStateToProps(this, (state) => {
-      const { entrance: { token } } = state;
-      return { token };
+      const { session: { token, directions } } = state;
+      return { token, directions };
     });
-    this.store.mapDispatchToProps(this, { registerOrder });
+    this.store.mapDispatchToProps(this, { registerOrder, close });
   }
 
   parseJwt(token: string) {
@@ -58,6 +62,9 @@ export class PageCreate {
     this.data['job']['origin']['address']['location'] = { lat: origPlace.lat, lng: origPlace.lng };
     this.data['job']['destination']['address']['location'] = { lat: destPlace.lat, lng: destPlace.lng };
     this.registerOrder(this.data, this.token);
+    const tabs: HTMLIonTabsElement = await (this.tab as any).componentOnReady();
+    tabs.select('tab-map');
+    this.close();
   }
 
   handleAddress(e: any, data: any, type: string) {
@@ -92,8 +99,8 @@ export class PageCreate {
       </ion-header>,
 
       <ion-content padding>
-
-        <form method="POST" action="#" novalidate>
+        {this.directions.slice(-1)[0].component === 'CREATE' &&
+        <form id="create" method="POST" action="#" novalidate>
           <ion-list>
             <ion-item>
               <ion-label position="stacked" color="primary">Insira imagens do produto</ion-label>
@@ -101,43 +108,25 @@ export class PageCreate {
             </ion-item>
             <ion-item>
               <ion-label position="stacked" color="primary">Insira o título do seu anúncio</ion-label>
-              <ion-input name="title" type="text" onInput={(e) => this.handleInput(e)} required></ion-input>
+              <ion-input name="title" type="text" value="" clearInput onInput={(e) => this.handleInput(e)} required></ion-input>
             </ion-item>
-            {/*<ion-text color="danger">
-              <p padding-left>Username is required</p>
-            </ion-text>*/}
-
             <ion-item>
               <ion-label position="stacked" color="primary">Descreva a operação que você precisa</ion-label>
-              <ion-textarea rows={2} name="description" onInput={(e) => this.handleDescription(e)} required></ion-textarea>
+              <ion-textarea rows={2} name="description" value="" onInput={(e) => this.handleDescription(e)} required></ion-textarea>
             </ion-item>
-            {/*<ion-text color="danger">
-              <p padding-left>Password is required</p>
-            </ion-text>*/}
-
             <ion-item>
               <ion-label position="stacked" color="primary">Data de saída</ion-label>
-              <ion-datetime display-format="MMM DD, YYYY HH:mm" name="scheduledTo"></ion-datetime>
+              <ion-datetime display-format="MMM DD, YYYY HH:mm" value="" name="scheduledTo"></ion-datetime>
             </ion-item>
             <address-input input={(e: any, d: any) => this.handleAddress(e, d, 'origin')} label="Endereço de saída"/>
             <address-input input={(e: any, d: any) => this.handleAddress(e, d, 'destination')} label="Endereço de chegada"/>
-            {/*<ion-item>
-              <ion-label position="stacked" color="primary">Selecione categorias</ion-label>
-              <ion-chip><ion-label>Trabalho</ion-label></ion-chip>
-              <ion-chip><ion-label>Quarto</ion-label></ion-chip>
-              <ion-chip><ion-label>Jantar</ion-label></ion-chip>
-              <ion-chip><ion-label>Living</ion-label></ion-chip>
-              <ion-chip><ion-label>Comercial</ion-label></ion-chip>
-              <ion-chip><ion-label>Perecível</ion-label></ion-chip>
-              <ion-chip><ion-label>Equipamento</ion-label></ion-chip>
-              <ion-chip><ion-label>Eletrônico</ion-label></ion-chip>
-            </ion-item>*/}
           </ion-list>
 
           <div padding>
             <ion-button onClick={async (e) => { await this.handleSubmit(e); }} expand="block">Criar</ion-button>
           </div>
         </form>
+        }
 
       </ion-content>
     ];

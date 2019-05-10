@@ -28,6 +28,8 @@ export class AddressInput {
                 placeholder="Endereço"
                 type="text"
                 onInput={(e) => this.address(e)}
+                clearInput
+                value=""
                 required>
               </ion-input>
             </ion-col>
@@ -36,6 +38,8 @@ export class AddressInput {
                 name="number"
                 placeholder="Num."
                 onInput={(e) => this.address(e)}
+                clearInput
+                value=""
                 required>
               </ion-input>
             </ion-col>
@@ -47,6 +51,8 @@ export class AddressInput {
                 placeholder="Complemento"
                 type="text"
                 onInput={(e) => this.address(e)}
+                clearInput
+                value=""
                 required>
               </ion-input>
             </ion-col>
@@ -58,6 +64,8 @@ export class AddressInput {
                 placeholder="Bairro"
                 type="text"
                 onInput={(e) => this.address(e)}
+                clearInput
+                value=""
                 required>
               </ion-input>
             </ion-col>
@@ -69,6 +77,8 @@ export class AddressInput {
                 placeholder="Cidade"
                 type="text"
                 onInput={(e) => this.address(e)}
+                clearInput
+                value=""
                 required>
               </ion-input>
             </ion-col>
@@ -78,6 +88,8 @@ export class AddressInput {
                 placeholder="UF"
                 type="text"
                 onInput={(e) => this.address(e)}
+                clearInput
+                value=""
                 required>
               </ion-input>
             </ion-col>
@@ -89,6 +101,8 @@ export class AddressInput {
                 placeholder="Dica de endereço"
                 type="text"
                 onInput={(e) => this.address(e)}
+                clearInput
+                value=""
                 required>
               </ion-input>
             </ion-col>

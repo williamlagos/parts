@@ -1,7 +1,7 @@
 import { Component, Prop, State } from '@stencil/core';
 // import { UserData } from '../../providers/user-data';
 
-import { closeRegister, openRegister, register, setToken, toggleIntro } from '../../actions/entrance';
+import { closeRegister, openRegister, register, setToken, toggleIntro } from '../../actions/session';
 
 import { Action, Store } from '@stencil/redux';
 
@@ -20,9 +20,9 @@ export class Entrance {
     value: ''
   };
   @State() name = '';
-  @State() skipIntro: boolean;
+  @State() introduced: boolean;
   @State() submitted = false;
-  @State() registerOpened = false;
+  @State() registered = false;
   @Prop({ context: 'store' }) store: Store;
   // @Event() userDidLogIn: EventEmitter;
 
@@ -35,8 +35,8 @@ export class Entrance {
 
   componentWillLoad() {
     this.store.mapStateToProps(this, (state) => {
-      const { entrance: { name, skipIntro, registerOpened } } = state;
-      return { name, skipIntro, registerOpened };
+      const { session: { name, introduced, registered } } = state;
+      return { name, introduced, registered };
     });
     this.store.mapDispatchToProps(this, {
       setToken,
@@ -78,19 +78,19 @@ export class Entrance {
     this.password = { ...this.password, valid: false };
   }
 
-  async onRegisterSignup(e: any) {
+  /* async onRegisterSignup(e: any) {
     e.preventDefault();
     console.log('clicked signup');
     this.validatePassword();
     this.validateUsername();
 
     this.submitted = true;
-    this.registerOpened = false;
+    this.registered = false;
 
-    /*if (this.password.valid && this.username.valid) {
+    if (this.password.valid && this.username.valid) {
       UserData.signup(this.username.value);
-    }*/
-  }
+    }
+  } */
 
   async onLogin(e: any) {
     e.preventDefault();
@@ -112,10 +112,10 @@ export class Entrance {
     }
   }
 
-  onSignup(event: any) {
+  /* onSignup(event: any) {
     event.preventDefault();
-    this.registerOpened = true;
-  }
+    this.registered = true;
+  } */
 
   renderLogin() {
     return [
@@ -181,8 +181,8 @@ export class Entrance {
   }
 
   render() {
-    if (!this.skipIntro) return <generic-carousel action={() => this.toggleIntro(true)}/>;
-    return this.registerOpened ?
+    if (!this.introduced) return <generic-carousel action={() => this.toggleIntro(true)}/>;
+    return !this.registered ?
       <generic-wizard action={(d: any) => this.register(d)} exit={() => this.closeRegister()}/> :
       this.renderLogin();
   }

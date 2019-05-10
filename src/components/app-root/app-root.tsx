@@ -19,7 +19,7 @@ export class AppRoot {
   async componentWillLoad() {
     this.store.setStore(configureStore({}));
     this.store.mapStateToProps(this, (state) => {
-      const { entrance: { token } } = state;
+      const { session: { token } } = state;
       return { token };
     });
   }

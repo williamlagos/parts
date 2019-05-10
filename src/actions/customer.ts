@@ -17,10 +17,6 @@ export const registerOrder = (data: any, token: string) => async (dispatch: any,
   const pictures = await (await Backend.addPicture({ 'xAccessToken': token, 'files': files })).json();
   data.pictures = pictures.map((picture: any) => picture._id);
   const order = await (await Backend.createOrder({ 'xAccessToken': token, 'order': data })).json();
-  console.log(data);
-  console.log(order);
-  console.log(token);
-  // console.log(endpoint);
   return dispatch({
     type: TypeKeys.REGISTER_ORDER,
     orderId: order._id

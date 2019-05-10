@@ -1,11 +1,12 @@
 import {
+  CloseAction,
   CloseRegisterAction,
+  OpenAction,
   OpenRegisterAction,
-  RegisterAction,
   RevokeTokenAction,
   SetTokenAction,
   SkipIntroAction
-} from './entrance';
+} from './session';
 
 import {
   RegisterOrderAction
@@ -26,21 +27,23 @@ export type ActionTypes =
   | SkipIntroAction
   | OpenRegisterAction
   | CloseRegisterAction
-  | RegisterAction
   | RevokeTokenAction
   | RegisterOrderAction
   | SelectOrderAction
+  | CloseAction
+  | OpenAction
 ;
 
 export enum TypeKeys {
   NULL = 'NULL',
+  OPEN = 'OPEN',
+  CLOSE = 'CLOSE',
   ERROR = 'ERROR',
   SET_TOKEN = 'SET_TOKEN',
   REVOKE_TOKEN = 'REVOKE_TOKEN',
   SKIP_INTRO = 'SKIP_INTRO',
   OPEN_REGISTER = 'OPEN_REGISTER',
   CLOSE_REGISTER = 'CLOSE_REGISTER',
-  REGISTER = 'REGISTER',
   REGISTER_ORDER = 'REGISTER_ORDER',
   SELECT_ORDER = 'SELECT_ORDER'
 }

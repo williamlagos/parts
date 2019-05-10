@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Prop, State } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Method, Prop, State } from '@stencil/core';
 
 const MAX_UPLOAD_SIZE = 1024; // bytes
 const ALLOWED_FILE_TYPES = 'image.*';
@@ -8,7 +8,7 @@ const ALLOWED_FILE_TYPES = 'image.*';
   styleUrl: 'uploader.css',
   shadow: true
 })
-export class MyComponent {
+export class Uploader {
 
   @Element() private elementHost: HTMLElement;
   @Event() onUploadCompleted: EventEmitter<Blob>;
@@ -16,6 +16,15 @@ export class MyComponent {
   @State() index = 0;
   @State() list = [];
   @Prop() send: any;
+
+  @Method()
+  reset() {
+    // console.log('Clearing list');
+    let imagePreviewContainer: HTMLElement;
+    imagePreviewContainer = this.elementHost.shadowRoot.querySelector('#preview0');
+    imagePreviewContainer.style.background = `white`;
+    this.list = [];
+  }
 
   onInputChange(files: FileList) {
     // check if 1 image is uploaded
@@ -89,7 +98,7 @@ export class MyComponent {
     return <div class="image-upload">
       <div class="image-upload__edit">
         <label htmlFor="file"></label>
-        <input type="file" name="files[]" id="file" accept="image/*" class="image-upload__input"
+        <input type="file" name="files[]" value="" id="file" accept="image/*" class="image-upload__input"
           onChange={($event: any) => this.onInputChange($event.target.files)} multiple />
       </div>
       {this.list.length > 0 ?

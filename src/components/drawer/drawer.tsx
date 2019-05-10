@@ -3,7 +3,7 @@ import '@ionic/core';
 import { Component, Prop, State } from '@stencil/core';
 import { Action, Store } from '@stencil/redux';
 
-import { revokeToken } from '../../actions/entrance';
+import { open, revokeToken } from '../../actions/session';
 
 @Component({
   tag: 'app-drawer',
@@ -15,47 +15,23 @@ export class Menu {
   @Prop({ connect: 'ion-nav' }) nav: HTMLIonNavElement;
   @Prop({ connect: 'page-tabs' }) tabs: HTMLPageTabsElement;
 
+  open: Action;
   revokeToken: Action;
 
   appPages = [
-    {
-      title: 'Frete',
-      url: 'create',
-      icon: 'cube',
-      role: 'CUSTOMER'
-    },
-    {
-      title: 'Mapa',
-      url: 'map',
-      icon: 'map',
-      role: 'CUSTOMER'
-    },
-    {
-      title: 'Ofertas',
-      url: 'speakers',
-      icon: 'cash',
-      role: 'MERCHANT'
-    },
-    {
-      title: 'Agenda',
-      url: 'schedule',
-      icon: 'calendar',
-      role: 'MERCHANT'
-    },
-    {
-      title: 'Sobre',
-      url: 'about',
-      icon: 'information-circle',
-      role: 'ALL'
-    }
+    { title: 'Frete', url: 'create', icon: 'cube', role: 'CUSTOMER' },
+    { title: 'Mapa', url: 'map', icon: 'map', role: 'CUSTOMER' },
+    { title: 'Ofertas', url: 'speakers', icon: 'cash', role: 'MERCHANT' },
+    { title: 'Agenda', url: 'schedule', icon: 'calendar', role: 'MERCHANT' },
+    { title: 'Sobre', url: 'about', icon: 'information-circle', role: 'ALL' }
   ];
 
   componentWillLoad() {
     this.store.mapStateToProps(this, (state) => {
-      const { entrance: { token } } = state;
+      const { session: { token } } = state;
       return { token };
     });
-    this.store.mapDispatchToProps(this, { revokeToken });
+    this.store.mapDispatchToProps(this, { revokeToken, open });
   }
 
   checkLoginStatus() {
@@ -70,6 +46,7 @@ export class Menu {
   }
 
   async changeTab(tab: string) {
+    this.open(tab.toUpperCase(), '/' + tab);
     const tabCtrl: HTMLPageTabsElement = await (this.tabs as any).componentOnReady();
     await tabCtrl.select(tab);
   }
@@ -83,7 +60,7 @@ export class Menu {
 
   renderMenu() {
     const role = this.parseJwt(this.token)['_role'];
-    console.log(this.parseJwt(this.token));
+    // console.log(this.parseJwt(this.token));
     return (
       <ion-menu contentId="app" menuId="first" type="push">
         <ion-header>

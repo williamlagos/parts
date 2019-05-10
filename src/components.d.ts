@@ -7,9 +7,9 @@
 
 import '@stencil/core';
 
-import '@stencil/redux';
 import '@ionic/core';
 import 'ionicons';
+import '@stencil/redux';
 import {
   EventEmitter,
 } from '@stencil/core';
@@ -99,6 +99,7 @@ export namespace Components {
   }
 
   interface ImageUploader {
+    'reset': () => void;
     'send': any;
   }
   interface ImageUploaderAttributes extends StencilHTMLAttributes {

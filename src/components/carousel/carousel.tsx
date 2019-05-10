@@ -30,7 +30,7 @@ export class Carousel {
       <ion-header no-border>
         <ion-toolbar color="light">
           <ion-buttons slot="end">
-            // <ion-button color="primary" href="#" onClick={(e) => this.unload(e)}>Sair</ion-button>
+            {/*<ion-button color="primary" href="#" onClick={(e) => this.unload(e)}>Sair</ion-button>*/}
           </ion-buttons>
         </ion-toolbar>
       </ion-header>,
