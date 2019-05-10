@@ -100,8 +100,8 @@ export class PageCreate {
 
       <ion-content padding>
         {this.directions.slice(-1)[0].component === 'CREATE' &&
-        <form id="create" method="POST" action="#" novalidate>
-          <ion-list>
+        <generic-wizard id="create" steps={3} action={async (e: any) => { await this.handleSubmit(e); }}>
+          <div slot="step-1">
             <ion-item>
               <ion-label position="stacked" color="primary">Insira imagens do produto</ion-label>
               <image-uploader send={(files: any) => this.handleFile(files)}/>
@@ -118,14 +118,14 @@ export class PageCreate {
               <ion-label position="stacked" color="primary">Data de saída</ion-label>
               <ion-datetime display-format="MMM DD, YYYY HH:mm" value="" name="scheduledTo"></ion-datetime>
             </ion-item>
-            <address-input input={(e: any, d: any) => this.handleAddress(e, d, 'origin')} label="Endereço de saída"/>
-            <address-input input={(e: any, d: any) => this.handleAddress(e, d, 'destination')} label="Endereço de chegada"/>
-          </ion-list>
-
-          <div padding>
-            <ion-button onClick={async (e) => { await this.handleSubmit(e); }} expand="block">Criar</ion-button>
           </div>
-        </form>
+          <div slot="step-2">
+            <address-input input={(e: any, d: any) => this.handleAddress(e, d, 'origin')} label="Endereço de saída"/>
+          </div>
+          <div slot="step-3">
+            <address-input input={(e: any, d: any) => this.handleAddress(e, d, 'destination')} label="Endereço de chegada"/>
+          </div>
+        </generic-wizard>
         }
 
       </ion-content>

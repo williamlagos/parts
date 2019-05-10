@@ -88,7 +88,7 @@ export class Menu {
           <ion-list>
             <ion-list-header>Conta</ion-list-header>
 
-            <ion-menu-toggle autoHide={false}>
+            {/*<ion-menu-toggle autoHide={false}>
               {this.checkLoginStatus() ? (
                 <ion-item href="#" onClick={(e) => this.showPage(e, 'account')}>
                   <ion-icon slot="start" name="person"></ion-icon>
@@ -100,7 +100,7 @@ export class Menu {
                   <ion-label>Entrar</ion-label>
                 </ion-item>
               )}
-            </ion-menu-toggle>
+            </ion-menu-toggle>*/}
 
             <ion-menu-toggle autoHide={false}>
               <ion-item href="#support" button onClick={(e) => this.showPage(e, 'support')}>

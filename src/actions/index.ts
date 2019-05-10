@@ -13,7 +13,8 @@ import {
 } from './customer';
 
 import {
-  SelectOrderAction
+  SelectOrderAction,
+  ShowOrderAction
 } from './merchant';
 
 export interface NullAction {
@@ -30,6 +31,7 @@ export type ActionTypes =
   | RevokeTokenAction
   | RegisterOrderAction
   | SelectOrderAction
+  | ShowOrderAction
   | CloseAction
   | OpenAction
 ;
@@ -45,5 +47,6 @@ export enum TypeKeys {
   OPEN_REGISTER = 'OPEN_REGISTER',
   CLOSE_REGISTER = 'CLOSE_REGISTER',
   REGISTER_ORDER = 'REGISTER_ORDER',
-  SELECT_ORDER = 'SELECT_ORDER'
+  SELECT_ORDER = 'SELECT_ORDER',
+  SHOW_ORDER = 'SHOW_ORDER'
 }

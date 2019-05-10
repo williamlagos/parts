@@ -27,10 +27,12 @@ class Backend {
       'Content-Type': 'application/json',
       'x-access-token': config.headers['x-access-token']
     }
-    if (body) {
-      config.body = JSON.stringify(body);
-    } else if (form) {
-      config.body = _qs.stringify(form);
+    if (method !== 'GET') {
+      if (body) {
+        config.body = JSON.stringify(body);
+      } else if (form) {
+        config.body = _qs.stringify(form);
+      }
     }
     return fetch(queryUrl, config);
   };

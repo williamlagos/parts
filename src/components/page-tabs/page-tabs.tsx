@@ -52,7 +52,7 @@ export class PageTabs {
         <ion-tab tab="tab-map" component="page-map"></ion-tab>
         <ion-tab tab="tab-schedule" component="page-schedule"></ion-tab>
         <ion-tab tab="tab-create" component="page-create"></ion-tab>
-        <ion-tab tab="tab-speakers" component="page-speaker-list"></ion-tab>
+        <ion-tab tab="tab-speakers" component="page-orders"></ion-tab>
         <ion-tab tab="tab-about" component="page-about"></ion-tab>
 
         <ion-tab-bar slot="bottom">
@@ -67,13 +67,13 @@ export class PageTabs {
             </ion-tab-button>
           ]}
           {this.role === 'MERCHANT' && [
+            <ion-tab-button tab="tab-speakers" onClick={() => this.toggleOpen('speakers')}>
+              <ion-icon name="cash"></ion-icon>
+              <ion-label>Ofertar</ion-label>
+            </ion-tab-button>,
             <ion-tab-button tab="tab-schedule" onClick={() => this.toggleOpen('schedule')}>
               <ion-icon name="calendar"></ion-icon>
               <ion-label>Agenda</ion-label>
-            </ion-tab-button>,
-            <ion-tab-button tab="tab-speakers" onClick={() => this.toggleOpen('speakers')}>
-              <ion-icon name="cash"></ion-icon>
-              <ion-label>Oferta</ion-label>
             </ion-tab-button>
           ]}
           <ion-tab-button tab="tab-about" onClick={() => this.toggleOpen('about')}>

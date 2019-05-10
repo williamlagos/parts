@@ -58,6 +58,9 @@ export namespace Components {
   interface PageMap {}
   interface PageMapAttributes extends StencilHTMLAttributes {}
 
+  interface PageOrders {}
+  interface PageOrdersAttributes extends StencilHTMLAttributes {}
+
   interface PageScheduleFilter {
     'excludedTracks': string[];
   }
@@ -98,6 +101,17 @@ export namespace Components {
     'role'?: any;
   }
 
+  interface RegisterWizard {
+    'action': any;
+    'exit': any;
+    'images': any;
+  }
+  interface RegisterWizardAttributes extends StencilHTMLAttributes {
+    'action'?: any;
+    'exit'?: any;
+    'images'?: any;
+  }
+
   interface ImageUploader {
     'reset': () => void;
     'send': any;
@@ -109,13 +123,15 @@ export namespace Components {
 
   interface GenericWizard {
     'action': any;
-    'exit': any;
+    'id': string;
     'images': any;
+    'steps': number;
   }
   interface GenericWizardAttributes extends StencilHTMLAttributes {
     'action'?: any;
-    'exit'?: any;
+    'id'?: string;
     'images'?: any;
+    'steps'?: number;
   }
 }
 
@@ -130,6 +146,7 @@ declare global {
     'PageAccount': Components.PageAccount;
     'PageCreate': Components.PageCreate;
     'PageMap': Components.PageMap;
+    'PageOrders': Components.PageOrders;
     'PageScheduleFilter': Components.PageScheduleFilter;
     'PageSchedule': Components.PageSchedule;
     'PageSession': Components.PageSession;
@@ -137,6 +154,7 @@ declare global {
     'PageSpeakerList': Components.PageSpeakerList;
     'PageSupport': Components.PageSupport;
     'PageTabs': Components.PageTabs;
+    'RegisterWizard': Components.RegisterWizard;
     'ImageUploader': Components.ImageUploader;
     'GenericWizard': Components.GenericWizard;
   }
@@ -151,6 +169,7 @@ declare global {
     'page-account': Components.PageAccountAttributes;
     'page-create': Components.PageCreateAttributes;
     'page-map': Components.PageMapAttributes;
+    'page-orders': Components.PageOrdersAttributes;
     'page-schedule-filter': Components.PageScheduleFilterAttributes;
     'page-schedule': Components.PageScheduleAttributes;
     'page-session': Components.PageSessionAttributes;
@@ -158,6 +177,7 @@ declare global {
     'page-speaker-list': Components.PageSpeakerListAttributes;
     'page-support': Components.PageSupportAttributes;
     'page-tabs': Components.PageTabsAttributes;
+    'register-wizard': Components.RegisterWizardAttributes;
     'image-uploader': Components.ImageUploaderAttributes;
     'generic-wizard': Components.GenericWizardAttributes;
   }
@@ -217,6 +237,12 @@ declare global {
     new (): HTMLPageMapElement;
   };
 
+  interface HTMLPageOrdersElement extends Components.PageOrders, HTMLStencilElement {}
+  var HTMLPageOrdersElement: {
+    prototype: HTMLPageOrdersElement;
+    new (): HTMLPageOrdersElement;
+  };
+
   interface HTMLPageScheduleFilterElement extends Components.PageScheduleFilter, HTMLStencilElement {}
   var HTMLPageScheduleFilterElement: {
     prototype: HTMLPageScheduleFilterElement;
@@ -259,6 +285,12 @@ declare global {
     new (): HTMLPageTabsElement;
   };
 
+  interface HTMLRegisterWizardElement extends Components.RegisterWizard, HTMLStencilElement {}
+  var HTMLRegisterWizardElement: {
+    prototype: HTMLRegisterWizardElement;
+    new (): HTMLRegisterWizardElement;
+  };
+
   interface HTMLImageUploaderElement extends Components.ImageUploader, HTMLStencilElement {}
   var HTMLImageUploaderElement: {
     prototype: HTMLImageUploaderElement;
@@ -281,6 +313,7 @@ declare global {
     'page-account': HTMLPageAccountElement
     'page-create': HTMLPageCreateElement
     'page-map': HTMLPageMapElement
+    'page-orders': HTMLPageOrdersElement
     'page-schedule-filter': HTMLPageScheduleFilterElement
     'page-schedule': HTMLPageScheduleElement
     'page-session': HTMLPageSessionElement
@@ -288,6 +321,7 @@ declare global {
     'page-speaker-list': HTMLPageSpeakerListElement
     'page-support': HTMLPageSupportElement
     'page-tabs': HTMLPageTabsElement
+    'register-wizard': HTMLRegisterWizardElement
     'image-uploader': HTMLImageUploaderElement
     'generic-wizard': HTMLGenericWizardElement
   }
@@ -302,6 +336,7 @@ declare global {
     'page-account': HTMLPageAccountElement;
     'page-create': HTMLPageCreateElement;
     'page-map': HTMLPageMapElement;
+    'page-orders': HTMLPageOrdersElement;
     'page-schedule-filter': HTMLPageScheduleFilterElement;
     'page-schedule': HTMLPageScheduleElement;
     'page-session': HTMLPageSessionElement;
@@ -309,6 +344,7 @@ declare global {
     'page-speaker-list': HTMLPageSpeakerListElement;
     'page-support': HTMLPageSupportElement;
     'page-tabs': HTMLPageTabsElement;
+    'register-wizard': HTMLRegisterWizardElement;
     'image-uploader': HTMLImageUploaderElement;
     'generic-wizard': HTMLGenericWizardElement;
   }

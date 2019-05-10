@@ -78,20 +78,6 @@ export class Entrance {
     this.password = { ...this.password, valid: false };
   }
 
-  /* async onRegisterSignup(e: any) {
-    e.preventDefault();
-    console.log('clicked signup');
-    this.validatePassword();
-    this.validateUsername();
-
-    this.submitted = true;
-    this.registered = false;
-
-    if (this.password.valid && this.username.valid) {
-      UserData.signup(this.username.value);
-    }
-  } */
-
   async onLogin(e: any) {
     e.preventDefault();
     this.validatePassword();
@@ -103,19 +89,9 @@ export class Entrance {
     console.log(this.name);
 
     if (this.password.valid && this.username.valid) {
-      // await UserData.login(this.username.value);
       this.setToken(this.username.value, this.password.value);
-
-      // this.userDidLogIn.emit({ loginStatus: true });
-      // console.log(navCtrl);
-      // navCtrl.push('/schedule');
     }
   }
-
-  /* onSignup(event: any) {
-    event.preventDefault();
-    this.registered = true;
-  } */
 
   renderLogin() {
     return [
@@ -183,7 +159,7 @@ export class Entrance {
   render() {
     if (!this.introduced) return <generic-carousel action={() => this.toggleIntro(true)}/>;
     return !this.registered ?
-      <generic-wizard action={(d: any) => this.register(d)} exit={() => this.closeRegister()}/> :
+      <register-wizard action={(d: any) => this.register(d)} exit={() => this.closeRegister()}/> :
       this.renderLogin();
   }
 }
