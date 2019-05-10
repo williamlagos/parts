@@ -2,7 +2,7 @@ import { Component, Prop, State } from '@stencil/core';
 
 @Component({
   tag: 'register-wizard',
-  styleUrl: 'wizard.css',
+  styleUrl: 'register.css',
 })
 export class Register {
   @State() submitted = false;
