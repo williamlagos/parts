@@ -22,6 +22,7 @@ export declare class Backend {
   static getNearbyMerchants(parameters?: any): any;
   static getNearbyMerchantsByService(parameters?: any): any;
   static createOrder(parameters?: any): any;
+  static getReadyOrders(parameters?: any): any;
   static getOrders(parameters?: any): any;
   static getOrdersByPeriod(parameters?: any): any;
   static getOrder(parameters?: any): any;
@@ -39,6 +40,7 @@ export declare class Backend {
   static accessWithFacebook(parameters?: any): any;
   static addPicture(parameters?: any): any;
   static getPicture(parameters?: any): any;
+  static getPictures(parameters?: any): any;
   static getLatest(parameters?: any): any;
   static removePicture(parameters?: any): any;
   static createUser(parameters?: any): any;

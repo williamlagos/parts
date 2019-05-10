@@ -870,6 +870,38 @@ class Backend {
   };
 
   /**
+   * request: getReadyOrders
+   * @param xAccessToken - JWT created on user creation or authentication.
+   * @param status - Filtering status.
+   */
+  static getReadyOrders(parameters = {}) {
+    const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
+    const config = parameters.$config || {
+      headers: {}
+    };
+    let path = '/order/ready';
+    let body;
+    let queryParameters = {};
+    let form = {};
+
+    if (parameters['xAccessToken'] !== undefined) {
+      config.headers['x-access-token'] = parameters['xAccessToken'];
+    }
+
+    if (parameters['xAccessToken'] === undefined) {
+      return Promise.reject(new Error('Missing required  parameter: xAccessToken'));
+    }
+
+    if (parameters.$queryParameters) {
+      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+        queryParameters[parameterName] = parameters.$queryParameters[parameterName];
+      });
+    }
+
+    return Backend.request('get', domain + path, body, queryParameters, form, config);
+  };
+
+  /**
    * request: getOrdersByPeriod
    * @param xAccessToken - JWT created on user creation or authentication.
    * @param status - Filtering status.
@@ -1471,6 +1503,43 @@ class Backend {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
+
+    return Backend.request('get', domain + path, body, queryParameters, form, config);
+  };
+
+  /**
+   * request: getPictures
+   * @param xAccessToken - JWT created on user creation or authentication.
+   * @param ids - list of ids
+   */
+  static getPictures(parameters = {}) {
+    const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
+    const config = parameters.$config || {
+      headers: {}
+    };
+    let path = '/picture/multiple';
+    let body;
+    let queryParameters = {};
+    let form = {};
+
+    if (parameters['xAccessToken'] !== undefined) {
+      config.headers['x-access-token'] = parameters['xAccessToken'];
+    }
+
+    if (parameters['xAccessToken'] === undefined) {
+      return Promise.reject(new Error('Missing required  parameter: xAccessToken'));
+    }
+
+    if (parameters['ids'] === undefined) {
+      return Promise.reject(new Error('Missing required  parameter: id'));
+    }
+
+    /*if (parameters.$queryParameters) {
+      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+        queryParameters[parameterName] = parameters.$queryParameters[parameterName];
+      });
+    }*/
+    queryParameters = { ids: String(parameters['ids']) }
 
     return Backend.request('get', domain + path, body, queryParameters, form, config);
   };

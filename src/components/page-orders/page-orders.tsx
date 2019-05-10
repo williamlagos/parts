@@ -116,29 +116,26 @@ export class PageOrders {
         <ion-list>
           <ion-grid fixed>
             <ion-row align-items-stretch>
-              {this.speakers.map(speaker => (
+              {this.orders.map(order => {
+               console.log(order.pictures[0]);
+               return (
                 <ion-col size="12" size-md="6">
                   <ion-card class="speaker-card">
                     <ion-card-header>
-                      <ion-item detail-none href={`/speakers/${speaker.id}`}>
-                        <ion-avatar slot="start">
-                          <img src={speaker.profilePic} alt="Speaker profile pic"/>
-                        </ion-avatar>
-                        {speaker.name}
+                      <ion-item detail-none href={`/speakers/${order.id}`}>
+                        {
+                          order.pictures.length > 0 ?
+                          <img src={order.pictures[0].externalRef} alt="Aqui fica a imagem do pedido"/> :
+                          <img style={{ 'text-align': 'center' }} alt="Aqui fica a imagem do pedido"/>
+                        }
+                        {/*<ion-avatar slot="start">
+                        </ion-avatar>*/}
                       </ion-item>
                     </ion-card-header>
-
                     <ion-card-content>
                       <ion-list>
-                        {/*(speaker.sessions.map(session => (
-                          <ion-item href={`/speakers/session/${session.id}`}>
-                            <h3>{session.name}</h3>
-                          </ion-item>
-                        ))*/}
-
-                        <ion-item><p>R${speaker.id * 5},00</p><br/></ion-item>
-                        <ion-item href={`/speakers/${speaker.id}`}>
-                          <h3>Sobre {speaker.name}</h3>
+                        <ion-item href={`/speakers/${order.id}`}>
+                          <h2>{order.title}</h2>
                         </ion-item>
                       </ion-list>
                     </ion-card-content>
@@ -149,7 +146,7 @@ export class PageOrders {
                           fill="clear"
                           size="small"
                           color="primary"
-                          onClick={() => this.goToSpeakerTwitter(speaker)}>
+                          onClick={() => this.goToSpeakerTwitter(order)}>
                           <ion-icon name="logo-twitter" slot="start"></ion-icon>
                           {/*Contatar*/}
                         </ion-button>
@@ -159,7 +156,7 @@ export class PageOrders {
                           fill="clear"
                           size="small"
                           color="primary"
-                          onClick={() => this.openSpeakerShare(speaker)}>
+                          onClick={() => this.openSpeakerShare(order)}>
                           <ion-icon name="share-alt" slot="start"></ion-icon>
                           {/*Compartilhar*/}
                         </ion-button>
@@ -169,7 +166,7 @@ export class PageOrders {
                           fill="clear"
                           size="small"
                           color="primary"
-                          onClick={() => this.openContact(speaker)}>
+                          onClick={() => this.openContact(order)}>
                           <ion-icon name="chatboxes" slot="start"></ion-icon>
                           {/*Enviar*/}
                         </ion-button>
@@ -177,7 +174,7 @@ export class PageOrders {
                     </ion-row>
                   </ion-card>
                 </ion-col>
-              ))}
+              ); })}
             </ion-row>
           </ion-grid>
         </ion-list>

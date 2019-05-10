@@ -17,10 +17,20 @@ export interface ShowOrderAction {
 
 export const showOrder = (token: string) => async (dispatch: any, _getState: any) => {
   Backend.setDomain(endpoint);
-  console.log(await (await Backend.getOrders({ 'xAccessToken': token })).json());
+  const orders = await (await Backend.getReadyOrders({ 'xAccessToken': token })).json();
+  const pictures = orders.map((order: any) => order.pictures).flat();
+  const picturesObj = await(await Backend.getPictures({ 'xAccessToken': token, 'ids': pictures.flat() })).json();
+  const ordersWithPictures = orders.map((order: any) => {
+    for (let i = 0; i < picturesObj.length; i++) {
+      const foundOne = order.pictures.indexOf(picturesObj[i]._id);
+      if (foundOne !== -1) order.pictures[foundOne] = picturesObj[i];
+    }
+    return order;
+  });
+  // console.log(ordersWithPictures);
   return dispatch({
     type: TypeKeys.SHOW_ORDER,
-    orders: []
+    orders: ordersWithPictures
   });
 };
 
