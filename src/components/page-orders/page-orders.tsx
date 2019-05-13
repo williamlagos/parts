@@ -117,30 +117,30 @@ export class PageOrders {
           <ion-grid fixed>
             <ion-row align-items-stretch>
               {this.orders.map(order => {
-               console.log(order.pictures[0]);
+               console.log(order.job.origin.items);
                return (
                 <ion-col size="12" size-md="6">
                   <ion-card class="speaker-card">
+                    <a style={{ 'text-decoration': 'none' }} href={`/speakers/${order.id}`}>
+                      {
+                        order.pictures.length > 0 ?
+                        <img style={{ 'text-align': 'center' }} src={order.pictures[0].externalRef} alt="Aqui fica a imagem do pedido"/> :
+                        <img style={{ 'text-align': 'center' }} alt="Aqui fica a imagem do pedido"/>
+                      }
+                    </a>
                     <ion-card-header>
-                      <ion-item detail-none href={`/speakers/${order.id}`}>
-                        {
-                          order.pictures.length > 0 ?
-                          <img src={order.pictures[0].externalRef} alt="Aqui fica a imagem do pedido"/> :
-                          <img style={{ 'text-align': 'center' }} alt="Aqui fica a imagem do pedido"/>
-                        }
-                        {/*<ion-avatar slot="start">
-                        </ion-avatar>*/}
-                      </ion-item>
+                      <ion-card-subtitle>{order.job.origin.address.street + ', ' + order.job.origin.address.number}</ion-card-subtitle>
+                      <ion-card-title>{order.title}</ion-card-title>
                     </ion-card-header>
                     <ion-card-content>
-                      <ion-list>
-                        <ion-item href={`/speakers/${order.id}`}>
-                          <h2>{order.title}</h2>
-                        </ion-item>
-                      </ion-list>
+                      {
+                        order.job.origin.items.length > 1 ?
+                          <ion-list>{order.job.origin.items.map((item: any) => <ion-item>{item.description}</ion-item>)}</ion-list> :
+                          order.job.origin.items.length > 0 && order.job.origin.items[0].description
+                      }
                     </ion-card-content>
 
-                    <ion-row no-padding justify-content-center>
+                    {/*<ion-row no-padding justify-content-center>
                       <ion-col size="4" text-left>
                         <ion-button
                           fill="clear"
@@ -148,7 +148,6 @@ export class PageOrders {
                           color="primary"
                           onClick={() => this.goToSpeakerTwitter(order)}>
                           <ion-icon name="logo-twitter" slot="start"></ion-icon>
-                          {/*Contatar*/}
                         </ion-button>
                       </ion-col>
                       <ion-col size="4" text-center>
@@ -158,7 +157,6 @@ export class PageOrders {
                           color="primary"
                           onClick={() => this.openSpeakerShare(order)}>
                           <ion-icon name="share-alt" slot="start"></ion-icon>
-                          {/*Compartilhar*/}
                         </ion-button>
                       </ion-col>
                       <ion-col size="4" text-right>
@@ -168,10 +166,9 @@ export class PageOrders {
                           color="primary"
                           onClick={() => this.openContact(order)}>
                           <ion-icon name="chatboxes" slot="start"></ion-icon>
-                          {/*Enviar*/}
                         </ion-button>
                       </ion-col>
-                    </ion-row>
+                    </ion-row>*/}
                   </ion-card>
                 </ion-col>
               ); })}
