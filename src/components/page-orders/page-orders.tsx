@@ -139,7 +139,7 @@ export class PageOrders {
                           order.job.origin.items.length > 0 && order.job.origin.items[0].description
                       }
                     </ion-card-content>
-
+                    <ion-button expand="full" color="primary" fill="clear">Ofertar</ion-button>
                     {/*<ion-row no-padding justify-content-center>
                       <ion-col size="4" text-left>
                         <ion-button
