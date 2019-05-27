@@ -9,10 +9,12 @@ import {
 } from './session';
 
 import {
-  RegisterOrderAction
+  RegisterOrderAction,
+  ShowMyOrdersAction,
 } from './customer';
 
 import {
+  PlaceOrderAction,
   SelectOrderAction,
   ShowOrderAction
 } from './merchant';
@@ -34,6 +36,8 @@ export type ActionTypes =
   | ShowOrderAction
   | CloseAction
   | OpenAction
+  | PlaceOrderAction
+  | ShowMyOrdersAction
 ;
 
 export enum TypeKeys {
@@ -48,5 +52,7 @@ export enum TypeKeys {
   CLOSE_REGISTER = 'CLOSE_REGISTER',
   REGISTER_ORDER = 'REGISTER_ORDER',
   SELECT_ORDER = 'SELECT_ORDER',
-  SHOW_ORDER = 'SHOW_ORDER'
+  SHOW_ORDER = 'SHOW_ORDER',
+  PLACE_ORDER = 'PLACE_ORDER',
+  MY_ORDERS = 'MY_ORDERS'
 }

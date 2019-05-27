@@ -21,7 +21,7 @@ export class Menu {
   appPages = [
     { title: 'Frete', url: 'create', icon: 'cube', role: 'CUSTOMER' },
     { title: 'Mapa', url: 'map', icon: 'map', role: 'CUSTOMER' },
-    { title: 'Ofertas', url: 'speakers', icon: 'cash', role: 'MERCHANT' },
+    { title: 'Ofertas', url: 'speakers', icon: 'cash', role: 'ALL' },
     { title: 'Agenda', url: 'schedule', icon: 'calendar', role: 'MERCHANT' },
     { title: 'Sobre', url: 'about', icon: 'information-circle', role: 'ALL' }
   ];

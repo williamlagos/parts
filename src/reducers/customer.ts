@@ -19,6 +19,9 @@ const customer = (state: AppState = prepareState(), action: ActionTypes) => {
     case TypeKeys.REGISTER_ORDER: {
       return { ...state, orderId: action.orderId };
     }
+    case TypeKeys.MY_ORDERS: {
+      return { ...state, orders: action.orders };
+    }
   }
 
   return state;

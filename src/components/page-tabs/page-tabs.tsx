@@ -52,7 +52,7 @@ export class PageTabs {
         <ion-tab tab="tab-map" component="page-map"></ion-tab>
         <ion-tab tab="tab-schedule" component="page-schedule"></ion-tab>
         <ion-tab tab="tab-create" component="page-create"></ion-tab>
-        <ion-tab tab="tab-speakers" component="page-orders"></ion-tab>
+        <ion-tab tab="tab-speakers" component="page-order-list"></ion-tab>
         <ion-tab tab="tab-about" component="page-about"></ion-tab>
 
         <ion-tab-bar slot="bottom">
@@ -60,6 +60,10 @@ export class PageTabs {
             <ion-tab-button tab="tab-map" onClick={() => this.toggleOpen('map')}>
               <ion-icon name="map"></ion-icon>
               <ion-label>Mapa</ion-label>
+            </ion-tab-button>,
+            <ion-tab-button tab="tab-speakers" onClick={() => this.toggleOpen('speakers')}>
+              <ion-icon name="cash"></ion-icon>
+              <ion-label>Ofertas</ion-label>
             </ion-tab-button>,
             <ion-tab-button tab="tab-create" onClick={() => this.toggleOpen('create')}>
               <ion-icon name="cube"></ion-icon>

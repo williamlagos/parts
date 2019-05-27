@@ -3,35 +3,51 @@ import { Action, Store } from '@stencil/redux';
 import { Plugins } from '@capacitor/core';
 
 import { showOrder } from '../../actions/merchant';
+import { showMyOrders } from '../../actions/customer';
 
-import { ConferenceData } from '../../providers/conference-data';
+// import { ConferenceData } from '../../providers/conference-data';
 const { Browser } = Plugins;
 
 @Component({
-  tag: 'page-orders',
-  styleUrl: 'page-orders.css'
+  tag: 'page-order-list',
+  styleUrl: 'page-order-list.css'
 })
-export class PageOrders {
+export class PageOrderList {
   mode!: string;
   speakers: any[] = [];
   @State() token: string;
   @State() orders: any[] = [];
   @Prop({ connect: 'ion-action-sheet-controller' }) actionSheetCtrl: HTMLIonActionSheetControllerElement;
+  @Prop({ connect: 'ion-modal-controller' }) modalCtrl: HTMLIonModalControllerElement;
   @Prop({ context: 'store' }) store: Store;
 
   showOrder: Action;
+  showMyOrders: Action;
 
   async componentWillLoad() {
-    this.store.mapStateToProps(this, (state) => {
-      const {
-        merchant: { orders },
-        session: { token }
-      } = state;
-      return { orders, token };
-    });
-    this.store.mapDispatchToProps(this, { showOrder });
-    this.showOrder(this.token);
-    this.speakers = await ConferenceData.getSpeakers();
+    const role = this.parseJwt(this.token)['_role'];
+    if (role === 'MERCHANT') {
+      this.store.mapStateToProps(this, (state) => {
+        const {
+          merchant: { orders },
+          session: { token }
+        } = state;
+        return { orders, token };
+      });
+      this.store.mapDispatchToProps(this, { showOrder });
+      this.showOrder(this.token);
+    } else if (role === 'CUSTOMER') {
+      this.store.mapStateToProps(this, (state) => {
+        const {
+          customer: { orders },
+          session: { token }
+        } = state;
+        return { orders, token };
+      });
+      this.store.mapDispatchToProps(this, { showMyOrders });
+      this.showMyOrders(this.token);
+    }
+    // this.speakers = await ConferenceData.getSpeakers();
   }
 
   goToSpeakerTwitter(speaker: any) {
@@ -101,6 +117,28 @@ export class PageOrders {
     actionSheet.present();
   }
 
+  parseJwt(token: string) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    return JSON.parse(window.atob(base64));
+  }
+
+  async offer(e: any, order: any) {
+    const modal = await this.modalCtrl.create({
+      component: 'page-order-detail',
+      componentProps: {
+        userId: this.parseJwt(this.token)._id,
+        orderId: e.target.id,
+        order
+      }
+    });
+    await modal.present();
+    const { data } = await modal.onDidDismiss();
+    // console.log(data);
+    // console.log(data.success);
+    if (data.success === 0) e.target.disabled = true;
+  }
+
   render() {
     return [
       <ion-header>
@@ -117,7 +155,7 @@ export class PageOrders {
           <ion-grid fixed>
             <ion-row align-items-stretch>
               {this.orders.map(order => {
-               console.log(order.job.origin.items);
+               // console.log(order.pictures);
                return (
                 <ion-col size="12" size-md="6">
                   <ion-card class="speaker-card">
@@ -139,7 +177,9 @@ export class PageOrders {
                           order.job.origin.items.length > 0 && order.job.origin.items[0].description
                       }
                     </ion-card-content>
-                    <ion-button expand="full" color="primary" fill="clear">Ofertar</ion-button>
+                    <ion-button id={order._id} expand="full" color="primary" disabled={order.placed} fill="clear" onClick={(e) => this.offer(e, order)}>
+                      { order.placed ? 'Frete já ofertado' : 'Ofertar' }
+                    </ion-button>
                     {/*<ion-row no-padding justify-content-center>
                       <ion-col size="4" text-left>
                         <ion-button

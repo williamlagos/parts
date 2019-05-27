@@ -10,6 +10,11 @@ export interface RegisterOrderAction {
   orderId: string;
 }
 
+export interface ShowMyOrdersAction {
+  type: TypeKeys.MY_ORDERS;
+  orders: any;
+}
+
 export const registerOrder = (data: any, token: string) => async (dispatch: any, _getState: any) => {
   const files = data.files;
   delete data.files;
@@ -20,5 +25,36 @@ export const registerOrder = (data: any, token: string) => async (dispatch: any,
   return dispatch({
     type: TypeKeys.REGISTER_ORDER,
     orderId: order._id
+  });
+};
+
+export const showMyOrders = (token: string) => async (dispatch: any, _getState: any) => {
+  Backend.setDomain(endpoint);
+  const base64Url = token.split('.')[1];
+  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+  const userId = JSON.parse(window.atob(base64))._id;
+  const initialOrders = await (await Backend.getOrders({ 'xAccessToken': token })).json();
+  const pictures = initialOrders.map((order: any) => order.pictures).flat();
+  /* const bids = initialOrders.map((order: any) => order.bids).flat();
+  const bidsObj = await (await Backend.getBids({ 'xAccessToken': token, 'ids': bids.flat() })).json(); */
+  const picturesObj = await(await Backend.getPictures({ 'xAccessToken': token, 'ids': pictures.flat() })).json();
+  // console.log(picturesObj);
+  const ordersWithPictures = initialOrders.map(async (order: any) => {
+    if (order.bids.length > 0) {
+      const bids = await (await Backend.getOrderBids({ 'xAccessToken': token, 'order': order._id })).json();
+      const result = bids.filter((bid: any) => userId === bid.user._id);
+      order.placed = result.length > 0;
+    }
+    for (let i = 0; i < picturesObj.length; i++) {
+      const foundOne = order.pictures.indexOf(picturesObj[i]._id);
+      if (foundOne !== -1) order.pictures[foundOne] = picturesObj[i];
+    }
+    return order;
+  });
+  const orders = await Promise.all(ordersWithPictures);
+  // console.log(orders);
+  return dispatch({
+    type: TypeKeys.MY_ORDERS,
+    orders
   });
 };

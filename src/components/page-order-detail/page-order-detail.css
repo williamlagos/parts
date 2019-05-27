@@ -1,0 +1,18 @@
+page-order-detail ion-card {
+  text-align: center;
+}
+page-order-detail img {
+  max-width: 140px;
+  margin: 0 auto 20px;
+  /* border-radius: 50%; */
+}
+
+page-order-detail p {
+  color: #60646b;
+}
+
+.outer-content {
+  display:flex;
+  align-items: center;
+  justify-content: center;
+}

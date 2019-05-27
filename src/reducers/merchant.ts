@@ -24,6 +24,9 @@ const merchant = (state: AppState = prepareState(), action: ActionTypes) => {
     case TypeKeys.SHOW_ORDER: {
       return { ...state, orders: action.orders };
     }
+    case TypeKeys.PLACE_ORDER: {
+      return { ...state, orderId: action.orderId };
+    }
   }
 
   return state;

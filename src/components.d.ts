@@ -8,8 +8,8 @@
 import '@stencil/core';
 
 import '@ionic/core';
-import '@stencil/redux';
 import 'ionicons';
+import '@stencil/redux';
 import {
   EventEmitter,
 } from '@stencil/core';
@@ -58,8 +58,19 @@ export namespace Components {
   interface PageMap {}
   interface PageMapAttributes extends StencilHTMLAttributes {}
 
-  interface PageOrders {}
-  interface PageOrdersAttributes extends StencilHTMLAttributes {}
+  interface PageOrderDetail {
+    'order': any;
+    'orderId': string;
+    'userId': any;
+  }
+  interface PageOrderDetailAttributes extends StencilHTMLAttributes {
+    'order'?: any;
+    'orderId'?: string;
+    'userId'?: any;
+  }
+
+  interface PageOrderList {}
+  interface PageOrderListAttributes extends StencilHTMLAttributes {}
 
   interface PageScheduleFilter {
     'excludedTracks': string[];
@@ -146,7 +157,8 @@ declare global {
     'PageAccount': Components.PageAccount;
     'PageCreate': Components.PageCreate;
     'PageMap': Components.PageMap;
-    'PageOrders': Components.PageOrders;
+    'PageOrderDetail': Components.PageOrderDetail;
+    'PageOrderList': Components.PageOrderList;
     'PageScheduleFilter': Components.PageScheduleFilter;
     'PageSchedule': Components.PageSchedule;
     'PageSession': Components.PageSession;
@@ -169,7 +181,8 @@ declare global {
     'page-account': Components.PageAccountAttributes;
     'page-create': Components.PageCreateAttributes;
     'page-map': Components.PageMapAttributes;
-    'page-orders': Components.PageOrdersAttributes;
+    'page-order-detail': Components.PageOrderDetailAttributes;
+    'page-order-list': Components.PageOrderListAttributes;
     'page-schedule-filter': Components.PageScheduleFilterAttributes;
     'page-schedule': Components.PageScheduleAttributes;
     'page-session': Components.PageSessionAttributes;
@@ -237,10 +250,16 @@ declare global {
     new (): HTMLPageMapElement;
   };
 
-  interface HTMLPageOrdersElement extends Components.PageOrders, HTMLStencilElement {}
-  var HTMLPageOrdersElement: {
-    prototype: HTMLPageOrdersElement;
-    new (): HTMLPageOrdersElement;
+  interface HTMLPageOrderDetailElement extends Components.PageOrderDetail, HTMLStencilElement {}
+  var HTMLPageOrderDetailElement: {
+    prototype: HTMLPageOrderDetailElement;
+    new (): HTMLPageOrderDetailElement;
+  };
+
+  interface HTMLPageOrderListElement extends Components.PageOrderList, HTMLStencilElement {}
+  var HTMLPageOrderListElement: {
+    prototype: HTMLPageOrderListElement;
+    new (): HTMLPageOrderListElement;
   };
 
   interface HTMLPageScheduleFilterElement extends Components.PageScheduleFilter, HTMLStencilElement {}
@@ -313,7 +332,8 @@ declare global {
     'page-account': HTMLPageAccountElement
     'page-create': HTMLPageCreateElement
     'page-map': HTMLPageMapElement
-    'page-orders': HTMLPageOrdersElement
+    'page-order-detail': HTMLPageOrderDetailElement
+    'page-order-list': HTMLPageOrderListElement
     'page-schedule-filter': HTMLPageScheduleFilterElement
     'page-schedule': HTMLPageScheduleElement
     'page-session': HTMLPageSessionElement
@@ -336,7 +356,8 @@ declare global {
     'page-account': HTMLPageAccountElement;
     'page-create': HTMLPageCreateElement;
     'page-map': HTMLPageMapElement;
-    'page-orders': HTMLPageOrdersElement;
+    'page-order-detail': HTMLPageOrderDetailElement;
+    'page-order-list': HTMLPageOrderListElement;
     'page-schedule-filter': HTMLPageScheduleFilterElement;
     'page-schedule': HTMLPageScheduleElement;
     'page-session': HTMLPageSessionElement;
