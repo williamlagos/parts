@@ -57,17 +57,17 @@ export class PageTabs {
 
         <ion-tab-bar slot="bottom">
           {this.role === 'CUSTOMER' && [
-            <ion-tab-button tab="tab-map" onClick={() => this.toggleOpen('map')}>
+            {/*<ion-tab-button tab="tab-map" onClick={() => this.toggleOpen('map')}>
               <ion-icon name="map"></ion-icon>
               <ion-label>Mapa</ion-label>
+            </ion-tab-button>*/},
+            <ion-tab-button tab="tab-create" onClick={() => this.toggleOpen('create')}>
+              <ion-icon name="cube"></ion-icon>
+              <ion-label>Frete</ion-label>
             </ion-tab-button>,
             <ion-tab-button tab="tab-speakers" onClick={() => this.toggleOpen('speakers')}>
               <ion-icon name="cash"></ion-icon>
               <ion-label>Ofertas</ion-label>
-            </ion-tab-button>,
-            <ion-tab-button tab="tab-create" onClick={() => this.toggleOpen('create')}>
-              <ion-icon name="cube"></ion-icon>
-              <ion-label>Frete</ion-label>
             </ion-tab-button>
           ]}
           {this.role === 'MERCHANT' && [

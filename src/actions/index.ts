@@ -10,7 +10,9 @@ import {
 
 import {
   RegisterOrderAction,
+  SetMerchantOrderAction,
   ShowMyOrdersAction,
+  ShowOrderBidsAction
 } from './customer';
 
 import {
@@ -38,6 +40,8 @@ export type ActionTypes =
   | OpenAction
   | PlaceOrderAction
   | ShowMyOrdersAction
+  | ShowOrderBidsAction
+  | SetMerchantOrderAction
 ;
 
 export enum TypeKeys {
@@ -54,5 +58,7 @@ export enum TypeKeys {
   SELECT_ORDER = 'SELECT_ORDER',
   SHOW_ORDER = 'SHOW_ORDER',
   PLACE_ORDER = 'PLACE_ORDER',
-  MY_ORDERS = 'MY_ORDERS'
+  MY_ORDERS = 'MY_ORDERS',
+  ORDER_BIDS = 'ORDER_BIDS',
+  ORDER_MERCHANT = 'ORDER_MERCHANT'
 }

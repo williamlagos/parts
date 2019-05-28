@@ -15,6 +15,15 @@ export interface ShowMyOrdersAction {
   orders: any;
 }
 
+export interface ShowOrderBidsAction {
+  type: TypeKeys.ORDER_BIDS;
+  bids: any;
+}
+
+export interface SetMerchantOrderAction {
+  type: TypeKeys.ORDER_MERCHANT;
+}
+
 export const registerOrder = (data: any, token: string) => async (dispatch: any, _getState: any) => {
   const files = data.files;
   delete data.files;
@@ -57,4 +66,19 @@ export const showMyOrders = (token: string) => async (dispatch: any, _getState: 
     type: TypeKeys.MY_ORDERS,
     orders
   });
+};
+
+export const showOrderBids = (token: string, orderId: string) => async (dispatch: any, _getState: any) => {
+  Backend.setDomain(endpoint);
+  const bids = await (await Backend.getOrderBids({ 'xAccessToken': token, 'order': orderId })).json();
+  return dispatch({
+    type: TypeKeys.ORDER_BIDS,
+    bids
+  });
+};
+
+export const selectMerchantForOrder = (merchantId: string, orderId: string, token: string) => async (dispatch: any, _getState: any) => {
+  Backend.setDomain(endpoint);
+  await Backend.setOrderMerchant({ 'xAccessToken': token, 'id': orderId, 'merchant': merchantId });
+  return dispatch({ type: TypeKeys.ORDER_MERCHANT });
 };

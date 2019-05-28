@@ -61,11 +61,13 @@ export namespace Components {
   interface PageOrderDetail {
     'order': any;
     'orderId': string;
+    'role': string;
     'userId': any;
   }
   interface PageOrderDetailAttributes extends StencilHTMLAttributes {
     'order'?: any;
     'orderId'?: string;
+    'role'?: string;
     'userId'?: any;
   }
 

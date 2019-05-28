@@ -4,6 +4,7 @@ import { Action, Store } from '@stencil/redux';
 // import { ConferenceData } from '../../providers/conference-data';
 
 import { placeOrder } from '../../actions/merchant';
+import { selectMerchantForOrder, showOrderBids } from '../../actions/customer';
 
 @Component({
   tag: 'page-order-detail',
@@ -16,34 +17,46 @@ export class PageOrderDetail {
   @Prop() order: any;
   @Prop() orderId: string;
   @Prop() userId: any;
+  @Prop() role: string;
   @Prop({ context: 'config' }) config: Config;
   @Prop({ context: 'store' }) store: Store;
   @State() data = { 'value': 0.0, 'description': '' };
   @State() token: string;
+  @State() bids: any;
 
   placeOrder: Action;
+  acceptOrder: Action;
+  showOrderBids: Action;
+  selectMerchantForOrder: Action;
 
   async componentWillLoad() {
     // this.speaker = await ConferenceData.getSpeaker('1');
     this.store.mapStateToProps(this, (state) => {
-      const { session: { token } } = state;
-      return { token };
+      const {
+        session: { token },
+        customer: { bids }
+      } = state;
+      return { token, bids };
     });
-    this.store.mapDispatchToProps(this, { placeOrder });
+    this.store.mapDispatchToProps(this, { placeOrder, showOrderBids, selectMerchantForOrder });
+    await this.showOrderBids(this.token, this.orderId);
   }
 
   dismiss(data?: any) {
     // dismiss this modal and pass back data
-    (this.el.closest('ion-modal') as any).dismiss(data);
+    (this.el.closest('ion-modal') as any).dismiss(data === null ? { 'success': 0 } : data);
   }
 
   offer() {
     const bid = { ...this.data, /*order: this.orderId,*/ user: this.userId };
     this.placeOrder(bid, this.orderId, this.token);
     this.dismiss({ 'success': 0 });
-    // console.log(bid);
-    // console.log(this.data);
-    // console.log(this.orderId);
+  }
+
+  schedule() {
+    const merchants: HTMLIonRadioGroupElement = document.querySelector('#merchants');
+    this.selectMerchantForOrder(merchants.value, this.orderId, this.token);
+    this.dismiss({ 'success': 0 });
   }
 
   handleInput(ev: any) {
@@ -75,6 +88,7 @@ export class PageOrderDetail {
         <ion-grid>
           <ion-row>
             <ion-col style={{ 'text-align' : 'center' }} col-10 push-1 col-sm-6 push-sm-3>
+            <ion-item>
               {
                 this.order.pictures.length > 0 ?
                 <img style={{ 'text-align': 'center' }} src={this.order.pictures[0].externalRef} alt="Aqui fica a imagem do pedido"/> :
@@ -91,20 +105,44 @@ export class PageOrderDetail {
                   }
                 </p>
               </div>
+              </ion-item>
             </ion-col>
           </ion-row>
           <ion-row>
-          <form style={{ 'width': '100%' }}>
-          <ion-item>
-            <ion-label position="stacked" color="primary">Digite uma observação</ion-label>
-            <ion-textarea name="description" value="" onInput={(e) => this.handleInput(e)}></ion-textarea>
-            </ion-item>
-            <ion-item>
-              <ion-label position="stacked" color="primary">Digite o valor desejado</ion-label>
-              <ion-input name="value" type="number" value="" onInput={(e) => this.handleInput(e)}></ion-input>
-              </ion-item>
-            <ion-button expand="full" color="primary" onClick={() => this.offer()} fill="clear">Ofertar</ion-button>
-          </form>
+            <ion-col>
+              {
+                this.role === 'MERCHANT' ? (
+                  <form style={{ 'width': '100%' }}>
+                  <ion-item>
+                    <ion-label position="stacked" color="primary">Digite uma observação</ion-label>
+                    <ion-textarea name="description" value="" onInput={(e) => this.handleInput(e)}></ion-textarea>
+                    </ion-item>
+                    <ion-item>
+                      <ion-label position="stacked" color="primary">Digite o valor desejado</ion-label>
+                      <ion-input name="value" type="number" value="" onInput={(e) => this.handleInput(e)}></ion-input>
+                      </ion-item>
+                    <ion-button expand="full" color="primary" onClick={() => this.offer()} fill="clear">Ofertar</ion-button>
+                  </form>
+                ) : (
+                  <ion-list>
+                    <ion-radio-group id="merchants">
+                      <ion-list-header>
+                        <ion-label>Selecione a oferta de um freteiro:</ion-label>
+                      </ion-list-header>
+                      {
+                        this.bids.map((bid: any, i: number) => (
+                          <ion-item>
+                            <ion-label>{bid.user.name} ofereceu R$ {bid.value}</ion-label>
+                            <ion-radio slot="start" value={bid.user._id} checked={i === 0} ></ion-radio>
+                          </ion-item>
+                        ))
+                      }
+                    </ion-radio-group>
+                    <ion-button expand="block" onClick={() => this.schedule()}>Agendar frete</ion-button>
+                  </ion-list>
+                )
+              }
+            </ion-col>
           </ion-row>
         </ion-grid>
       </ion-content>

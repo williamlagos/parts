@@ -15,6 +15,7 @@ const { Browser } = Plugins;
 export class PageOrderList {
   mode!: string;
   speakers: any[] = [];
+  @State() role: string;
   @State() token: string;
   @State() orders: any[] = [];
   @Prop({ connect: 'ion-action-sheet-controller' }) actionSheetCtrl: HTMLIonActionSheetControllerElement;
@@ -25,27 +26,27 @@ export class PageOrderList {
   showMyOrders: Action;
 
   async componentWillLoad() {
-    const role = this.parseJwt(this.token)['_role'];
-    if (role === 'MERCHANT') {
+    this.store.mapStateToProps(this, (state) => {
+      const { session: { token } } = state;
+      return { token };
+    });
+    this.role = this.parseJwt(this.token)['_role'];
+    console.log(this.role);
+    if (this.role === 'MERCHANT') {
       this.store.mapStateToProps(this, (state) => {
-        const {
-          merchant: { orders },
-          session: { token }
-        } = state;
-        return { orders, token };
+        const { merchant: { orders } } = state;
+        return { orders };
       });
       this.store.mapDispatchToProps(this, { showOrder });
-      this.showOrder(this.token);
-    } else if (role === 'CUSTOMER') {
+      await this.showOrder(this.token);
+    } else if (this.role === 'CUSTOMER') {
+      console.log('YES');
       this.store.mapStateToProps(this, (state) => {
-        const {
-          customer: { orders },
-          session: { token }
-        } = state;
-        return { orders, token };
+        const { customer: { orders } } = state;
+        return { orders };
       });
       this.store.mapDispatchToProps(this, { showMyOrders });
-      this.showMyOrders(this.token);
+      await this.showMyOrders(this.token);
     }
     // this.speakers = await ConferenceData.getSpeakers();
   }
@@ -127,6 +128,7 @@ export class PageOrderList {
     const modal = await this.modalCtrl.create({
       component: 'page-order-detail',
       componentProps: {
+        role: this.role,
         userId: this.parseJwt(this.token)._id,
         orderId: e.target.id,
         order
@@ -154,64 +156,74 @@ export class PageOrderList {
         <ion-list>
           <ion-grid fixed>
             <ion-row align-items-stretch>
-              {this.orders.map(order => {
-               // console.log(order.pictures);
-               return (
-                <ion-col size="12" size-md="6">
-                  <ion-card class="speaker-card">
-                    <a style={{ 'text-decoration': 'none' }} href={`/speakers/${order.id}`}>
-                      {
-                        order.pictures.length > 0 ?
-                        <img style={{ 'text-align': 'center' }} src={order.pictures[0].externalRef} alt="Aqui fica a imagem do pedido"/> :
-                        <img style={{ 'text-align': 'center' }} alt="Aqui fica a imagem do pedido"/>
-                      }
-                    </a>
-                    <ion-card-header>
-                      <ion-card-subtitle>{order.job.origin.address.street + ', ' + order.job.origin.address.number}</ion-card-subtitle>
-                      <ion-card-title>{order.title}</ion-card-title>
-                    </ion-card-header>
-                    <ion-card-content>
-                      {
-                        order.job.origin.items.length > 1 ?
-                          <ion-list>{order.job.origin.items.map((item: any) => <ion-item>{item.description}</ion-item>)}</ion-list> :
-                          order.job.origin.items.length > 0 && order.job.origin.items[0].description
-                      }
-                    </ion-card-content>
-                    <ion-button id={order._id} expand="full" color="primary" disabled={order.placed} fill="clear" onClick={(e) => this.offer(e, order)}>
-                      { order.placed ? 'Frete já ofertado' : 'Ofertar' }
-                    </ion-button>
-                    {/*<ion-row no-padding justify-content-center>
-                      <ion-col size="4" text-left>
-                        <ion-button
-                          fill="clear"
-                          size="small"
-                          color="primary"
-                          onClick={() => this.goToSpeakerTwitter(order)}>
-                          <ion-icon name="logo-twitter" slot="start"></ion-icon>
-                        </ion-button>
-                      </ion-col>
-                      <ion-col size="4" text-center>
-                        <ion-button
-                          fill="clear"
-                          size="small"
-                          color="primary"
-                          onClick={() => this.openSpeakerShare(order)}>
-                          <ion-icon name="share-alt" slot="start"></ion-icon>
-                        </ion-button>
-                      </ion-col>
-                      <ion-col size="4" text-right>
-                        <ion-button
-                          fill="clear"
-                          size="small"
-                          color="primary"
-                          onClick={() => this.openContact(order)}>
-                          <ion-icon name="chatboxes" slot="start"></ion-icon>
-                        </ion-button>
-                      </ion-col>
-                    </ion-row>*/}
-                  </ion-card>
-                </ion-col>
-              ); })}
+              {
+                this.orders.map(order => (
+                  order.status === 'created' && (
+                    <ion-col size="12" size-md="6">
+                      <ion-card class="speaker-card">
+                        <a style={{ 'text-decoration': 'none' }} href={`/speakers/${order.id}`}>
+                          {
+                            order.pictures.length > 0 ?
+                            <img style={{ 'text-align': 'center' }} src={order.pictures[0].externalRef} alt="Aqui fica a imagem do pedido"/> :
+                            <img style={{ 'text-align': 'center' }} alt="Aqui fica a imagem do pedido"/>
+                          }
+                        </a>
+                        <ion-card-header>
+                          <ion-card-subtitle>{order.job.origin.address.street + ', ' + order.job.origin.address.number}</ion-card-subtitle>
+                          <ion-card-title>{order.title}</ion-card-title>
+                        </ion-card-header>
+                        <ion-card-content>
+                          {
+                            order.job.origin.items.length > 1 ?
+                              <ion-list>{order.job.origin.items.map((item: any) => <ion-item>{item.description}</ion-item>)}</ion-list> :
+                              order.job.origin.items.length > 0 && order.job.origin.items[0].description
+                          }
+                        </ion-card-content>
+                          {
+                            this.role === 'MERCHANT' ? (
+                              <ion-button id={order._id} expand="full" color="primary" disabled={order.placed} fill="clear" onClick={(e) => this.offer(e, order)}>
+                                { order.placed ? 'Frete já ofertado' : 'Ofertar' }
+                              </ion-button>
+                            ) : (
+                              <ion-button id={order._id} expand="full" color="primary" disabled={order.placed} fill="clear" onClick={(e) => this.offer(e, order)}>
+                                { order.placed ? 'Frete já selecionado' : 'Ver ofertas' }
+                              </ion-button>
+                            )
+                          }
+                          {/*<ion-row no-padding justify-content-center>
+                            <ion-col size="4" text-left>
+                              <ion-button
+                                fill="clear"
+                                size="small"
+                                color="primary"
+                                onClick={() => this.goToSpeakerTwitter(order)}>
+                                <ion-icon name="logo-twitter" slot="start"></ion-icon>
+                              </ion-button>
+                            </ion-col>
+                            <ion-col size="4" text-center>
+                              <ion-button
+                                fill="clear"
+                                size="small"
+                                color="primary"
+                                onClick={() => this.openSpeakerShare(order)}>
+                                <ion-icon name="share-alt" slot="start"></ion-icon>
+                              </ion-button>
+                            </ion-col>
+                            <ion-col size="4" text-right>
+                              <ion-button
+                                fill="clear"
+                                size="small"
+                                color="primary"
+                                onClick={() => this.openContact(order)}>
+                                <ion-icon name="chatboxes" slot="start"></ion-icon>
+                              </ion-button>
+                            </ion-col>
+                          </ion-row>*/}
+                      </ion-card>
+                    </ion-col>
+                  )
+                ))
+              }
             </ion-row>
           </ion-grid>
         </ion-list>
