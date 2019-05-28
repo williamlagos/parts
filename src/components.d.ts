@@ -58,6 +58,16 @@ export namespace Components {
   interface PageMap {}
   interface PageMapAttributes extends StencilHTMLAttributes {}
 
+  interface PageMerchantDetail {
+    'speakerId': string;
+  }
+  interface PageMerchantDetailAttributes extends StencilHTMLAttributes {
+    'speakerId'?: string;
+  }
+
+  interface PageMerchantList {}
+  interface PageMerchantListAttributes extends StencilHTMLAttributes {}
+
   interface PageOrderDetail {
     'order': any;
     'orderId': string;
@@ -92,16 +102,6 @@ export namespace Components {
     'goback'?: string;
     'sessionId'?: string;
   }
-
-  interface PageSpeakerDetail {
-    'speakerId': string;
-  }
-  interface PageSpeakerDetailAttributes extends StencilHTMLAttributes {
-    'speakerId'?: string;
-  }
-
-  interface PageSpeakerList {}
-  interface PageSpeakerListAttributes extends StencilHTMLAttributes {}
 
   interface PageSupport {}
   interface PageSupportAttributes extends StencilHTMLAttributes {}
@@ -159,13 +159,13 @@ declare global {
     'PageAccount': Components.PageAccount;
     'PageCreate': Components.PageCreate;
     'PageMap': Components.PageMap;
+    'PageMerchantDetail': Components.PageMerchantDetail;
+    'PageMerchantList': Components.PageMerchantList;
     'PageOrderDetail': Components.PageOrderDetail;
     'PageOrderList': Components.PageOrderList;
     'PageScheduleFilter': Components.PageScheduleFilter;
     'PageSchedule': Components.PageSchedule;
     'PageSession': Components.PageSession;
-    'PageSpeakerDetail': Components.PageSpeakerDetail;
-    'PageSpeakerList': Components.PageSpeakerList;
     'PageSupport': Components.PageSupport;
     'PageTabs': Components.PageTabs;
     'RegisterWizard': Components.RegisterWizard;
@@ -183,13 +183,13 @@ declare global {
     'page-account': Components.PageAccountAttributes;
     'page-create': Components.PageCreateAttributes;
     'page-map': Components.PageMapAttributes;
+    'page-merchant-detail': Components.PageMerchantDetailAttributes;
+    'page-merchant-list': Components.PageMerchantListAttributes;
     'page-order-detail': Components.PageOrderDetailAttributes;
     'page-order-list': Components.PageOrderListAttributes;
     'page-schedule-filter': Components.PageScheduleFilterAttributes;
     'page-schedule': Components.PageScheduleAttributes;
     'page-session': Components.PageSessionAttributes;
-    'page-speaker-detail': Components.PageSpeakerDetailAttributes;
-    'page-speaker-list': Components.PageSpeakerListAttributes;
     'page-support': Components.PageSupportAttributes;
     'page-tabs': Components.PageTabsAttributes;
     'register-wizard': Components.RegisterWizardAttributes;
@@ -252,6 +252,18 @@ declare global {
     new (): HTMLPageMapElement;
   };
 
+  interface HTMLPageMerchantDetailElement extends Components.PageMerchantDetail, HTMLStencilElement {}
+  var HTMLPageMerchantDetailElement: {
+    prototype: HTMLPageMerchantDetailElement;
+    new (): HTMLPageMerchantDetailElement;
+  };
+
+  interface HTMLPageMerchantListElement extends Components.PageMerchantList, HTMLStencilElement {}
+  var HTMLPageMerchantListElement: {
+    prototype: HTMLPageMerchantListElement;
+    new (): HTMLPageMerchantListElement;
+  };
+
   interface HTMLPageOrderDetailElement extends Components.PageOrderDetail, HTMLStencilElement {}
   var HTMLPageOrderDetailElement: {
     prototype: HTMLPageOrderDetailElement;
@@ -280,18 +292,6 @@ declare global {
   var HTMLPageSessionElement: {
     prototype: HTMLPageSessionElement;
     new (): HTMLPageSessionElement;
-  };
-
-  interface HTMLPageSpeakerDetailElement extends Components.PageSpeakerDetail, HTMLStencilElement {}
-  var HTMLPageSpeakerDetailElement: {
-    prototype: HTMLPageSpeakerDetailElement;
-    new (): HTMLPageSpeakerDetailElement;
-  };
-
-  interface HTMLPageSpeakerListElement extends Components.PageSpeakerList, HTMLStencilElement {}
-  var HTMLPageSpeakerListElement: {
-    prototype: HTMLPageSpeakerListElement;
-    new (): HTMLPageSpeakerListElement;
   };
 
   interface HTMLPageSupportElement extends Components.PageSupport, HTMLStencilElement {}
@@ -334,13 +334,13 @@ declare global {
     'page-account': HTMLPageAccountElement
     'page-create': HTMLPageCreateElement
     'page-map': HTMLPageMapElement
+    'page-merchant-detail': HTMLPageMerchantDetailElement
+    'page-merchant-list': HTMLPageMerchantListElement
     'page-order-detail': HTMLPageOrderDetailElement
     'page-order-list': HTMLPageOrderListElement
     'page-schedule-filter': HTMLPageScheduleFilterElement
     'page-schedule': HTMLPageScheduleElement
     'page-session': HTMLPageSessionElement
-    'page-speaker-detail': HTMLPageSpeakerDetailElement
-    'page-speaker-list': HTMLPageSpeakerListElement
     'page-support': HTMLPageSupportElement
     'page-tabs': HTMLPageTabsElement
     'register-wizard': HTMLRegisterWizardElement
@@ -358,13 +358,13 @@ declare global {
     'page-account': HTMLPageAccountElement;
     'page-create': HTMLPageCreateElement;
     'page-map': HTMLPageMapElement;
+    'page-merchant-detail': HTMLPageMerchantDetailElement;
+    'page-merchant-list': HTMLPageMerchantListElement;
     'page-order-detail': HTMLPageOrderDetailElement;
     'page-order-list': HTMLPageOrderListElement;
     'page-schedule-filter': HTMLPageScheduleFilterElement;
     'page-schedule': HTMLPageScheduleElement;
     'page-session': HTMLPageSessionElement;
-    'page-speaker-detail': HTMLPageSpeakerDetailElement;
-    'page-speaker-list': HTMLPageSpeakerListElement;
     'page-support': HTMLPageSupportElement;
     'page-tabs': HTMLPageTabsElement;
     'register-wizard': HTMLRegisterWizardElement;

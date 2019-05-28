@@ -5,8 +5,8 @@ const { Browser } = Plugins;
 import { ConferenceData } from '../../providers/conference-data';
 
 @Component({
-  tag: 'page-speaker-list',
-  styleUrl: 'page-speaker-list.css'
+  tag: 'page-merchant-list',
+  styleUrl: 'page-merchant-list.css'
 })
 export class PageSpeakerList {
 
@@ -122,7 +122,7 @@ export class PageSpeakerList {
                           </ion-item>
                         ))*/}
 
-                        <ion-item><p>R${speaker.id*5},00</p><br/></ion-item>
+                        <ion-item><p>R${speaker.id * 5},00</p><br/></ion-item>
                         <ion-item href={`/speakers/${speaker.id}`}>
                           <h3>Sobre {speaker.name}</h3>
                         </ion-item>

@@ -2,8 +2,8 @@ import { Component, Prop } from '@stencil/core';
 import { ConferenceData } from '../../providers/conference-data';
 
 @Component({
-  tag: 'page-speaker-detail',
-  styleUrl: 'page-speaker-detail.css'
+  tag: 'page-merchant-detail',
+  styleUrl: 'page-merchant-detail.css'
 })
 export class PageSpeakerDetail {
   private speaker: any;
