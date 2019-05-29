@@ -31,7 +31,6 @@ export class PageOrderList {
       return { token };
     });
     this.role = this.parseJwt(this.token)['_role'];
-    console.log(this.role);
     if (this.role === 'MERCHANT') {
       this.store.mapStateToProps(this, (state) => {
         const { merchant: { orders } } = state;

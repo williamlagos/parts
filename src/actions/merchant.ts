@@ -7,7 +7,6 @@ const endpoint = hostname === 'localhost' ? 'http://localhost:3000' : 'https://a
 
 export interface SelectOrderAction {
   type: TypeKeys.SELECT_ORDER;
-  orderId: string;
 }
 
 export interface ShowOrderAction {
@@ -20,6 +19,11 @@ export interface PlaceOrderAction {
   orderId: string;
 }
 
+export interface ShowMerchantOrdersAction {
+  type: TypeKeys.MERCHANT_ORDERS;
+  orders: any[];
+}
+
 export const showOrder = (token: string) => async (dispatch: any, _getState: any) => {
   Backend.setDomain(endpoint);
   const base64Url = token.split('.')[1];
@@ -27,10 +31,7 @@ export const showOrder = (token: string) => async (dispatch: any, _getState: any
   const userId = JSON.parse(window.atob(base64))._id;
   const initialOrders = await (await Backend.getReadyOrders({ 'xAccessToken': token })).json();
   const pictures = initialOrders.map((order: any) => order.pictures).flat();
-  /* const bids = initialOrders.map((order: any) => order.bids).flat();
-  const bidsObj = await (await Backend.getBids({ 'xAccessToken': token, 'ids': bids.flat() })).json(); */
   const picturesObj = await(await Backend.getPictures({ 'xAccessToken': token, 'ids': pictures.flat() })).json();
-  // console.log(picturesObj);
   const ordersWithPictures = initialOrders.map(async (order: any) => {
     if (order.bids.length > 0) {
       const bids = await (await Backend.getOrderBids({ 'xAccessToken': token, 'order': order._id })).json();
@@ -44,18 +45,25 @@ export const showOrder = (token: string) => async (dispatch: any, _getState: any
     return order;
   });
   const orders = await Promise.all(ordersWithPictures);
-  // console.log(orders);
   return dispatch({
     type: TypeKeys.SHOW_ORDER,
     orders
   });
 };
 
-export const selectOrder = () => async (dispatch: any, _getState: any) => {
+export const showMyOrders = (token: string) => async (dispatch: any, _getState: any) => {
+  Backend.setDomain(endpoint);
+  const orders = await (await Backend.getOrders({ 'xAccessToken': token })).json();
   return dispatch({
-    type: TypeKeys.SELECT_ORDER,
-    orderId: ''
+    type: TypeKeys.MERCHANT_ORDERS,
+    orders
   });
+};
+
+export const selectOrder = (order: any, token: string) => async (dispatch: any, _getState: any) => {
+  Backend.setDomain(endpoint);
+  await Backend.acceptOrder({ 'xAccessToken': token, 'id': order });
+  return dispatch({ type: TypeKeys.SELECT_ORDER });
 };
 
 export const placeOrder = (bid: any, order: any, token: string) => async (dispatch: any, _getState: any) => {

@@ -51,8 +51,8 @@ export class PageCreate {
     this.data['job']['scheduledTo'] = document.querySelector('ion-datetime').value;
     const origAddrObj = this.data['job']['origin']['address'];
     const destAddrObj = this.data['job']['destination']['address'];
-    const origAddr = origAddrObj['address'] + ', ' + origAddrObj['number'];
-    const destAddr = destAddrObj['address'] + ', ' + destAddrObj['number'];
+    const origAddr = origAddrObj['street'] + ', ' + origAddrObj['number'];
+    const destAddr = destAddrObj['street'] + ', ' + destAddrObj['number'];
     /* Code for geocoding API on Google Maps */
     const apiKey = 'AIzaSyC8B5IrTvSbGt9Akb5f00CiDmO86RTb1ec';
     const origResponse = await fetch(gmapURL + 'key=' + apiKey + '&address=' + origAddr);
@@ -61,10 +61,11 @@ export class PageCreate {
     const destPlace = (await destResponse.json()).results[0].geometry.location;
     this.data['job']['origin']['address']['location'] = { lat: origPlace.lat, lng: origPlace.lng };
     this.data['job']['destination']['address']['location'] = { lat: destPlace.lat, lng: destPlace.lng };
+    console.log(this.data);
     this.registerOrder(this.data, this.token);
-    const tabs: HTMLIonTabsElement = await (this.tab as any).componentOnReady();
-    tabs.select('tab-map');
-    this.close();
+    // const tabs: HTMLIonTabsElement = await (this.tab as any).componentOnReady();
+    // tabs.select('tab-map');
+    // this.close();
   }
 
   handleAddress(e: any, data: any, type: string) {
@@ -73,7 +74,9 @@ export class PageCreate {
   }
 
   handleFile(files: FileList) {
+    console.log(files);
     this.data['files'] = files;
+    console.log(this.data);
   }
 
   // @Listen('ionChange')

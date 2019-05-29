@@ -7,7 +7,6 @@ const endpoint = hostname === 'localhost' ? 'http://localhost:3000' : 'https://a
 
 export interface RegisterOrderAction {
   type: TypeKeys.REGISTER_ORDER;
-  orderId: string;
 }
 
 export interface ShowMyOrdersAction {
@@ -26,15 +25,13 @@ export interface SetMerchantOrderAction {
 
 export const registerOrder = (data: any, token: string) => async (dispatch: any, _getState: any) => {
   const files = data.files;
-  delete data.files;
   Backend.setDomain(endpoint);
   const pictures = await (await Backend.addPicture({ 'xAccessToken': token, 'files': files })).json();
+  console.log(pictures);
   data.pictures = pictures.map((picture: any) => picture._id);
-  const order = await (await Backend.createOrder({ 'xAccessToken': token, 'order': data })).json();
-  return dispatch({
-    type: TypeKeys.REGISTER_ORDER,
-    orderId: order._id
-  });
+  delete data.files;
+  await Backend.createOrder({ 'xAccessToken': token, 'order': data });
+  return dispatch({ type: TypeKeys.REGISTER_ORDER });
 };
 
 export const showMyOrders = (token: string) => async (dispatch: any, _getState: any) => {

@@ -46,7 +46,6 @@ export class PageTabs {
   }
 
   render() {
-    // console.log(this.role);
     return [
       <ion-tabs>
         <ion-tab tab="tab-map" component="page-map"></ion-tab>
@@ -57,17 +56,17 @@ export class PageTabs {
 
         <ion-tab-bar slot="bottom">
           {this.role === 'CUSTOMER' && [
-            {/*<ion-tab-button tab="tab-map" onClick={() => this.toggleOpen('map')}>
-              <ion-icon name="map"></ion-icon>
-              <ion-label>Mapa</ion-label>
-            </ion-tab-button>*/},
             <ion-tab-button tab="tab-create" onClick={() => this.toggleOpen('create')}>
               <ion-icon name="cube"></ion-icon>
-              <ion-label>Frete</ion-label>
+              <ion-label>Criar</ion-label>
             </ion-tab-button>,
             <ion-tab-button tab="tab-speakers" onClick={() => this.toggleOpen('speakers')}>
               <ion-icon name="cash"></ion-icon>
               <ion-label>Ofertas</ion-label>
+            </ion-tab-button>,
+            <ion-tab-button tab="tab-schedule" onClick={() => this.toggleOpen('schedule')}>
+              <ion-icon name="calendar"></ion-icon>
+              <ion-label>Fretes</ion-label>
             </ion-tab-button>
           ]}
           {this.role === 'MERCHANT' && [
@@ -77,12 +76,16 @@ export class PageTabs {
             </ion-tab-button>,
             <ion-tab-button tab="tab-schedule" onClick={() => this.toggleOpen('schedule')}>
               <ion-icon name="calendar"></ion-icon>
-              <ion-label>Agenda</ion-label>
+              <ion-label>Fretes</ion-label>
+            </ion-tab-button>,
+            <ion-tab-button tab="tab-about" onClick={() => this.toggleOpen('about')}>
+              <ion-icon name="information-circle"></ion-icon>
+              <ion-label>Sobre</ion-label>
             </ion-tab-button>
           ]}
-          <ion-tab-button tab="tab-about" onClick={() => this.toggleOpen('about')}>
-            <ion-icon name="information-circle"></ion-icon>
-            <ion-label>Sobre</ion-label>
+          <ion-tab-button tab="tab-map" onClick={() => this.toggleOpen('map')}>
+            <ion-icon name="map"></ion-icon>
+            <ion-label>Mapa</ion-label>
           </ion-tab-button>
         </ion-tab-bar>
       </ion-tabs>

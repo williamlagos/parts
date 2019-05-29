@@ -49,6 +49,7 @@ export class Uploader {
       this.previews = files;
       for (let i = 0; i < files.length; i++) this.list.push(i);
       // console.log(this.list);
+      console.log(files);
       this.send(files);
     } else {
       console.error(files.length === 0 ? 'NO IMAGE UPLOADED' : 'YOU CAN ONLY UPLOAD ONE IMAGE AT THE TIME');
@@ -57,7 +58,7 @@ export class Uploader {
   }
 
   private uploadImage(file: any) {
-    console.log(typeof file);
+    // console.log(typeof file);
     // create a new instance of HTML5 FileReader api to handle uploading
     const reader = new FileReader();
 

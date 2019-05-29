@@ -24,7 +24,7 @@ export class AddressInput {
           <ion-row>
             <ion-col size="9">
               <ion-input
-                name="address"
+                name="street"
                 placeholder="Endereço"
                 type="text"
                 onInput={(e) => this.address(e)}
@@ -47,7 +47,7 @@ export class AddressInput {
           <ion-row>
             <ion-col>
               <ion-input
-                name="compliment"
+                name="complement"
                 placeholder="Complemento"
                 type="text"
                 onInput={(e) => this.address(e)}
@@ -60,7 +60,7 @@ export class AddressInput {
           <ion-row>
             <ion-col>
               <ion-input
-                name="neighborhood"
+                name="neighbourhood"
                 placeholder="Bairro"
                 type="text"
                 onInput={(e) => this.address(e)}

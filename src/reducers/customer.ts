@@ -2,14 +2,12 @@
 import { ActionTypes, TypeKeys } from '../actions/index';
 
 interface AppState {
-  orderId: string;
   orders: any[];
   bids: any[];
 }
 
 const prepareState = () => {
   const defaultState = {
-    orderId: '',
     orders: [],
     bids: []
   };
@@ -21,7 +19,7 @@ const prepareState = () => {
 const customer = (state: AppState = prepareState(), action: ActionTypes) => {
   switch (action.type) {
     case TypeKeys.REGISTER_ORDER: {
-      return { ...state, orderId: action.orderId };
+      return { ...state };
     }
     case TypeKeys.MY_ORDERS: {
       return { ...state, orders: action.orders };

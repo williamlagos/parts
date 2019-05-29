@@ -20,10 +20,10 @@ export class Menu {
 
   appPages = [
     { title: 'Frete', url: 'create', icon: 'cube', role: 'CUSTOMER' },
-    { title: 'Mapa', url: 'map', icon: 'map', role: 'CUSTOMER' },
+    { title: 'Mapa', url: 'map', icon: 'map', role: 'ALL' },
     { title: 'Ofertas', url: 'speakers', icon: 'cash', role: 'ALL' },
-    { title: 'Agenda', url: 'schedule', icon: 'calendar', role: 'MERCHANT' },
-    { title: 'Sobre', url: 'about', icon: 'information-circle', role: 'ALL' }
+    { title: 'Agenda', url: 'schedule', icon: 'calendar', role: 'ALL' },
+    { title: 'Sobre', url: 'about', icon: 'information-circle', role: 'MERCHANT' }
   ];
 
   componentWillLoad() {

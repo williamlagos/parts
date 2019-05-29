@@ -18,6 +18,7 @@ import {
 import {
   PlaceOrderAction,
   SelectOrderAction,
+  ShowMerchantOrdersAction,
   ShowOrderAction
 } from './merchant';
 
@@ -42,6 +43,7 @@ export type ActionTypes =
   | ShowMyOrdersAction
   | ShowOrderBidsAction
   | SetMerchantOrderAction
+  | ShowMerchantOrdersAction
 ;
 
 export enum TypeKeys {
@@ -60,5 +62,6 @@ export enum TypeKeys {
   PLACE_ORDER = 'PLACE_ORDER',
   MY_ORDERS = 'MY_ORDERS',
   ORDER_BIDS = 'ORDER_BIDS',
-  ORDER_MERCHANT = 'ORDER_MERCHANT'
+  ORDER_MERCHANT = 'ORDER_MERCHANT',
+  MERCHANT_ORDERS = 'MERCHANT_ORDERS'
 }
