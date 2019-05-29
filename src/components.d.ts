@@ -52,6 +52,15 @@ export namespace Components {
     'onUserDidLogOut'?: (event: CustomEvent) => void;
   }
 
+  interface PageActivity {
+    'goback': string;
+    'sessionId': string;
+  }
+  interface PageActivityAttributes extends StencilHTMLAttributes {
+    'goback'?: string;
+    'sessionId'?: string;
+  }
+
   interface PageCreate {}
   interface PageCreateAttributes extends StencilHTMLAttributes {}
 
@@ -93,15 +102,6 @@ export namespace Components {
 
   interface PageSchedule {}
   interface PageScheduleAttributes extends StencilHTMLAttributes {}
-
-  interface PageSession {
-    'goback': string;
-    'sessionId': string;
-  }
-  interface PageSessionAttributes extends StencilHTMLAttributes {
-    'goback'?: string;
-    'sessionId'?: string;
-  }
 
   interface PageSupport {}
   interface PageSupportAttributes extends StencilHTMLAttributes {}
@@ -157,6 +157,7 @@ declare global {
     'AppEntrance': Components.AppEntrance;
     'PageAbout': Components.PageAbout;
     'PageAccount': Components.PageAccount;
+    'PageActivity': Components.PageActivity;
     'PageCreate': Components.PageCreate;
     'PageMap': Components.PageMap;
     'PageMerchantDetail': Components.PageMerchantDetail;
@@ -165,7 +166,6 @@ declare global {
     'PageOrderList': Components.PageOrderList;
     'PageScheduleFilter': Components.PageScheduleFilter;
     'PageSchedule': Components.PageSchedule;
-    'PageSession': Components.PageSession;
     'PageSupport': Components.PageSupport;
     'PageTabs': Components.PageTabs;
     'RegisterWizard': Components.RegisterWizard;
@@ -181,6 +181,7 @@ declare global {
     'app-entrance': Components.AppEntranceAttributes;
     'page-about': Components.PageAboutAttributes;
     'page-account': Components.PageAccountAttributes;
+    'page-activity': Components.PageActivityAttributes;
     'page-create': Components.PageCreateAttributes;
     'page-map': Components.PageMapAttributes;
     'page-merchant-detail': Components.PageMerchantDetailAttributes;
@@ -189,7 +190,6 @@ declare global {
     'page-order-list': Components.PageOrderListAttributes;
     'page-schedule-filter': Components.PageScheduleFilterAttributes;
     'page-schedule': Components.PageScheduleAttributes;
-    'page-session': Components.PageSessionAttributes;
     'page-support': Components.PageSupportAttributes;
     'page-tabs': Components.PageTabsAttributes;
     'register-wizard': Components.RegisterWizardAttributes;
@@ -240,6 +240,12 @@ declare global {
     new (): HTMLPageAccountElement;
   };
 
+  interface HTMLPageActivityElement extends Components.PageActivity, HTMLStencilElement {}
+  var HTMLPageActivityElement: {
+    prototype: HTMLPageActivityElement;
+    new (): HTMLPageActivityElement;
+  };
+
   interface HTMLPageCreateElement extends Components.PageCreate, HTMLStencilElement {}
   var HTMLPageCreateElement: {
     prototype: HTMLPageCreateElement;
@@ -288,12 +294,6 @@ declare global {
     new (): HTMLPageScheduleElement;
   };
 
-  interface HTMLPageSessionElement extends Components.PageSession, HTMLStencilElement {}
-  var HTMLPageSessionElement: {
-    prototype: HTMLPageSessionElement;
-    new (): HTMLPageSessionElement;
-  };
-
   interface HTMLPageSupportElement extends Components.PageSupport, HTMLStencilElement {}
   var HTMLPageSupportElement: {
     prototype: HTMLPageSupportElement;
@@ -332,6 +332,7 @@ declare global {
     'app-entrance': HTMLAppEntranceElement
     'page-about': HTMLPageAboutElement
     'page-account': HTMLPageAccountElement
+    'page-activity': HTMLPageActivityElement
     'page-create': HTMLPageCreateElement
     'page-map': HTMLPageMapElement
     'page-merchant-detail': HTMLPageMerchantDetailElement
@@ -340,7 +341,6 @@ declare global {
     'page-order-list': HTMLPageOrderListElement
     'page-schedule-filter': HTMLPageScheduleFilterElement
     'page-schedule': HTMLPageScheduleElement
-    'page-session': HTMLPageSessionElement
     'page-support': HTMLPageSupportElement
     'page-tabs': HTMLPageTabsElement
     'register-wizard': HTMLRegisterWizardElement
@@ -356,6 +356,7 @@ declare global {
     'app-entrance': HTMLAppEntranceElement;
     'page-about': HTMLPageAboutElement;
     'page-account': HTMLPageAccountElement;
+    'page-activity': HTMLPageActivityElement;
     'page-create': HTMLPageCreateElement;
     'page-map': HTMLPageMapElement;
     'page-merchant-detail': HTMLPageMerchantDetailElement;
@@ -364,7 +365,6 @@ declare global {
     'page-order-list': HTMLPageOrderListElement;
     'page-schedule-filter': HTMLPageScheduleFilterElement;
     'page-schedule': HTMLPageScheduleElement;
-    'page-session': HTMLPageSessionElement;
     'page-support': HTMLPageSupportElement;
     'page-tabs': HTMLPageTabsElement;
     'register-wizard': HTMLRegisterWizardElement;

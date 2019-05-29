@@ -16,10 +16,12 @@ import {
 } from './customer';
 
 import {
+  CancelOrderAction,
   PlaceOrderAction,
   SelectOrderAction,
   ShowMerchantOrdersAction,
-  ShowOrderAction
+  ShowOrderAction,
+  StartOrderAction
 } from './merchant';
 
 export interface NullAction {
@@ -44,6 +46,8 @@ export type ActionTypes =
   | ShowOrderBidsAction
   | SetMerchantOrderAction
   | ShowMerchantOrdersAction
+  | CancelOrderAction
+  | StartOrderAction
 ;
 
 export enum TypeKeys {
@@ -63,5 +67,7 @@ export enum TypeKeys {
   MY_ORDERS = 'MY_ORDERS',
   ORDER_BIDS = 'ORDER_BIDS',
   ORDER_MERCHANT = 'ORDER_MERCHANT',
-  MERCHANT_ORDERS = 'MERCHANT_ORDERS'
+  MERCHANT_ORDERS = 'MERCHANT_ORDERS',
+  START_ORDER = 'START_ORDER',
+  CANCEL_ORDER = 'CANCEL_ORDER'
 }

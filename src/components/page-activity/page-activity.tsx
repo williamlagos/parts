@@ -3,8 +3,8 @@ import { ConferenceData } from '../../providers/conference-data';
 import { UserData } from '../../providers/user-data';
 
 @Component({
-  tag: 'page-session',
-  styleUrl: 'page-session.css'
+  tag: 'page-activity',
+  styleUrl: 'page-activity.css'
 })
 export class PageSession {
   private session: any;

@@ -61,11 +61,11 @@ export class PageCreate {
     const destPlace = (await destResponse.json()).results[0].geometry.location;
     this.data['job']['origin']['address']['location'] = { lat: origPlace.lat, lng: origPlace.lng };
     this.data['job']['destination']['address']['location'] = { lat: destPlace.lat, lng: destPlace.lng };
-    console.log(this.data);
+    // console.log(this.data);
     this.registerOrder(this.data, this.token);
-    // const tabs: HTMLIonTabsElement = await (this.tab as any).componentOnReady();
-    // tabs.select('tab-map');
-    // this.close();
+    const tabs: HTMLIonTabsElement = await (this.tab as any).componentOnReady();
+    tabs.select('tab-map');
+    this.close();
   }
 
   handleAddress(e: any, data: any, type: string) {
@@ -74,9 +74,9 @@ export class PageCreate {
   }
 
   handleFile(files: FileList) {
-    console.log(files);
+    // console.log(files);
     this.data['files'] = files;
-    console.log(this.data);
+    // console.log(this.data);
   }
 
   // @Listen('ionChange')

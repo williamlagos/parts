@@ -7,7 +7,7 @@ declare var google: any;
   tag: 'page-map',
   styleUrl: 'page-map.css',
 })
-export class PageMap {
+export class PageRoute {
   private mapData: any;
 
   @Element() private el: HTMLElement;

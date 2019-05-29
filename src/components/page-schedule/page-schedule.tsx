@@ -5,7 +5,8 @@ import { Action, Store } from '@stencil/redux';
 import { ConferenceData } from '../../providers/conference-data';
 import { UserData } from '../../providers/user-data';
 
-import { selectOrder, showMyOrders } from '../../actions/merchant';
+import { cancelOrder, selectOrder, showMyOrders, startOrder } from '../../actions/merchant';
+import { showMyOrders as showCustomerOrders } from '../../actions/customer';
 
 
 @Component({
@@ -18,17 +19,21 @@ export class PageSchedule {
   scheduleList: HTMLIonListElement;
   fab: HTMLIonFabElement;
   startOrder: Action;
+  cancelOrder: Action;
   selectOrder: Action;
   showMyOrders: Action;
+  showCustomerOrders: Action;
 
   @Element() el: any;
   @State() groups: any = [];
   @State() shownSessions: any = [];
-  @State() segment = 'all';
+  @State() segment = 'awaiting';
   @State() queryText = '';
   @State() role: string;
   @State() token: string;
   @State() orders: any[] = [];
+  @State() scheduleOrders: any[] = [];
+  @State() awaitingOrders: any[] = [];
   @State() slided = false;
 
   @Prop({ context: 'store' }) store: Store;
@@ -36,6 +41,7 @@ export class PageSchedule {
   @Prop({ connect: 'ion-alert-controller' }) alertCtrl: HTMLIonAlertControllerElement;
   @Prop({ connect: 'ion-loading-controller' }) loadingCtrl: HTMLIonLoadingControllerElement;
   @Prop({ connect: 'ion-modal-controller' }) modalCtrl: HTMLIonModalControllerElement;
+  @Prop({ connect: 'ion-tabs' }) tab: HTMLIonTabsElement;
 
 
   async componentWillLoad() {
@@ -50,14 +56,26 @@ export class PageSchedule {
         const { merchant: { orders } } = state;
         return { orders };
       });
-      this.store.mapDispatchToProps(this, { showMyOrders, selectOrder });
-      await this.showMyOrders(this.token);
+      this.store.mapDispatchToProps(this, { showMyOrders, selectOrder, cancelOrder, startOrder });
+    } else if (this.role === 'CUSTOMER') {
+      this.store.mapStateToProps(this, (state) => {
+        const { customer: { orders } } = state;
+        return { orders };
+      });
+      this.store.mapDispatchToProps(this, { showCustomerOrders, cancelOrder });
     }
+    await this.populateOrders();
   }
 
   componentDidLoad() {
     this.scheduleList = this.el.querySelector('#scheduleList');
     this.fab = this.el.querySelector('#socialFab');
+  }
+
+  async populateOrders() {
+    this.role === 'MERCHANT' ? await this.showMyOrders(this.token) : await this.showCustomerOrders(this.token);
+    this.scheduleOrders = this.orders.filter((order: any) => order.status === 'accepted');
+    this.awaitingOrders = this.orders.filter((order: any) => order.status === 'awaiting_for_confirmation');
   }
 
   parseJwt(token: string) {
@@ -110,6 +128,17 @@ export class PageSchedule {
     await modal.present();
   }
 
+  async cancelCurrentOrder(orderId: string) {
+    await this.cancelOrder(orderId, this.token);
+    await this.populateOrders();
+  }
+
+  async startCurrentOrder(orderId: string) {
+    await this.startOrder(orderId, this.token);
+    const tabs: HTMLIonTabsElement = await (this.tab as any).componentOnReady();
+    tabs.select('tab-map');
+  }
+
   async confirmOrder(orderId: string) {
     /*if (UserData.hasFavorite(session.name)) {
       // oops, this session has already been favorited, prompt to remove it
@@ -132,8 +161,9 @@ export class PageSchedule {
         },
         {
           text: 'Confirmar',
-          handler: () => {
+          handler: async () => {
             this.selectOrder(orderId, this.token);
+            await this.populateOrders();
             // close the sliding item
             // this.toggleSlide(orderId);
           }
@@ -191,7 +221,7 @@ export class PageSchedule {
 
   async toggleSlide(sliderId: string) {
     const slider: any = document.getElementById(sliderId);
-    !this.slided ? await slider.open() : await slider.close();
+    !this.slided ? await slider.open('end') : await slider.close();
     this.slided = !this.slided;
   }
 
@@ -204,61 +234,73 @@ export class PageSchedule {
           </ion-buttons>
 
           <ion-segment class="aligned" value={this.segment}>
-            <ion-segment-button value="all">
+            <ion-segment-button value="awaiting">
               Aguardando
             </ion-segment-button>
-            <ion-segment-button value="favorites">
+            <ion-segment-button value="schedule">
               Agendados
             </ion-segment-button>
           </ion-segment>
 
           <ion-buttons slot="end">
-            <ion-button onClick={() => this.presentFilter()}>
+            {/*<ion-button onClick={() => this.presentFilter()}>
               <ion-icon slot="icon-only" name="options"></ion-icon>
-            </ion-button>
+            </ion-button>*/}
           </ion-buttons>
         </ion-toolbar>
       </ion-header>,
 
       <ion-content>
-      <ion-searchbar value={this.queryText} placeholder="Buscar">
-      </ion-searchbar>
+      {/*<ion-searchbar value={this.queryText} placeholder="Buscar"></ion-searchbar>*/}
         <ion-list id="scheduleList" hidden={this.shownSessions === 0}>
-          {this.orders.map((order: any) =>
-            <ion-item-group>
-              {/*<ion-item-divider class="sticky">
-                <ion-label>
-                  {group.time}
-                </ion-label>
-              </ion-item-divider>
-
-              {order.sessions.map((session: any) =>*/}
-              <ion-item-sliding class="item-sliding-track" id={order._id} onClick={() => this.toggleSlide(order._id)}>
-                <ion-item class="item-sliding-track-trabalho" href="#">
+          {
+            (this.segment === 'awaiting' ? this.awaitingOrders : this.scheduleOrders).map((order: any) =>
+              <ion-item-group>
+                {/*<ion-item-divider class="sticky">
                   <ion-label>
-                    <h3>{order.job.destination.address.street + ' ' + order.job.destination.address.number}</h3>
-                    <p> {order.job.scheduledTo} - {order.job.origin.address.street + ' ' + order.job.origin.address.number}</p>
+                    {group.time}
                   </ion-label>
-                </ion-item>
-                <ion-item-options>
-                  {
-                    order.status === 'awaiting_for_confirmation' ? (
-                      <ion-item-option color="favorite" onClick={() => this.confirmOrder(order._id)}>
-                        Confirmar
-                      </ion-item-option>
-                    ) : (
-                      <ion-item-option color="danger" onClick={() => this.removeFavorite(order, 'Remove Favorite')}>
-                        Cancelar
-                      </ion-item-option>
-                    )
-                  }
-                </ion-item-options>
-              </ion-item-sliding>
-            </ion-item-group>
-          )}
+                </ion-item-divider>
+
+                {order.sessions.map((session: any) =>*/}
+                <ion-item-sliding class="item-sliding-track" id={order._id} onClick={() => this.toggleSlide(order._id)}>
+                  <ion-item-options side="start">
+                    {
+                      order.status === 'accepted' && (
+                        <ion-item-option color="danger" onClick={() => this.cancelOrder(order._id)}>
+                          Cancelar
+                        </ion-item-option>
+                      )
+                    }
+                  </ion-item-options>
+                  <ion-item class="item-sliding-track-trabalho" href="#">
+                    <ion-label>
+                      <h3>{order.job.destination.address.street + ' ' + order.job.destination.address.number}</h3>
+                      <p> {order.job.scheduledTo} - {order.job.origin.address.street + ' ' + order.job.origin.address.number}</p>
+                    </ion-label>
+                  </ion-item>
+                  <ion-item-options side="end">
+                    {
+                      this.role === 'MERCHANT' && (
+                        order.status === 'awaiting_for_confirmation' ? (
+                          <ion-item-option color="favorite" onClick={() => this.confirmOrder(order._id)}>
+                            Confirmar
+                          </ion-item-option>
+                        ) : (
+                          <ion-item-option color="tertiary" onClick={() => this.startCurrentOrder(order._id)}>
+                            Começar
+                          </ion-item-option>
+                        )
+                      )
+                    }
+                  </ion-item-options>
+                </ion-item-sliding>
+              </ion-item-group>
+            )
+          }
         </ion-list>
 
-        <ion-list-header hidden={this.shownSessions > 0}>
+        <ion-list-header hidden={(this.segment === 'awaiting' ? this.awaitingOrders : this.scheduleOrders).length > 0}>
           Não há sessões encontradas
         </ion-list-header>
 

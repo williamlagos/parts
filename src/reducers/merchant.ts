@@ -19,6 +19,12 @@ const merchant = (state: AppState = prepareState(), action: ActionTypes) => {
     case TypeKeys.SELECT_ORDER: {
       return { ...state };
     }
+    case TypeKeys.CANCEL_ORDER: {
+      return { ...state };
+    }
+    case TypeKeys.START_ORDER: {
+      return { ...state };
+    }
     case TypeKeys.SHOW_ORDER: {
       return { ...state, orders: action.orders };
     }

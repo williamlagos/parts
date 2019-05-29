@@ -24,6 +24,14 @@ export interface ShowMerchantOrdersAction {
   orders: any[];
 }
 
+export interface StartOrderAction {
+  type: TypeKeys.START_ORDER;
+}
+
+export interface CancelOrderAction {
+  type: TypeKeys.CANCEL_ORDER;
+}
+
 export const showOrder = (token: string) => async (dispatch: any, _getState: any) => {
   Backend.setDomain(endpoint);
   const base64Url = token.split('.')[1];
@@ -72,4 +80,14 @@ export const placeOrder = (bid: any, order: any, token: string) => async (dispat
     type: TypeKeys.PLACE_ORDER,
     orderId: order
   });
+};
+
+export const startOrder = (order: any, token: string) => async (dispatch: any, _getState: any) => {
+  await Backend.startOrder({ 'xAccessToken': token, 'id': order });
+  return dispatch({ type: TypeKeys.START_ORDER });
+};
+
+export const cancelOrder = (order: any, token: string) => async (dispatch: any, _getState: any) => {
+  await Backend.cancelOrder({ 'xAccessToken': token, 'id': order });
+  return dispatch({ type: TypeKeys.CANCEL_ORDER });
 };
