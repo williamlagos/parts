@@ -1,5 +1,10 @@
-import { Component, Element } from '@stencil/core';
+import { Component, Element, Prop, State } from '@stencil/core';
+import { Action, Store } from '@stencil/redux';
+
 import { ConferenceData } from '../../providers/conference-data';
+import { cancelOrder, showMyOrders } from '../../actions/merchant';
+import { showMyOrders as showCustomerOrders } from '../../actions/customer';
+
 
 declare var google: any;
 
@@ -9,37 +14,77 @@ declare var google: any;
 })
 export class PageRoute {
   private mapData: any;
+  private gmapKey = 'AIzaSyC8B5IrTvSbGt9Akb5f00CiDmO86RTb1ec';
+  cancelOrder: Action;
+  showMyOrders: Action;
+  showCustomerOrders: Action;
 
+  @State() token: string;
+  @State() role: string;
+  @State() orders: any[] = [];
+  @State() startedOrders: any[] = [];
+  @State() hasOrder: boolean;
+  @Prop({ context: 'store' }) store: Store;
   @Element() private el: HTMLElement;
 
   async componentWillLoad() {
-    await getGoogleMaps('AIzaSyC8B5IrTvSbGt9Akb5f00CiDmO86RTb1ec');
     this.mapData = await ConferenceData.getMap();
+    this.store.mapStateToProps(this, (state) => {
+      const { session: { token } } = state;
+      return { token };
+    });
+    this.role = this.parseJwt(this.token)['_role'];
+    if (this.role === 'MERCHANT') {
+      this.store.mapStateToProps(this, (state) => {
+        const { merchant: { orders } } = state;
+        return { orders };
+      });
+      this.store.mapDispatchToProps(this, { showMyOrders, cancelOrder });
+    } else if (this.role === 'CUSTOMER') {
+      this.store.mapStateToProps(this, (state) => {
+        const { customer: { orders } } = state;
+        return { orders };
+      });
+      this.store.mapDispatchToProps(this, { showCustomerOrders, cancelOrder });
+    }
+    await this.populateOrders();
+    this.hasOrder = this.startedOrders.length > 0;
+    /*!this.hasOrder && */
+    await getGoogleMaps(this.gmapKey);
   }
 
   async componentDidLoad() {
+    // if (this.hasOrder) return;
+    await this.populateMap();
+  }
+
+  async populateMap() {
     const mapData = this.mapData;
     const mapEle = this.el.querySelector('.map-canvas');
-
+    // console.log(this.mapData);
+    // console.log(this.startedOrders[0].job.origin.address.location);
     const map = new google.maps.Map(mapEle, {
-      center: mapData.find((d: any) => d.center),
+      center: this.startedOrders.length > 0 ?
+              this.startedOrders[0].job.origin.address.location :
+              mapData.find((d: any) => d.center),
       zoom: 16
     });
 
-    mapData.forEach((markerData: any) => {
-      const infoWindow = new google.maps.InfoWindow({
+    mapData.forEach((/*markerData: any*/) => {
+      // console.debug(markerData);
+      /*const infoWindow = new google.maps.InfoWindow({
         content: `<h5>${markerData.name}</h5>`
-      });
+      });*/
 
-      const marker = new google.maps.Marker({
+      /*const marker = new google.maps.Marker({
         position: markerData,
         map,
         title: markerData.name
-      });
+      });*/
 
-      marker.addListener('click', () => {
+      /*marker.addListener('click', () => {
         infoWindow.open(map, marker);
-      });
+      });*/
 
       google.maps.event.addListenerOnce(map, 'idle', () => {
         mapEle.classList.add('show-map');
@@ -47,7 +92,45 @@ export class PageRoute {
     });
   }
 
+  async populateOrders() {
+    this.role === 'MERCHANT' ? await this.showMyOrders(this.token) : await this.showCustomerOrders(this.token);
+    this.startedOrders = this.orders.filter((order: any) => order.status === 'started');
+    // this.awaitingOrders = this.orders.filter((order: any) => order.status === 'awaiting_for_confirmation');
+  }
+
+  parseJwt(token: string) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    return JSON.parse(window.atob(base64));
+  }
+
+  navigate() {
+    const gmapUrl = 'https://www.google.com/maps/dir/';
+    const j = this.startedOrders[0].job;
+    const daddr = `${j.destination.address.street}, ${j.destination.address.number}`;
+    const oaddr = `${j.origin.address.street}, ${j.origin.address.number}`;
+    window.location.replace(`${gmapUrl}?api=1&travelmode=driving&origin=${oaddr}&destination=${daddr}`);
+  }
+
+  async cancelCurrentOrder(orderId: string) {
+    await this.cancelOrder(orderId, this.token);
+    await this.populateOrders();
+    this.hasOrder = this.startedOrders.length > 0;
+    /*if (this.hasOrder) {
+      await getGoogleMaps(this.gmapKey);
+      await this.populateMap();
+    }*/
+  }
+
   render() {
+    let oaddr = '';
+    let daddr = '';
+    const gmapUrl = 'https://www.google.com/maps/embed/v1/directions';
+    if (this.hasOrder) {
+      const j = this.startedOrders[0].job;
+      daddr = `${j.destination.address.street}, ${j.destination.address.number}`;
+      oaddr = `${j.origin.address.street}, ${j.origin.address.number}`;
+    }
     return [
       <ion-header>
         <ion-toolbar>
@@ -58,7 +141,46 @@ export class PageRoute {
         </ion-toolbar>
       </ion-header>,
 
-      <div class="map-canvas"></div>
+      <div style={this.hasOrder && { 'display': 'none' }} class="map-canvas"></div>,
+
+      <div style={{ 'flex': '1', 'display': 'flex', 'flex-direction': 'column' }}>
+        {
+          this.hasOrder && ([
+            <iframe frameborder="0" style={{ border : '0', height: '100%', width: '100%' }}
+                    src={`${gmapUrl}?origin=${oaddr}&destination=${daddr}&key=${this.gmapKey}`}>
+            </iframe>,
+            <div>
+            <ion-card>
+              <ion-card-header>
+                <ion-card-subtitle>Prepare seus itens</ion-card-subtitle>
+                <ion-card-title>Frete em Andamento</ion-card-title>
+              </ion-card-header>
+
+              <ion-card-content>
+                O freteiro está a caminho de {this.startedOrders[0].job.origin.address.street + ', ' + this.startedOrders[0].job.origin.address.number},
+                a partir de {this.startedOrders[0].job.scheduledTo}. Aguarde a chegada do prestador de serviços para começar o frete para o endereço
+                {' ' + this.startedOrders[0].job.destination.address.street + ', ' + this.startedOrders[0].job.destination.address.number}. Contate o
+                {' ' + this.startedOrders[0].merchant.name} pelo telefone {this.startedOrders[0].merchant.phone} ou e-mail {this.startedOrders[0].merchant.email} em caso de necessidade.
+              </ion-card-content>
+
+              {
+                this.role === 'MERCHANT' ? (
+                  <div style={{ 'display': 'flex', 'padding': '0px 15px' }}>
+                    <ion-button style={{ 'flex': '1' }} color="danger" onClick={() => this.cancelCurrentOrder(this.startedOrders[0]._id)}>Cancelar</ion-button>
+                    <ion-button style={{ 'flex': '1' }} color="success" onClick={() => this.navigate()}>Navegar</ion-button>
+                  </div>
+                ) : (
+                  <div style={{ 'display': 'flex', 'padding': '0px 15px' }}>
+                    <ion-button style={{ 'flex': '1' }} color="danger" onClick={() => this.cancelCurrentOrder(this.startedOrders[0]._id)} expand="block">Cancelar</ion-button>
+                  </div>
+                )
+              }
+              <br/>
+            </ion-card>
+            </div>
+          ])
+        }
+      </div>
     ];
   }
 }

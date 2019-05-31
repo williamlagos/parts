@@ -267,7 +267,7 @@ export class PageSchedule {
                   <ion-item-options side="start">
                     {
                       order.status === 'accepted' && (
-                        <ion-item-option color="danger" onClick={() => this.cancelOrder(order._id)}>
+                        <ion-item-option color="danger" onClick={() => this.cancelCurrentOrder(order._id)}>
                           Cancelar
                         </ion-item-option>
                       )
