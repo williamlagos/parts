@@ -157,7 +157,64 @@ export class Entrance {
   }
 
   render() {
-    if (!this.introduced) return <generic-carousel action={() => this.toggleIntro(true)}/>;
+    if (!this.introduced) {
+      return (
+        <generic-carousel>
+          <ion-slide slot="slide1">
+            <div class="slide-image-container">
+              <img src="assets/img/tour_1_clipper.svg" class="slide-image"/>
+            </div>
+            <h2 class="slide-title">
+              Bem-vindo ao <b>Frete Fácil</b>
+            </h2>
+            <p>
+              O <b>Frete Fácil</b> é um aplicativo de serviços de mudança e fretagem, simples, prático e rápido.
+            </p>
+            <ion-button fill="clear" href="#" onClick={() => this.toggleIntro(true)}>
+              Continuar
+              <ion-icon slot="end" name="arrow-forward"></ion-icon>
+            </ion-button>
+          </ion-slide>
+
+          <ion-slide slot="slide2">
+            <div class="slide-image-container">
+              <img src="assets/img/tour_2_map.svg" class="slide-image"/>
+            </div>
+            <h2 class="slide-title">Por que usar o Frete Fácil?</h2>
+            <p>
+              <b>Frete Fácil</b> conta com prestadores de entrega e mudança bem selecionados e revisados pela nossa equipe.</p>
+              <ion-button fill="clear" href="#" onClick={() => this.toggleIntro(true)}>
+                Continuar
+                <ion-icon slot="end" name="arrow-forward"></ion-icon>
+              </ion-button>
+          </ion-slide>
+
+          <ion-slide slot="slide3">
+            <div class="slide-image-container">
+              <img src="assets/img/tour_3_payment.svg" class="slide-image"/>
+            </div>
+            <h2 class="slide-title">Pago a mais para usar este serviço?</h2>
+            <p>
+              O aplicativo é <b>100% gratuito</b>, apenas é cobrado o valor que é combinado pela plataforma entre o freteiro e você.</p>
+              <ion-button fill="clear" href="#" onClick={() => this.toggleIntro(true)}>
+                Continuar
+                <ion-icon slot="end" name="arrow-forward"></ion-icon>
+              </ion-button>
+          </ion-slide>
+
+          <ion-slide slot="slide4">
+            <div class="slide-image-container">
+              <img src="assets/img/tour_4_start.svg" class="slide-image"/>
+            </div>
+            <h2 class="slide-title">Pronto para Começar?</h2>
+            <ion-button fill="clear" href="#" onClick={() => this.toggleIntro(true)}>
+              Começar
+              <ion-icon slot="end" name="arrow-forward"></ion-icon>
+            </ion-button>
+          </ion-slide>
+        </generic-carousel>
+      );
+    }
     return !this.registered ?
       <register-wizard action={(d: any) => this.register(d)} exit={() => this.closeRegister()}/> :
       this.renderLogin();

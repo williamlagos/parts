@@ -5,7 +5,8 @@ import {
   OpenRegisterAction,
   RevokeTokenAction,
   SetTokenAction,
-  SkipIntroAction
+  SkipIntroAction,
+  SkipTourAction
 } from './session';
 
 import {
@@ -33,6 +34,7 @@ export type ActionTypes =
   | NullAction
   | SetTokenAction
   | SkipIntroAction
+  | SkipTourAction
   | OpenRegisterAction
   | CloseRegisterAction
   | RevokeTokenAction
@@ -58,6 +60,7 @@ export enum TypeKeys {
   SET_TOKEN = 'SET_TOKEN',
   REVOKE_TOKEN = 'REVOKE_TOKEN',
   SKIP_INTRO = 'SKIP_INTRO',
+  SKIP_TOUR = 'SKIP_TOUR',
   OPEN_REGISTER = 'OPEN_REGISTER',
   CLOSE_REGISTER = 'CLOSE_REGISTER',
   REGISTER_ORDER = 'REGISTER_ORDER',

@@ -3,6 +3,7 @@ import { ActionTypes, TypeKeys } from '../actions/index';
 
 interface AppState {
   token: string;
+  explained: number;
   introduced: number;
   registered: boolean;
   directions: any[];
@@ -11,6 +12,7 @@ interface AppState {
 const prepareState = () => {
   const defaultState = {
     token: '',
+    explained: 0,
     introduced: 0,
     registered: true,
     directions: [{
@@ -22,6 +24,7 @@ const prepareState = () => {
   return {
     ...defaultState,
     token: sessionOpen || defaultState.token,
+    explained: + Storage.getItem('explained') || + defaultState.explained,
     introduced: + Storage.getItem('introduced') || + defaultState.introduced,
     directions: sessionOpen && [...defaultState.directions, { component: 'DRAWER', url: '/' }] || defaultState.directions
   };
@@ -33,6 +36,12 @@ const session = (state: AppState = prepareState(), action: ActionTypes) => {
       return {
         ...state,
         introduced: action.introduced
+      };
+    }
+    case TypeKeys.SKIP_TOUR: {
+      return {
+        ...state,
+        explained: action.explained
       };
     }
     case TypeKeys.SET_TOKEN: {

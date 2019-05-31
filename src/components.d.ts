@@ -31,12 +31,8 @@ export namespace Components {
   interface AppRoot {}
   interface AppRootAttributes extends StencilHTMLAttributes {}
 
-  interface GenericCarousel {
-    'action': any;
-  }
-  interface GenericCarouselAttributes extends StencilHTMLAttributes {
-    'action'?: any;
-  }
+  interface GenericCarousel {}
+  interface GenericCarouselAttributes extends StencilHTMLAttributes {}
 
   interface AppDrawer {}
   interface AppDrawerAttributes extends StencilHTMLAttributes {}

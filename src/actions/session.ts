@@ -23,6 +23,12 @@ export interface SkipIntroAction {
   introduced: number;
 }
 
+export interface SkipTourAction {
+  type: TypeKeys.SKIP_TOUR;
+  directions: any[];
+  explained: number;
+}
+
 export interface OpenRegisterAction {
   type: TypeKeys.OPEN_REGISTER;
   directions: any[];
@@ -71,6 +77,15 @@ export const toggleIntro = (option: boolean) => async (dispatch: any, _getState:
   return dispatch({
     type: TypeKeys.SKIP_INTRO,
     introduced: + option
+  });
+};
+
+export const toggleTour = (option: boolean) => async (dispatch: any, _getState: any) => {
+  Storage.setItem('explained', String(+ option));
+  return dispatch({
+    directions: { component: 'DRAWER', url: '/' },
+    type: TypeKeys.SKIP_TOUR,
+    explained: + option
   });
 };
 
