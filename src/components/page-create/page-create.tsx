@@ -15,6 +15,8 @@ export class PageCreate {
 
   @Prop({ context: 'store' }) store: Store;
   @Prop({ connect: 'ion-tabs' }) tab: HTMLIonTabsElement;
+  @State() descriptions: any[] = [''];
+  @State() descriptionsLength = 1;
   @State() directions: any[];
   @State() token: any;
   @State() data = {
@@ -86,8 +88,15 @@ export class PageCreate {
 
   handleDescription(e: any) {
     e.preventDefault();
-    this.data.job.origin['items'] = [{ description: e.target.value }];
+    this.data.job.origin['items'].push({ description: e.target.value });
     // console.log(this.data);
+  }
+
+  addDescription(e: any) {
+    e.preventDefault();
+    this.descriptions.push('');
+    this.descriptionsLength = this.descriptions.length;
+    // console.log(this.descriptions);
   }
 
   render() {
@@ -103,7 +112,7 @@ export class PageCreate {
 
       <ion-content padding>
         {this.directions.slice(-1)[0].component === 'CREATE' &&
-        <generic-wizard id="create" steps={3} action={async (e: any) => { await this.handleSubmit(e); }}>
+        <generic-wizard id="create" steps={4} action={async (e: any) => { await this.handleSubmit(e); }}>
           <div slot="step-1">
             <ion-item>
               <ion-label position="stacked" color="primary">Insira imagens do produto</ion-label>
@@ -114,18 +123,27 @@ export class PageCreate {
               <ion-input name="title" type="text" value="" clearInput onInput={(e) => this.handleInput(e)} required></ion-input>
             </ion-item>
             <ion-item>
-              <ion-label position="stacked" color="primary">Descreva a operação que você precisa</ion-label>
-              <ion-textarea rows={2} name="description" value="" onInput={(e) => this.handleDescription(e)} required></ion-textarea>
-            </ion-item>
-            <ion-item>
               <ion-label position="stacked" color="primary">Data de saída</ion-label>
               <ion-datetime display-format="MMM DD, YYYY HH:mm" value="" name="scheduledTo"></ion-datetime>
             </ion-item>
           </div>
           <div slot="step-2">
-            <address-input input={(e: any, d: any) => this.handleAddress(e, d, 'origin')} label="Endereço de saída"/>
+            {
+              this.descriptions.map(() => {
+                return (
+                  <ion-item>
+                    <ion-label position="stacked" color="primary">Descreva o item que você precisa carregar</ion-label>
+                    <ion-textarea rows={2} name="description" value="" onInput={(e) => this.handleDescription(e)} required></ion-textarea>
+                  </ion-item>
+                );
+              })
+            }
+            <ion-button onClick={(e) => this.addDescription(e)}color="tertiary" expand="block">Adicionar outro item</ion-button>
           </div>
           <div slot="step-3">
+            <address-input input={(e: any, d: any) => this.handleAddress(e, d, 'origin')} label="Endereço de saída"/>
+          </div>
+          <div slot="step-4">
             <address-input input={(e: any, d: any) => this.handleAddress(e, d, 'destination')} label="Endereço de chegada"/>
           </div>
         </generic-wizard>

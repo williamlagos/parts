@@ -20,6 +20,12 @@ export class Wizard {
     this.step %= this.steps + 1;
   }
 
+  back(e: any) {
+    e.preventDefault();
+    this.step -= 1;
+    this.step %= this.steps + 1;
+  }
+
   submit(e: any) {
     e.preventDefault();
     this.action(e);
@@ -38,9 +44,10 @@ export class Wizard {
             <div style={{ display: 'none' }}><slot name={'step-' + step}/></div>
           ))}
         </ion-list>
-        <div padding>
-          {this.step === this.steps && <ion-button onClick={(e) => this.submit(e)} expand="block">Registrar</ion-button>}
-          {this.step < this.steps && <ion-button onClick={(e) => this.next(e)} expand="block">Próximo</ion-button>}
+        <div style={{ 'display': 'flex' }} padding>
+          {this.step > 1 && <ion-button style={{ 'flex': '1' }} onClick={(e) => this.back(e)} color="primary" expand="block">Voltar</ion-button>}
+          {this.step === this.steps && <ion-button style={{ 'flex': '1' }} onClick={(e) => this.submit(e)} color="primary" expand="block">Registrar</ion-button>}
+          {this.step < this.steps && <ion-button style={{ 'flex': '1' }} onClick={(e) => this.next(e)} color="primary" expand="block">Próximo</ion-button>}
         </div>
       </form>
     );
