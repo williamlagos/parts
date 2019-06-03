@@ -3,7 +3,7 @@ import '@ionic/core';
 import { Component, Prop, State } from '@stencil/core';
 import { Action, Store } from '@stencil/redux';
 
-import { open, revokeToken } from '../../actions/session';
+import { open, openProfile, revokeToken } from '../../actions/session';
 
 @Component({
   tag: 'app-drawer',
@@ -11,11 +11,13 @@ import { open, revokeToken } from '../../actions/session';
 })
 export class Menu {
   @State() token: string;
+  @State() profile: any = {};
   @Prop({ context: 'store' }) store: Store;
   @Prop({ connect: 'ion-nav' }) nav: HTMLIonNavElement;
   @Prop({ connect: 'page-tabs' }) tabs: HTMLPageTabsElement;
 
   open: Action;
+  openProfile: Action;
   revokeToken: Action;
 
   appPages = [
@@ -28,10 +30,11 @@ export class Menu {
 
   componentWillLoad() {
     this.store.mapStateToProps(this, (state) => {
-      const { session: { token } } = state;
-      return { token };
+      const { session: { token, profile } } = state;
+      return { token, profile };
     });
-    this.store.mapDispatchToProps(this, { revokeToken, open });
+    this.store.mapDispatchToProps(this, { revokeToken, openProfile, open });
+    this.openProfile(this.token);
   }
 
   checkLoginStatus() {
@@ -71,6 +74,37 @@ export class Menu {
           </ion-toolbar>
         </ion-header>
         <ion-content forceOverscroll={false}>
+          {
+            this.profile && ([
+              <ion-item>
+                <img src={this.profile.pictures.length > 0 ? this.profile.pictures[0].id : ''} alt="Imagem do perfil"/>
+              </ion-item>,
+              <ion-item>
+                <h5>{this.profile.name}</h5>
+              </ion-item>,
+              <ion-item>
+                <p>{this.profile.email}</p>
+              </ion-item>,
+              <ion-buttons class="static-stars">
+                <ion-item/>
+                {
+                  this.profile.hasOwnProperty('rating') ? ([
+                    <ion-button class={this.profile.rating >= 1 && 'marked'} id="star-1"/>,
+                    <ion-button class={this.profile.rating >= 2 && 'marked'} id="star-2"/>,
+                    <ion-button class={this.profile.rating >= 3 && 'marked'} id="star-3"/>,
+                    <ion-button class={this.profile.rating >= 4 && 'marked'} id="star-4"/>,
+                    <ion-button class={this.profile.rating >= 5 && 'marked'} id="star-5"/>
+                  ]) : ([
+                    <ion-button id="star-1"/>,
+                    <ion-button id="star-2"/>,
+                    <ion-button id="star-3"/>,
+                    <ion-button id="star-4"/>,
+                    <ion-button id="star-5"/>
+                  ])
+                }
+              </ion-buttons>
+            ])
+          }
           <ion-list>
             <ion-list-header>Navegar</ion-list-header>
 

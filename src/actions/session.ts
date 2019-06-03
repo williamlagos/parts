@@ -5,6 +5,11 @@ import { Backend } from '../providers/backend';
 const hostname = window && window.location && window.location.hostname;
 const endpoint = hostname === 'localhost' ? 'http://localhost:3000' : 'https://api.fretefacil.net';
 
+export interface OpenProfileAction {
+  type: TypeKeys.OPEN_PROFILE;
+  profile: any;
+}
+
 export interface SetTokenAction {
   type: TypeKeys.SET_TOKEN;
   directions: any[];
@@ -50,6 +55,15 @@ export interface CloseAction {
   type: TypeKeys.CLOSE;
   directions: any[];
 }
+
+export const openProfile = (token: string) => async (dispatch: any, _getState: any) => {
+  Backend.setDomain(endpoint);
+  const profile = await (await Backend.getUserProfile({ 'xAccessToken': token })).json();
+  return dispatch({
+    type: TypeKeys.OPEN_PROFILE,
+    profile
+  });
+};
 
 export const setToken = (email: string, password: string) => async (dispatch: any, _getState: any) => {
   Backend.setDomain(endpoint);
@@ -108,7 +122,7 @@ export const closeRegister = () => async (dispatch: any, _getState: any) => {
 export const register = (data: any) => async (dispatch: any, _getState: any) => {
   const files = data.files;
   delete data.files;
-  // console.log(data);
+  // TODO: Add picture reference to user
   Backend.setDomain(endpoint);
   const d = await (await Backend.createUser({ 'user': data })).json();
   await (await Backend.addPicture({ 'xAccessToken': d.token, 'files': files }));

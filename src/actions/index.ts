@@ -2,6 +2,7 @@ import {
   CloseAction,
   CloseRegisterAction,
   OpenAction,
+  OpenProfileAction,
   OpenRegisterAction,
   RevokeTokenAction,
   SetTokenAction,
@@ -18,7 +19,9 @@ import {
 
 import {
   CancelOrderAction,
+  FinishOrderAction,
   PlaceOrderAction,
+  RateOrderAction,
   SelectOrderAction,
   ShowMerchantOrdersAction,
   ShowOrderAction,
@@ -50,6 +53,9 @@ export type ActionTypes =
   | ShowMerchantOrdersAction
   | CancelOrderAction
   | StartOrderAction
+  | FinishOrderAction
+  | OpenProfileAction
+  | RateOrderAction
 ;
 
 export enum TypeKeys {
@@ -72,5 +78,8 @@ export enum TypeKeys {
   ORDER_MERCHANT = 'ORDER_MERCHANT',
   MERCHANT_ORDERS = 'MERCHANT_ORDERS',
   START_ORDER = 'START_ORDER',
-  CANCEL_ORDER = 'CANCEL_ORDER'
+  CANCEL_ORDER = 'CANCEL_ORDER',
+  FINISH_ORDER = 'FINISH_ORDER',
+  RATE_ORDER = 'RATE_ORDER',
+  OPEN_PROFILE = 'OPEN_PROFILE'
 }

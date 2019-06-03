@@ -32,6 +32,14 @@ export interface CancelOrderAction {
   type: TypeKeys.CANCEL_ORDER;
 }
 
+export interface FinishOrderAction {
+  type: TypeKeys.FINISH_ORDER;
+}
+
+export interface RateOrderAction {
+  type: TypeKeys.RATE_ORDER;
+}
+
 export const showOrder = (token: string) => async (dispatch: any, _getState: any) => {
   Backend.setDomain(endpoint);
   const base64Url = token.split('.')[1];
@@ -75,6 +83,7 @@ export const selectOrder = (order: any, token: string) => async (dispatch: any, 
 };
 
 export const placeOrder = (bid: any, order: any, token: string) => async (dispatch: any, _getState: any) => {
+  Backend.setDomain(endpoint);
   await (await Backend.placeBid({ 'xAccessToken': token, bid, order }));
   return dispatch({
     type: TypeKeys.PLACE_ORDER,
@@ -82,12 +91,26 @@ export const placeOrder = (bid: any, order: any, token: string) => async (dispat
   });
 };
 
+export const rateOrder = (order: any, rating: any, token: string) => async (dispatch: any, _getState: any) => {
+  Backend.setDomain(endpoint);
+  await Backend.rateOrder({ 'xAccessToken': token, 'id': order, 'rate': rating });
+  return dispatch({ type: TypeKeys.RATE_ORDER });
+};
+
 export const startOrder = (order: any, token: string) => async (dispatch: any, _getState: any) => {
+  Backend.setDomain(endpoint);
   await Backend.startOrder({ 'xAccessToken': token, 'id': order });
   return dispatch({ type: TypeKeys.START_ORDER });
 };
 
+export const finishOrder = (order: any, token: string) => async (dispatch: any, _getState: any) => {
+  Backend.setDomain(endpoint);
+  await Backend.finishOrder({ 'xAccessToken': token, 'id': order });
+  return dispatch({ type: TypeKeys.FINISH_ORDER });
+};
+
 export const cancelOrder = (order: any, token: string) => async (dispatch: any, _getState: any) => {
+  Backend.setDomain(endpoint);
   await Backend.cancelOrder({ 'xAccessToken': token, 'id': order });
   return dispatch({ type: TypeKeys.CANCEL_ORDER });
 };

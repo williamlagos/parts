@@ -2,7 +2,7 @@ import { Component, Element, Prop, State } from '@stencil/core';
 import { Action, Store } from '@stencil/redux';
 
 import { ConferenceData } from '../../providers/conference-data';
-import { cancelOrder, showMyOrders } from '../../actions/merchant';
+import { cancelOrder, finishOrder, rateOrder, showMyOrders } from '../../actions/merchant';
 import { showMyOrders as showCustomerOrders } from '../../actions/customer';
 
 
@@ -15,7 +15,9 @@ declare var google: any;
 export class PageRoute {
   private mapData: any;
   private gmapKey = 'AIzaSyC8B5IrTvSbGt9Akb5f00CiDmO86RTb1ec';
+  rateOrder: Action;
   cancelOrder: Action;
+  finishOrder: Action;
   showMyOrders: Action;
   showCustomerOrders: Action;
 
@@ -23,7 +25,10 @@ export class PageRoute {
   @State() role: string;
   @State() orders: any[] = [];
   @State() startedOrders: any[] = [];
+  @State() finishedOrders: any[] = [];
   @State() hasOrder: boolean;
+  @State() hasFinishedOrder: boolean;
+  @State() rating: any;
   @Prop({ context: 'store' }) store: Store;
   @Element() private el: HTMLElement;
 
@@ -39,17 +44,15 @@ export class PageRoute {
         const { merchant: { orders } } = state;
         return { orders };
       });
-      this.store.mapDispatchToProps(this, { showMyOrders, cancelOrder });
+      this.store.mapDispatchToProps(this, { showMyOrders, cancelOrder, rateOrder, finishOrder });
     } else if (this.role === 'CUSTOMER') {
       this.store.mapStateToProps(this, (state) => {
         const { customer: { orders } } = state;
         return { orders };
       });
-      this.store.mapDispatchToProps(this, { showCustomerOrders, cancelOrder });
+      this.store.mapDispatchToProps(this, { showCustomerOrders, cancelOrder, rateOrder, finishOrder });
     }
     await this.populateOrders();
-    this.hasOrder = this.startedOrders.length > 0;
-    /*!this.hasOrder && */
     await getGoogleMaps(this.gmapKey);
   }
 
@@ -96,6 +99,17 @@ export class PageRoute {
     this.role === 'MERCHANT' ? await this.showMyOrders(this.token) : await this.showCustomerOrders(this.token);
     this.startedOrders = this.orders.filter((order: any) => order.status === 'started');
     // this.awaitingOrders = this.orders.filter((order: any) => order.status === 'awaiting_for_confirmation');
+    this.finishedOrders = this.orders.filter((order: any) => order.status === 'finished' && !order.hasOwnProperty('ratings'));
+    // console.log(this.isEmpty((this.finishedOrders[0].ratings)));
+    this.hasOrder = this.startedOrders.length > 0;
+    this.hasFinishedOrder = this.finishedOrders.length > 0;
+  }
+
+  isEmpty(obj: any) {
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) return false;
+    }
+    return true;
   }
 
   parseJwt(token: string) {
@@ -115,19 +129,41 @@ export class PageRoute {
   async cancelCurrentOrder(orderId: string) {
     await this.cancelOrder(orderId, this.token);
     await this.populateOrders();
-    this.hasOrder = this.startedOrders.length > 0;
     /*if (this.hasOrder) {
       await getGoogleMaps(this.gmapKey);
       await this.populateMap();
     }*/
   }
 
+  async finishCurrentOrder(orderId: string) {
+    await this.finishOrder(orderId, this.token);
+    await this.populateOrders();
+
+  }
+
+  async rateCurrentOrder(orderId: string) {
+    await this.rateOrder(orderId, this.rating, this.token);
+    await this.populateOrders();
+  }
+
+  toggleStar(ev: any, id: string) {
+    ev.preventDefault();
+    this.rating = + id.split('-')[1];
+    for (let i = 1; i <= 5; i++) document.getElementById(`star-${i}`).classList.remove('marked');
+    for (let i = 1; i <= this.rating; i++) {
+      const cl = document.getElementById(`star-${i}`).classList;
+      // !cl.contains('marked') ? cl.add('marked') : cl.remove('marked');
+      // console.log(`star-${i}`);
+      cl.add('marked');
+    }
+  }
+
   render() {
     let oaddr = '';
     let daddr = '';
     const gmapUrl = 'https://www.google.com/maps/embed/v1/directions';
-    if (this.hasOrder) {
-      const j = this.startedOrders[0].job;
+    if (this.hasOrder || this.hasFinishedOrder) {
+      const j = this.hasFinishedOrder ? this.finishedOrders[0].job : this.startedOrders[0].job;
       daddr = `${j.destination.address.street}, ${j.destination.address.number}`;
       oaddr = `${j.origin.address.street}, ${j.origin.address.number}`;
     }
@@ -141,41 +177,65 @@ export class PageRoute {
         </ion-toolbar>
       </ion-header>,
 
-      <div style={this.hasOrder && { 'display': 'none' }} class="map-canvas"></div>,
+      <div style={(this.hasOrder || this.hasFinishedOrder) && { 'display': 'none' }} class="map-canvas"></div>,
 
       <div style={{ 'flex': '1', 'display': 'flex', 'flex-direction': 'column' }}>
         {
-          this.hasOrder && ([
+          (this.hasOrder || this.hasFinishedOrder) && ([
             <iframe frameborder="0" style={{ border : '0', height: '100%', width: '100%' }}
                     src={`${gmapUrl}?origin=${oaddr}&destination=${daddr}&key=${this.gmapKey}`}>
             </iframe>,
             <div>
             <ion-card>
               <ion-card-header>
-                <ion-card-subtitle>Prepare seus itens</ion-card-subtitle>
-                <ion-card-title>Frete em Andamento</ion-card-title>
+                <ion-card-subtitle>{this.hasFinishedOrder ? 'Avalie seu frete' : 'Prepare seus itens'}</ion-card-subtitle>
+                <ion-card-title>{this.hasFinishedOrder ? 'Frete Concluído' : 'Frete em Andamento'}</ion-card-title>
               </ion-card-header>
 
-              <ion-card-content>
-                O freteiro está a caminho de {this.startedOrders[0].job.origin.address.street + ', ' + this.startedOrders[0].job.origin.address.number},
-                a partir de {this.startedOrders[0].job.scheduledTo}. Aguarde a chegada do prestador de serviços para começar o frete para o endereço
-                {' ' + this.startedOrders[0].job.destination.address.street + ', ' + this.startedOrders[0].job.destination.address.number}. Contate o
-                {' ' + this.startedOrders[0].merchant.name} pelo telefone {this.startedOrders[0].merchant.phone} ou e-mail {this.startedOrders[0].merchant.email} em caso de necessidade.
-              </ion-card-content>
+              {
+                this.hasOrder && ([
+                  <ion-card-content>
+                    O freteiro está a caminho de {this.startedOrders[0].job.origin.address.street + ', ' + this.startedOrders[0].job.origin.address.number},
+                    a partir de {this.startedOrders[0].job.scheduledTo}. Aguarde a chegada do prestador de serviços para começar o frete para o endereço
+                    {' ' + this.startedOrders[0].job.destination.address.street + ', ' + this.startedOrders[0].job.destination.address.number}. Contate o
+                    {' ' + this.startedOrders[0].merchant.name} pelo telefone {this.startedOrders[0].merchant.phone} ou e-mail {this.startedOrders[0].merchant.email} em caso de necessidade.
+                  </ion-card-content>,
+                  <div>
+                    {
+                      this.role === 'MERCHANT' ? (
+                        <div style={{ 'display': 'flex', 'padding': '0px 15px' }}>
+                          <ion-button style={{ 'flex': '1' }} color="danger" onClick={() => this.cancelCurrentOrder(this.startedOrders[0]._id)}>Cancelar</ion-button>
+                          <ion-button style={{ 'flex': '1' }} color="tertiary" onClick={() => this.navigate()}>Navegar</ion-button>
+                          <ion-button style={{ 'flex': '1' }} color="success" onClick={() => this.finishCurrentOrder(this.startedOrders[0]._id)}>Concluir</ion-button>
+                        </div>
+                      ) : (
+                          <div style={{ 'display': 'flex', 'padding': '0px 15px' }}>
+                            <ion-button style={{ 'flex': '1' }} color="danger" onClick={() => this.cancelCurrentOrder(this.startedOrders[0]._id)} expand="block">Cancelar</ion-button>
+                          </div>
+                      )
+                    }
+                  </div>,
+                  <br/>
+                ])
+              }
 
               {
-                this.role === 'MERCHANT' ? (
+                this.hasFinishedOrder && ([
+                  <ion-card-content>
+                    <ion-buttons class="stars">
+                      <ion-button id="star-1" onClick={(e) => this.toggleStar(e, 'star-1')}></ion-button>
+                      <ion-button id="star-2" onClick={(e) => this.toggleStar(e, 'star-2')}></ion-button>
+                      <ion-button id="star-3" onClick={(e) => this.toggleStar(e, 'star-3')}></ion-button>
+                      <ion-button id="star-4" onClick={(e) => this.toggleStar(e, 'star-4')}></ion-button>
+                      <ion-button id="star-5" onClick={(e) => this.toggleStar(e, 'star-5')}></ion-button>
+                    </ion-buttons>
+                  </ion-card-content>,
                   <div style={{ 'display': 'flex', 'padding': '0px 15px' }}>
-                    <ion-button style={{ 'flex': '1' }} color="danger" onClick={() => this.cancelCurrentOrder(this.startedOrders[0]._id)}>Cancelar</ion-button>
-                    <ion-button style={{ 'flex': '1' }} color="success" onClick={() => this.navigate()}>Navegar</ion-button>
-                  </div>
-                ) : (
-                  <div style={{ 'display': 'flex', 'padding': '0px 15px' }}>
-                    <ion-button style={{ 'flex': '1' }} color="danger" onClick={() => this.cancelCurrentOrder(this.startedOrders[0]._id)} expand="block">Cancelar</ion-button>
-                  </div>
-                )
+                    <ion-button style={{ 'flex': '1' }} color="tertiary" onClick={() => this.rateCurrentOrder(this.finishedOrders[0]._id)} expand="block">Enviar</ion-button>
+                  </div>,
+                  <br/>
+                ])
               }
-              <br/>
             </ion-card>
             </div>
           ])

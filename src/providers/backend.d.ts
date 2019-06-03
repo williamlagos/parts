@@ -28,6 +28,7 @@ export declare class Backend {
   static getOrder(parameters?: any): any;
   static acceptOrder(parameters?: any): any;
   static cancelOrder(parameters?: any): any;
+  static finishOrder(parameters?: any): any;
   static rateOrder(parameters?: any): any;
   static getReceivingModes(parameters?: any): any;
   static getPaymentModes(parameters?: any): any;

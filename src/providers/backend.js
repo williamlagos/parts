@@ -1062,6 +1062,44 @@ class Backend {
   };
 
   /**
+   * request: finishOrder
+   * @param xAccessToken - JWT created on user creation or authentication.
+   * @param id -
+   */
+  static finishOrder(parameters = {}) {
+    const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
+    const config = parameters.$config || {
+      headers: {}
+    };
+    let path = '/order/{id}/finish';
+    let body;
+    let queryParameters = {};
+    let form = {};
+
+    if (parameters['xAccessToken'] !== undefined) {
+      config.headers['x-access-token'] = parameters['xAccessToken'];
+    }
+
+    if (parameters['xAccessToken'] === undefined) {
+      return Promise.reject(new Error('Missing required  parameter: xAccessToken'));
+    }
+
+    path = path.replace('{id}', `${parameters['id']}`);
+
+    if (parameters['id'] === undefined) {
+      return Promise.reject(new Error('Missing required  parameter: id'));
+    }
+
+    if (parameters.$queryParameters) {
+      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+        queryParameters[parameterName] = parameters.$queryParameters[parameterName];
+      });
+    }
+
+    return Backend.request('post', domain + path, body, queryParameters, form, config);
+  };
+
+  /**
    * request: rateOrder
    * @param xAccessToken - JWT created on user creation or authentication.
    * @param id -

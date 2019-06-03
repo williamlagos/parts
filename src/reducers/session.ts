@@ -86,6 +86,12 @@ const session = (state: AppState = prepareState(), action: ActionTypes) => {
         directions: state.directions.slice(0, -1)
       };
     }
+    case TypeKeys.OPEN_PROFILE: {
+      return {
+        ...state,
+        profile: action.profile
+      };
+    }
   }
 
   return state;
