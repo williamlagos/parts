@@ -48,6 +48,8 @@ export class PageOrderDetail {
   }
 
   offer() {
+    console.log(this.order._id);
+    console.log(this.orderId);
     const bid = { ...this.data, /*order: this.orderId,*/ user: this.userId };
     this.placeOrder(bid, this.orderId, this.token);
     this.dismiss({ 'success': 0 });
@@ -91,10 +93,10 @@ export class PageOrderDetail {
             <ion-item>
               {
                 this.order.hasOwnProperty('pictures') && this.order.pictures.length > 0 ?
-                <img style={{ 'text-align': 'center' }} src={this.order.pictures[0].externalRef} alt="Aqui fica a imagem do pedido"/> :
-                <img style={{ 'text-align': 'center' }} alt="Aqui fica a imagem do pedido"/>
+                <img style={{ 'text-align': 'center', 'margin': '10px 10px 10px 0px' }} src={this.order.pictures[0].externalRef} alt="Aqui fica a imagem do pedido"/> :
+                <img style={{ 'text-align': 'center', 'margin': '10px 10px 10px 0px' }} alt="Aqui fica a imagem do pedido"/>
               }
-              <div style={{ 'text-align' : 'left' }}>
+              <ion-label style={{ 'text-align' : 'left' }}>
                 <p>Origem: { this.order.job.origin.address.street + ', ' + this.order.job.origin.address.number }</p>
                 <p>Destino: { this.order.job.destination.address.street + ', ' + this.order.job.destination.address.number }</p>
                 <p>
@@ -104,7 +106,7 @@ export class PageOrderDetail {
                   this.order.job.origin.items.length > 0 && this.order.job.origin.items[0].description
                   }
                 </p>
-              </div>
+              </ion-label>
               </ion-item>
             </ion-col>
           </ion-row>
