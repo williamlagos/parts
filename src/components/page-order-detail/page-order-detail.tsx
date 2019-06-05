@@ -90,7 +90,7 @@ export class PageOrderDetail {
             <ion-col style={{ 'text-align' : 'center' }} col-10 push-1 col-sm-6 push-sm-3>
             <ion-item>
               {
-                this.order.pictures.length > 0 ?
+                this.order.hasOwnProperty('pictures') && this.order.pictures.length > 0 ?
                 <img style={{ 'text-align': 'center' }} src={this.order.pictures[0].externalRef} alt="Aqui fica a imagem do pedido"/> :
                 <img style={{ 'text-align': 'center' }} alt="Aqui fica a imagem do pedido"/>
               }

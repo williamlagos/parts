@@ -161,7 +161,7 @@ export class PageOrderList {
                     <ion-col size="12" size-md="6">
                       <ion-card class="speaker-card">
                         <a style={{ 'text-decoration': 'none' }} href={`/speakers/${order.id}`}>
-                          <img style={{ 'text-align': 'center' }} src={order.pictures.length > 0 ? order.pictures[0].externalRef : 'assets/img/box.svg'} alt="Aqui fica a imagem do pedido"/>
+                          <img style={{ 'text-align': 'center' }} src={order.hasOwnProperty('pictures') && order.pictures.length > 0 ? order.pictures[0].externalRef : 'assets/img/box.svg'} alt="Aqui fica a imagem do pedido"/>
                         </a>
                         <ion-card-header>
                           <ion-card-subtitle>{order.job.origin.address.street + ', ' + order.job.origin.address.number}</ion-card-subtitle>

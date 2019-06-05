@@ -28,6 +28,7 @@ export class Uploader {
 
   onInputChange(files: FileList) {
     // check if 1 image is uploaded
+    // console.log(files[0]);
     if (files.length >= 1) {
       for (let i = 0; i < files.length; i++) {
         const imageFile = files[i];
@@ -48,8 +49,8 @@ export class Uploader {
       this.index = 0;
       this.previews = files;
       for (let i = 0; i < files.length; i++) this.list.push(i);
-      // console.log(this.list);
-      console.log(files);
+      // console.log(this.list[0]);
+      // console.log(files[0]);
       this.send(files);
     } else {
       console.error(files.length === 0 ? 'NO IMAGE UPLOADED' : 'YOU CAN ONLY UPLOAD ONE IMAGE AT THE TIME');

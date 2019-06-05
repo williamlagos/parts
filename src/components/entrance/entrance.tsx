@@ -85,8 +85,8 @@ export class Entrance {
 
     this.submitted = true;
 
-    console.log(this.name);
-    console.log(this.name);
+    // console.log(this.name);
+    // console.log(this.name);
 
     if (this.password.valid && this.username.valid) {
       this.setToken(this.username.value, this.password.value);

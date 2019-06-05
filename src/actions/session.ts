@@ -59,6 +59,8 @@ export interface CloseAction {
 export const openProfile = (token: string) => async (dispatch: any, _getState: any) => {
   Backend.setDomain(endpoint);
   const profile = await (await Backend.getUserProfile({ 'xAccessToken': token })).json();
+  profile.pictures = profile.hasOwnProperty('pictures') && profile.pictures.length > 0 ?
+                     [(await (await Backend.getPicture({ 'xAccessToken': token, 'id': profile.pictures[0] })).json())['externalRef']] : [ {} ];
   return dispatch({
     type: TypeKeys.OPEN_PROFILE,
     profile
@@ -121,11 +123,12 @@ export const closeRegister = () => async (dispatch: any, _getState: any) => {
 
 export const register = (data: any) => async (dispatch: any, _getState: any) => {
   const files = data.files;
-  delete data.files;
-  // TODO: Add picture reference to user
+  console.log(data.files);
   Backend.setDomain(endpoint);
   const d = await (await Backend.createUser({ 'user': data })).json();
-  await (await Backend.addPicture({ 'xAccessToken': d.token, 'files': files }));
+  const pictures = await (await Backend.addPicture({ 'xAccessToken': d.token, 'files': files })).json();
+  const picture = pictures.map((pic: any) => pic._id)[0];
+  await Backend.updateUser({ 'xAccessToken': d.token, 'user': { 'pictures': [picture] } });
   return dispatch({
     type: TypeKeys.CLOSE_REGISTER,
     registered: true

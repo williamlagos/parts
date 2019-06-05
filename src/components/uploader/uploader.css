@@ -101,4 +101,7 @@ label:active{
 
 #preview0 {
   background: url('assets/img/flatcube.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }

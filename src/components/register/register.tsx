@@ -23,7 +23,7 @@ export class Register {
   }
 
   handleFile(files: FileList) {
-    this.data['files'] = files;
+    this.data['files'] = [files[0]];
   }
 
   handleAddress(ev: any) {
@@ -67,6 +67,7 @@ export class Register {
 
   submit(e: any) {
     e.preventDefault();
+    // console.log(this.data);
     const data = {
       ...this.data,
       username: this.username.value,

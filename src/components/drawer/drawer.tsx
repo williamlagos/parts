@@ -64,6 +64,7 @@ export class Menu {
   renderMenu() {
     const role = this.parseJwt(this.token)['_role'];
     // console.log(this.parseJwt(this.token));
+    // console.log(this.profile);
     return (
       <ion-menu contentId="app" menuId="first" type="push">
         <ion-header>
@@ -78,7 +79,7 @@ export class Menu {
             this.profile && ([
               <ion-item>
                 <ion-avatar slot="start">
-                  <img src={this.profile.pictures.length > 0 ? this.profile.pictures[0].id : 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y'} alt="Imagem do perfil"/>
+                  <img src={this.profile.hasOwnProperty('pictures') && this.profile.pictures.length > 0 ? this.profile.pictures[0] : 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y'} alt="Imagem do perfil"/>
                 </ion-avatar>
                 <ion-label>
                   <h5>{this.profile.name}</h5>
