@@ -37,10 +37,10 @@ export class Carousel {
 
       <ion-content scrollY={false}>
         <ion-slides pager={false}>
-          <slot name="slide1"/>
-          <slot name="slide2"/>
-          <slot name="slide3"/>
-          <slot name="slide4"/>
+          <ion-slide><slot name="slide1"/></ion-slide>
+          <ion-slide><slot name="slide2"/></ion-slide>
+          <ion-slide><slot name="slide3"/></ion-slide>
+          <ion-slide><slot name="slide4"/></ion-slide>
         </ion-slides>
       </ion-content>
     ];

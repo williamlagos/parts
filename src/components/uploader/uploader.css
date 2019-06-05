@@ -13,8 +13,8 @@ image-uploader {
 
 .image-upload__edit {
   position: absolute;
-  top: 10px;
-  right: 12px;
+  top: -9px;
+  right: -9px;
   z-index: 1;
 }
 
@@ -26,8 +26,8 @@ image-uploader {
 
 .image-upload__edit label {
   display: block;
-
-  background: #fff;
+  color: white;
+  background: black;
   border: 1px solid transparent;
   border-radius: 100%;
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
@@ -39,7 +39,8 @@ image-uploader {
 }
 
 .image-upload__edit label:hover {
-  background: #f1f1f1;
+  background: white;
+  color: black;
   border-color: #d6d6d6;
 }
 
@@ -82,9 +83,9 @@ label:active{
   width: 80px;
   height: 80px;
   /* max-width: 128px;
-  max-height: 128px;
-  border-radius: 100%; */
-  border: 6px solid #F0F0F0;
+  max-height: 128px; */
+  border-radius: 8px;
+  border: 6px solid #FFF;
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2);
   margin: 5px;
 }
@@ -96,4 +97,8 @@ label:active{
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+}
+
+#preview0 {
+  background: url('assets/img/flatcube.svg');
 }

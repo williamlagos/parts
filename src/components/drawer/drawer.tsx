@@ -77,32 +77,34 @@ export class Menu {
           {
             this.profile && ([
               <ion-item>
-                <img src={this.profile.pictures.length > 0 ? this.profile.pictures[0].id : ''} alt="Imagem do perfil"/>
+                <ion-avatar slot="start">
+                  <img src={this.profile.pictures.length > 0 ? this.profile.pictures[0].id : 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y'} alt="Imagem do perfil"/>
+                </ion-avatar>
+                <ion-label>
+                  <h5>{this.profile.name}</h5>
+                  <p>{this.profile.email}</p>
+                </ion-label>
               </ion-item>,
               <ion-item>
-                <h5>{this.profile.name}</h5>
-              </ion-item>,
-              <ion-item>
-                <p>{this.profile.email}</p>
-              </ion-item>,
-              <ion-buttons class="static-stars">
-                <ion-item/>
-                {
-                  this.profile.hasOwnProperty('rating') ? ([
-                    <ion-button class={this.profile.rating >= 1 && 'marked'} id="star-1"/>,
-                    <ion-button class={this.profile.rating >= 2 && 'marked'} id="star-2"/>,
-                    <ion-button class={this.profile.rating >= 3 && 'marked'} id="star-3"/>,
-                    <ion-button class={this.profile.rating >= 4 && 'marked'} id="star-4"/>,
-                    <ion-button class={this.profile.rating >= 5 && 'marked'} id="star-5"/>
-                  ]) : ([
-                    <ion-button id="star-1"/>,
-                    <ion-button id="star-2"/>,
-                    <ion-button id="star-3"/>,
-                    <ion-button id="star-4"/>,
-                    <ion-button id="star-5"/>
-                  ])
-                }
-              </ion-buttons>
+                <ion-buttons class="static-stars">
+                  {/*<ion-item/>*/}
+                  {
+                    this.profile.hasOwnProperty('rating') ? ([
+                      <ion-button class={this.profile.rating >= 1 && 'marked'} id="star-1"/>,
+                      <ion-button class={this.profile.rating >= 2 && 'marked'} id="star-2"/>,
+                      <ion-button class={this.profile.rating >= 3 && 'marked'} id="star-3"/>,
+                      <ion-button class={this.profile.rating >= 4 && 'marked'} id="star-4"/>,
+                      <ion-button class={this.profile.rating >= 5 && 'marked'} id="star-5"/>
+                    ]) : ([
+                      <ion-button id="star-1"/>,
+                      <ion-button id="star-2"/>,
+                      <ion-button id="star-3"/>,
+                      <ion-button id="star-4"/>,
+                      <ion-button id="star-5"/>
+                    ])
+                  }
+                </ion-buttons>
+              </ion-item>
             ])
           }
           <ion-list>

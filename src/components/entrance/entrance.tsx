@@ -160,7 +160,7 @@ export class Entrance {
     if (!this.introduced) {
       return (
         <generic-carousel>
-          <ion-slide slot="slide1">
+          <div slot="slide1">
             <div class="slide-image-container">
               <img src="assets/img/tour_1_clipper.svg" class="slide-image"/>
             </div>
@@ -174,9 +174,9 @@ export class Entrance {
               Continuar
               <ion-icon slot="end" name="arrow-forward"></ion-icon>
             </ion-button>
-          </ion-slide>
+          </div>
 
-          <ion-slide slot="slide2">
+          <div slot="slide2">
             <div class="slide-image-container">
               <img src="assets/img/tour_2_map.svg" class="slide-image"/>
             </div>
@@ -187,9 +187,9 @@ export class Entrance {
                 Continuar
                 <ion-icon slot="end" name="arrow-forward"></ion-icon>
               </ion-button>
-          </ion-slide>
+          </div>
 
-          <ion-slide slot="slide3">
+          <div slot="slide3">
             <div class="slide-image-container">
               <img src="assets/img/tour_3_payment.svg" class="slide-image"/>
             </div>
@@ -200,9 +200,9 @@ export class Entrance {
                 Continuar
                 <ion-icon slot="end" name="arrow-forward"></ion-icon>
               </ion-button>
-          </ion-slide>
+          </div>
 
-          <ion-slide slot="slide4">
+          <div slot="slide4">
             <div class="slide-image-container">
               <img src="assets/img/tour_4_start.svg" class="slide-image"/>
             </div>
@@ -211,7 +211,7 @@ export class Entrance {
               Começar
               <ion-icon slot="end" name="arrow-forward"></ion-icon>
             </ion-button>
-          </ion-slide>
+          </div>
         </generic-carousel>
       );
     }
