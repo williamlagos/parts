@@ -15,13 +15,15 @@ export class PageCreate {
 
   @Prop({ context: 'store' }) store: Store;
   @Prop({ connect: 'ion-tabs' }) tab: HTMLIonTabsElement;
-  @State() descriptions: any[] = [''];
+  @State() descriptions: any[] = [{ description: '' }];
   @State() descriptionsLength = 1;
   @State() directions: any[];
   @State() token: any;
   @State() data = {
     job: {
-      origin: {},
+      origin: {
+        items: []
+      },
       destination: {}
     }
   };
@@ -63,6 +65,7 @@ export class PageCreate {
     const destPlace = (await destResponse.json()).results[0].geometry.location;
     this.data['job']['origin']['address']['location'] = { lat: origPlace.lat, lng: origPlace.lng };
     this.data['job']['destination']['address']['location'] = { lat: destPlace.lat, lng: destPlace.lng };
+    this.data.job.origin['items'] = [ ...this.descriptions.slice(0, this.descriptionsLength) ];
     // console.log(this.data);
     this.registerOrder(this.data, this.token);
     const tabs: HTMLIonTabsElement = await (this.tab as any).componentOnReady();
@@ -75,9 +78,11 @@ export class PageCreate {
     this.data['job'][type] = data;
   }
 
-  handleFile(files: FileList) {
+  handleFile(f: FileList) {
     // console.log(files);
-    this.data['files'] = files;
+    const files = [];
+    for (let i = 0; i < f.length; i++) files.push(f[i]);
+    this.data['files'] = [ ...files ];
     // console.log(this.data);
   }
 
@@ -88,15 +93,14 @@ export class PageCreate {
 
   handleDescription(e: any) {
     e.preventDefault();
-    this.data.job.origin['items'].push({ description: e.target.value });
-    // console.log(this.data);
+    this.descriptions[this.descriptionsLength - 1] = { description: e.target.value };
+    this.descriptions[this.descriptionsLength] = { description: '' };
   }
 
   addDescription(e: any) {
     e.preventDefault();
-    this.descriptions.push('');
-    this.descriptionsLength = this.descriptions.length;
-    // console.log(this.descriptions);
+    // this.descriptions.push({ description: '' });
+    this.descriptionsLength += 1;
   }
 
   render() {
@@ -129,11 +133,11 @@ export class PageCreate {
           </div>
           <div slot="step-2">
             {
-              this.descriptions.map(() => {
+              this.descriptions.map((description: any) => {
                 return (
                   <ion-item>
                     <ion-label position="stacked" color="primary">Descreva o item que você precisa carregar</ion-label>
-                    <ion-textarea rows={2} name="description" value="" onInput={(e) => this.handleDescription(e)} required></ion-textarea>
+                    <ion-textarea rows={2} name="description" onInput={(e) => this.handleDescription(e)} required value={description['description']}></ion-textarea>
                   </ion-item>
                 );
               })

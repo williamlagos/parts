@@ -60,7 +60,7 @@ export const openProfile = (token: string) => async (dispatch: any, _getState: a
   Backend.setDomain(endpoint);
   const profile = await (await Backend.getUserProfile({ 'xAccessToken': token })).json();
   profile.pictures = profile.hasOwnProperty('pictures') && profile.pictures.length > 0 ?
-                     [(await (await Backend.getPicture({ 'xAccessToken': token, 'id': profile.pictures[0] })).json())['externalRef']] : [ {} ];
+                     [(await (await Backend.getPicture({ 'xAccessToken': token, 'id': profile.pictures[0] })).json())['externalRef']] : [ ];
   return dispatch({
     type: TypeKeys.OPEN_PROFILE,
     profile

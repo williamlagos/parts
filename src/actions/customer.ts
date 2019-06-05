@@ -27,9 +27,9 @@ export const registerOrder = (data: any, token: string) => async (dispatch: any,
   const files = data.files;
   Backend.setDomain(endpoint);
   const pictures = await (await Backend.addPicture({ 'xAccessToken': token, 'files': files })).json();
-  console.log(pictures);
+  // console.log(pictures);
   data.pictures = pictures.map((picture: any) => picture._id);
-  delete data.files;
+  // delete data.files;
   await Backend.createOrder({ 'xAccessToken': token, 'order': data });
   return dispatch({ type: TypeKeys.REGISTER_ORDER });
 };
