@@ -1,13 +1,14 @@
 import '@ionic/core';
 
 import { Component, Prop, State } from '@stencil/core';
-import { Plugins } from '@capacitor/core';
 
 import { Action, Store } from '@stencil/redux';
 import { configureStore } from '../../store/index';
 import { toggleTour } from '../../actions/session';
 
-const { SplashScreen } = Plugins;
+// Removed for while before Capacitor integration
+// import { Plugins } from '@capacitor/core';
+// const { SplashScreen } = Plugins;
 
 @Component({
   tag: 'app-root',
@@ -31,7 +32,7 @@ export class AppRoot {
   async componentDidLoad() {
     this.checkLoginStatus();
     try {
-      await SplashScreen.hide();
+      // await SplashScreen.hide();
     } catch {
       return;
     }

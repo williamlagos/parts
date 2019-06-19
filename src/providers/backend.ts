@@ -1,20 +1,20 @@
 import _qs from 'qs';
 
-let domain = '';
-
 class Backend {
 
+  static backendDomain = '';
+
   static getDomain() {
-    return domain;
-  };
+    return Backend.backendDomain;
+  }
 
-  static setDomain($domain) {
-    domain = $domain;
-  };
+  static setDomain($domain: any) {
+    Backend.backendDomain = $domain;
+  }
 
-  static request(method, url, body, queryParameters, form, config) {
+  static request(method: any, url: string, body: any, queryParameters: any, form: any, config: any) {
     method = method.toUpperCase();
-    let keys = Object.keys(queryParameters);
+    const keys = Object.keys(queryParameters);
     let queryUrl = url;
 
     if (keys.length > 0) {
@@ -26,7 +26,7 @@ class Backend {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
       'x-access-token': config.headers['x-access-token']
-    }
+    };
     if (method !== 'GET') {
       if (body) {
         config.body = JSON.stringify(body);
@@ -35,16 +35,16 @@ class Backend {
       }
     }
     return fetch(queryUrl, config);
-  };
+  }
 
-  static multipartRequest(method, url, form, config) {
-    const formData  = new FormData();
+  static multipartRequest(method: any, url: string, form: any, config: any) {
+    const formData = new FormData();
     const files = form['files'];
-    for(let i = 0; i < files.length; i++) {
+    for (let i = 0; i < files.length; i++) {
       formData.append('files[]', files[i]);
     }
-    let options = {
-      method: method,
+    const options = {
+      method,
       headers: {
         // 'content-type': 'multipart/form-data; boundary=---011000010111000001101001',
         'x-access-token': config.headers['x-access-token']
@@ -62,15 +62,15 @@ class Backend {
    * @param page - Number of pages to skip.
    * @param pageSize - Size of documents on one page.
    */
-  static getUsersAsAdmin(parameters = {}) {
+  static getUsersAsAdmin(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
-    let path = '/admin/users';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const path = '/admin/users';
+    const body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters['xAccessToken'] !== undefined) {
       config.headers['x-access-token'] = parameters['xAccessToken'];
@@ -109,28 +109,28 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('get', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: deactivateUserAsAdmin
    * @param xAccessToken - JWT created on user creation or authentication.
    * @param id -
    */
-  static deactivateUserAsAdmin(parameters = {}) {
+  static deactivateUserAsAdmin(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
     let path = '/admin/users/{id}';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters['xAccessToken'] !== undefined) {
       config.headers['x-access-token'] = parameters['xAccessToken'];
@@ -147,13 +147,13 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('post', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: activateUserAsAdmin
@@ -163,15 +163,15 @@ class Backend {
    * @param xAccessToken - JWT created on user creation or authentication.
    * @param id -
    */
-  static activateUserAsAdmin(parameters = {}) {
+  static activateUserAsAdmin(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
     let path = '/admin/users/{id}/activate';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters['xAccessToken'] !== undefined) {
       config.headers['x-access-token'] = parameters['xAccessToken'];
@@ -188,13 +188,13 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('post', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: changeUserRole
@@ -202,15 +202,15 @@ class Backend {
    * @param id -
    * @param role -
    */
-  static changeUserRole(parameters = {}) {
+  static changeUserRole(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
     let path = '/admin/users/{id}/role/{role}';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters['xAccessToken'] !== undefined) {
       config.headers['x-access-token'] = parameters['xAccessToken'];
@@ -233,27 +233,27 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('post', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: getChats
    * @param xAccessToken - JWT created on user creation or authentication.
    */
-  static getChats(parameters = {}) {
+  static getChats(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
-    let path = '/chat/chats';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const path = '/chat/chats';
+    const body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters['xAccessToken'] !== undefined) {
       config.headers['x-access-token'] = parameters['xAccessToken'];
@@ -264,28 +264,28 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('get', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: getChat
    * @param xAccessToken - JWT created on user creation or authentication.
    * @param chat -
    */
-  static getChat(parameters = {}) {
+  static getChat(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
     let path = '/chat/{chat}';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters['xAccessToken'] !== undefined) {
       config.headers['x-access-token'] = parameters['xAccessToken'];
@@ -302,54 +302,54 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('get', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: addLead
    * @param lead - JSON representation of the lead.
    */
-  static addLead(parameters = {}) {
+  static addLead(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
-    let path = '/lead';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const path = '/lead';
+    let body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters['lead'] !== undefined) {
       body = parameters['lead'];
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('post', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: getLeads
    * @param xAccessToken - JWT created on user creation or authentication.
    */
-  static getLeads(parameters = {}) {
+  static getLeads(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
-    let path = '/lead';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const path = '/lead';
+    const body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters['xAccessToken'] !== undefined) {
       config.headers['x-access-token'] = parameters['xAccessToken'];
@@ -360,28 +360,28 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('get', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: getLead
    * @param xAccessToken - JWT created on user creation or authentication.
    * @param id -
    */
-  static getLead(parameters = {}) {
+  static getLead(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
     let path = '/lead/{id}';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters['xAccessToken'] !== undefined) {
       config.headers['x-access-token'] = parameters['xAccessToken'];
@@ -398,13 +398,13 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('get', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: placeBid
@@ -412,15 +412,15 @@ class Backend {
    * @param bid - JSON representation of the bid.
    * @param order -
    */
-  static placeBid(parameters = {}) {
+  static placeBid(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
     let path = '/bid/{order}/place';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    let body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters['xAccessToken'] !== undefined) {
       config.headers['x-access-token'] = parameters['xAccessToken'];
@@ -441,13 +441,13 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('post', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: placeFinalBid
@@ -455,15 +455,15 @@ class Backend {
    * @param bid - JSON representation of the bid.
    * @param order -
    */
-  static placeFinalBid(parameters = {}) {
+  static placeFinalBid(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
     let path = '/bid/{order}/final';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    let body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters['xAccessToken'] !== undefined) {
       config.headers['x-access-token'] = parameters['xAccessToken'];
@@ -484,28 +484,28 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('post', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: getOrderBids
    * @param xAccessToken - JWT created on user creation or authentication.
    * @param order -
    */
-  static getOrderBids(parameters = {}) {
+  static getOrderBids(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
     let path = '/bid/by-order/{order}';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters['xAccessToken'] !== undefined) {
       config.headers['x-access-token'] = parameters['xAccessToken'];
@@ -522,28 +522,28 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('get', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: removeFavoriteMerchant
    * @param xAccessToken - JWT created on user creation or authentication.
    * @param merchant -
    */
-  static removeFavoriteMerchant(parameters = {}) {
+  static removeFavoriteMerchant(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
     let path = '/customer/favorites/merchant/{merchant}';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters['xAccessToken'] !== undefined) {
       config.headers['x-access-token'] = parameters['xAccessToken'];
@@ -560,27 +560,27 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('post', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: getFavoritesList
    * @param xAccessToken - JWT created on user creation or authentication.
    */
-  static getFavoritesList(parameters = {}) {
+  static getFavoritesList(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
-    let path = '/customer/favorites/merchants';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const path = '/customer/favorites/merchants';
+    const body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters['xAccessToken'] !== undefined) {
       config.headers['x-access-token'] = parameters['xAccessToken'];
@@ -591,27 +591,27 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('get', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: getMerchantById
    * @param id -
    */
-  static getMerchantById(parameters = {}) {
-    const domain = parameters.$domain ? parameters.$domain : getDomain();
+  static getMerchantById(parameters: any = {}) {
+    const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
     let path = '/merchant/{id}/details';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const body: any = {};
+    const queryParameters = {};
+    const form = {};
     path = path.replace('{id}', `${parameters['id']}`);
 
     if (parameters['id'] === undefined) {
@@ -619,27 +619,27 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
-    return request('get', domain + path, body, queryParameters, form, config);
-  };
+    return Backend.request('get', domain + path, body, queryParameters, form, config);
+  }
 
   /**
    * request: getMerchantByUsername
    * @param username -
    */
-  static getMerchantByUsername(parameters = {}) {
+  static getMerchantByUsername(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
     let path = '/merchant/by-username/{username}';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const body: any = {};
+    const queryParameters = {};
+    const form = {};
     path = path.replace('{username}', `${parameters['username']}`);
 
     if (parameters['username'] === undefined) {
@@ -647,28 +647,28 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('get', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: createMerchant
    * @param xAccessToken - JWT created on user creation or authentication.
    * @param user - JSON representation of the user.
    */
-  static createMerchant(parameters = {}) {
+  static createMerchant(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
-    let path = '/merchant/account/payment';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const path = '/merchant/account/payment';
+    let body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters['xAccessToken'] !== undefined) {
       config.headers['x-access-token'] = parameters['xAccessToken'];
@@ -683,13 +683,13 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('post', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: getNearbyMerchants
@@ -698,15 +698,15 @@ class Backend {
    * @param radius - Maximum radius to search for (km).
    * @param keyword - Geolocation keyword value.
    */
-  static getNearbyMerchants(parameters = {}) {
+  static getNearbyMerchants(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
-    let path = '/merchant/nearby';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const path = '/merchant/nearby';
+    const body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters['latitude'] !== undefined) {
       queryParameters['latitude'] = parameters['latitude'];
@@ -733,13 +733,13 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('get', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: getNearbyMerchantsByService
@@ -749,15 +749,15 @@ class Backend {
    * @param keyword - Geolocation keyword value.
    * @param radius - Maximum radius to search for (km).
    */
-  static getNearbyMerchantsByService(parameters = {}) {
+  static getNearbyMerchantsByService(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
     let path = '/merchant/nearby/{service}';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const body: any = {};
+    const queryParameters = {};
+    const form = {};
     path = path.replace('{service}', `${parameters['service']}`);
 
     if (parameters['service'] === undefined) {
@@ -789,28 +789,28 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('get', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: createOrder
    * @param xAccessToken - JWT created on user creation or authentication.
    * @param order - JSON representation of the order to be created.
    */
-  static createOrder(parameters = {}) {
+  static createOrder(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
-    let path = '/order';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const path = '/order';
+    let body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters['xAccessToken'] !== undefined) {
       config.headers['x-access-token'] = parameters['xAccessToken'];
@@ -825,28 +825,28 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('post', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: getOrders
    * @param xAccessToken - JWT created on user creation or authentication.
    * @param status - Filtering status.
    */
-  static getOrders(parameters = {}) {
+  static getOrders(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
-    let path = '/order';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const path = '/order';
+    const body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters['xAccessToken'] !== undefined) {
       config.headers['x-access-token'] = parameters['xAccessToken'];
@@ -861,28 +861,28 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('get', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: getReadyOrders
    * @param xAccessToken - JWT created on user creation or authentication.
    * @param status - Filtering status.
    */
-  static getReadyOrders(parameters = {}) {
+  static getReadyOrders(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
-    let path = '/order/ready';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const path = '/order/ready';
+    const body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters['xAccessToken'] !== undefined) {
       config.headers['x-access-token'] = parameters['xAccessToken'];
@@ -893,13 +893,13 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('get', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: getOrdersByPeriod
@@ -908,15 +908,15 @@ class Backend {
    * @param startDate - Filtering start date.
    * @param endDate - Filtering end date.
    */
-  static getOrdersByPeriod(parameters = {}) {
+  static getOrdersByPeriod(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
-    let path = '/order/between-dates';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const path = '/order/between-dates';
+    const body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters['xAccessToken'] !== undefined) {
       config.headers['x-access-token'] = parameters['xAccessToken'];
@@ -939,28 +939,28 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('get', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: getOrder
    * @param xAccessToken - JWT created on user creation or authentication.
    * @param id -
    */
-  static getOrder(parameters = {}) {
+  static getOrder(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
     let path = '/order/{id}';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters['xAccessToken'] !== undefined) {
       config.headers['x-access-token'] = parameters['xAccessToken'];
@@ -977,28 +977,28 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('get', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: acceptOrder
    * @param xAccessToken - JWT created on user creation or authentication.
    * @param id -
    */
-  static acceptOrder(parameters = {}) {
+  static acceptOrder(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
     let path = '/order/{id}/accept';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters['xAccessToken'] !== undefined) {
       config.headers['x-access-token'] = parameters['xAccessToken'];
@@ -1015,28 +1015,28 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('post', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: cancelOrder
    * @param xAccessToken - JWT created on user creation or authentication.
    * @param id -
    */
-  static cancelOrder(parameters = {}) {
+  static cancelOrder(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
     let path = '/order/{id}/cancel';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters['xAccessToken'] !== undefined) {
       config.headers['x-access-token'] = parameters['xAccessToken'];
@@ -1053,28 +1053,28 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('get', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: finishOrder
    * @param xAccessToken - JWT created on user creation or authentication.
    * @param id -
    */
-  static finishOrder(parameters = {}) {
+  static finishOrder(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
     let path = '/order/{id}/finish';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters['xAccessToken'] !== undefined) {
       config.headers['x-access-token'] = parameters['xAccessToken'];
@@ -1091,13 +1091,13 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('post', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: rateOrder
@@ -1105,15 +1105,15 @@ class Backend {
    * @param id -
    * @param rate -
    */
-  static rateOrder(parameters = {}) {
+  static rateOrder(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
     let path = '/order/{id}/rate/{rate}';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters['xAccessToken'] !== undefined) {
       config.headers['x-access-token'] = parameters['xAccessToken'];
@@ -1136,13 +1136,13 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('post', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: getReceivingModes
@@ -1150,24 +1150,24 @@ class Backend {
    * method: getReceivingModes_TYPE
    * raw_url: getReceivingModes_RAW_URL
    */
-  static getReceivingModes(parameters = {}) {
+  static getReceivingModes(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
-    let path = '/order/receiving-modes';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const path = '/order/receiving-modes';
+    const body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('get', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: getPaymentModes
@@ -1175,24 +1175,24 @@ class Backend {
    * method: getPaymentModes_TYPE
    * raw_url: getPaymentModes_RAW_URL
    */
-  static getPaymentModes(parameters = {}) {
+  static getPaymentModes(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
-    let path = '/order/payment-modes/list';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const path = '/order/payment-modes/list';
+    const body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('get', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: getOrdersNearby
@@ -1203,15 +1203,15 @@ class Backend {
    * @param page - Number of pages to skip.
    * @param pageSize - Size of documents on one page.
    */
-  static getOrdersNearby(parameters = {}) {
+  static getOrdersNearby(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
-    let path = '/order/by-location/nearby';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const path = '/order/by-location/nearby';
+    const body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters['latitude'] !== undefined) {
       queryParameters['latitude'] = parameters['latitude'];
@@ -1250,13 +1250,13 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('get', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: setOrderMerchant
@@ -1264,15 +1264,15 @@ class Backend {
    * @param id -
    * @param merchant -
    */
-  static setOrderMerchant(parameters = {}) {
+  static setOrderMerchant(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
     let path = '/order/{id}/merchant/{merchant}';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters['xAccessToken'] !== undefined) {
       config.headers['x-access-token'] = parameters['xAccessToken'];
@@ -1295,28 +1295,28 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('post', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: startOrder
    * @param xAccessToken - JWT created on user creation or authentication.
    * @param id -
    */
-  static startOrder(parameters = {}) {
+  static startOrder(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
     let path = '/order/{id}/start';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters['xAccessToken'] !== undefined) {
       config.headers['x-access-token'] = parameters['xAccessToken'];
@@ -1333,27 +1333,27 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('post', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: sendNotification
    * @param xAccessToken - JWT created on user creation or authentication.
    */
-  static sendNotification(parameters = {}) {
+  static sendNotification(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
-    let path = '/notification/send';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const path = '/notification/send';
+    const body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters['xAccessToken'] !== undefined) {
       config.headers['x-access-token'] = parameters['xAccessToken'];
@@ -1364,27 +1364,27 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('post', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: getNotifications
    * @param xAccessToken - JWT created on user creation or authentication.
    */
-  static getNotifications(parameters = {}) {
+  static getNotifications(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
-    let path = '/notification';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const path = '/notification';
+    const body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters['xAccessToken'] !== undefined) {
       config.headers['x-access-token'] = parameters['xAccessToken'];
@@ -1395,28 +1395,28 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('get', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: getNotification
    * @param xAccessToken - JWT created on user creation or authentication.
    * @param id -
    */
-  static getNotification(parameters = {}) {
+  static getNotification(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
     let path = '/notification/{id}';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters['xAccessToken'] !== undefined) {
       config.headers['x-access-token'] = parameters['xAccessToken'];
@@ -1433,27 +1433,27 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('get', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: accessWithFacebook
    * @param accessToken - User access token returned from Facebook oauth.
    */
-  static accessWithFacebook(parameters = {}) {
+  static accessWithFacebook(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
-    let path = '/oauth/access/facebook';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const path = '/oauth/access/facebook';
+    const body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters['accessToken'] !== undefined) {
       queryParameters['access_token'] = parameters['accessToken'];
@@ -1464,27 +1464,27 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('post', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * Send images to system.
    * @param multipart - Image to upload
    */
-  static addPicture(parameters = {}) {
+  static addPicture(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
-    let path = '/picture/save';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const path = '/picture/save';
+    // const body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters['xAccessToken'] !== undefined) {
       config.headers['x-access-token'] = parameters['xAccessToken'];
@@ -1499,28 +1499,28 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.multipartRequest('POST', domain + path, form, config);
-  };
+  }
 
   /**
    * request: getPicture
    * @param xAccessToken - JWT created on user creation or authentication.
    * @param id -
    */
-  static getPicture(parameters = {}) {
+  static getPicture(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
     let path = '/picture/{id}';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters['xAccessToken'] !== undefined) {
       config.headers['x-access-token'] = parameters['xAccessToken'];
@@ -1537,28 +1537,28 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('get', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: getPictures
    * @param xAccessToken - JWT created on user creation or authentication.
    * @param ids - list of ids
    */
-  static getPictures(parameters = {}) {
+  static getPictures(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
-    let path = '/picture/multiple';
-    let body;
+    const path = '/picture/multiple';
+    const body: any = {};
     let queryParameters = {};
-    let form = {};
+    const form = {};
 
     if (parameters['xAccessToken'] !== undefined) {
       config.headers['x-access-token'] = parameters['xAccessToken'];
@@ -1573,29 +1573,29 @@ class Backend {
     }
 
     /*if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }*/
-    queryParameters = { ids: String(parameters['ids']) }
+    queryParameters = { ids: String(parameters['ids']) };
 
     return Backend.request('get', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: getLatest
    * @param xAccessToken - JWT created on user creation or authentication.
    * @param itemId -
    */
-  static getLatest(parameters = {}) {
+  static getLatest(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
     let path = '/picture/{itemId}';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters['xAccessToken'] !== undefined) {
       config.headers['x-access-token'] = parameters['xAccessToken'];
@@ -1612,28 +1612,28 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('get', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: removePicture
    * @param xAccessToken - JWT created on user creation or authentication.
    * @param id -
    */
-  static removePicture(parameters = {}) {
+  static removePicture(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
     let path = '/picture/remove/{id}';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters['xAccessToken'] !== undefined) {
       config.headers['x-access-token'] = parameters['xAccessToken'];
@@ -1650,54 +1650,54 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('post', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * Creates an element with user data.
    * @param user - User credentials object.
    */
-  static createUser(parameters = {}) {
+  static createUser(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
-    let path = '/user/create';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const path = '/user/create';
+    let body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters['user'] !== undefined) {
       body = parameters['user'];
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('post', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: isUniqueUsername
    * @param username -
    */
-  static isUniqueUsername(parameters = {}) {
+  static isUniqueUsername(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
     let path = '/user/username/exists/{username}';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const body: any = {};
+    const queryParameters = {};
+    const form = {};
     path = path.replace('{username}', `${parameters['username']}`);
 
     if (parameters['username'] === undefined) {
@@ -1705,27 +1705,27 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('get', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: getUserProfile
    * @param xAccessToken - JWT created on user creation or authentication.
    */
-  static getUserProfile(parameters = {}) {
+  static getUserProfile(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
-    let path = '/user/profile';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const path = '/user/profile';
+    const body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters['xAccessToken'] !== undefined) {
       config.headers['x-access-token'] = parameters['xAccessToken'];
@@ -1736,50 +1736,50 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('get', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * Authenticates an user with e-mail and password.
    * @param user - User credentials object.
    */
-  static authenticateUser(parameters = {}) {
+  static authenticateUser(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
-    let path = '/user/authenticate';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const path = '/user/authenticate';
+    let body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters['user'] !== undefined) {
       body = parameters['user'];
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('post', domain + path, body, queryParameters, form, config);
-  };
+  }
 
-  static updateUser(parameters = {}) {
+  static updateUser(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
-    let path = '/user/update';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const path = '/user/update';
+    let body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters['xAccessToken'] !== undefined) {
       config.headers['x-access-token'] = parameters['xAccessToken'];
@@ -1794,27 +1794,27 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('post', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: recoverPassword
    * @param email -
    */
-  static recoverPassword(parameters = {}) {
+  static recoverPassword(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
     let path = '/user/password/recover/{email}';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const body: any = {};
+    const queryParameters = {};
+    const form = {};
     path = path.replace('{email}', `${parameters['email']}`);
 
     if (parameters['email'] === undefined) {
@@ -1822,28 +1822,28 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('post', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: updatePassword
    * @param xAccessToken - JWT created on user creation or authentication.
    * @param user - User credentials object.
    */
-  static updatePassword(parameters = {}) {
+  static updatePassword(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
-    let path = '/user/password/update';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const path = '/user/password/update';
+    let body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters['xAccessToken'] !== undefined) {
       config.headers['x-access-token'] = parameters['xAccessToken'];
@@ -1858,28 +1858,28 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('post', domain + path, body, queryParameters, form, config);
-  };
+  }
 
   /**
    * request: addSkip
    * @param xAccessToken - JWT created on user creation or authentication.
    * @param skip - User step in order to skip.
    */
-  static addSkip(parameters = {}) {
+  static addSkip(parameters: any = {}) {
     const domain = parameters.$domain ? parameters.$domain : Backend.getDomain();
     const config = parameters.$config || {
       headers: {}
     };
     let path = '/user/skips/{skip}';
-    let body;
-    let queryParameters = {};
-    let form = {};
+    const body: any = {};
+    const queryParameters = {};
+    const form = {};
 
     if (parameters['xAccessToken'] !== undefined) {
       config.headers['x-access-token'] = parameters['xAccessToken'];
@@ -1896,13 +1896,13 @@ class Backend {
     }
 
     if (parameters.$queryParameters) {
-      Object.keys(parameters.$queryParameters).forEach(function (parameterName) {
+      Object.keys(parameters.$queryParameters).forEach((parameterName) => {
         queryParameters[parameterName] = parameters.$queryParameters[parameterName];
       });
     }
 
     return Backend.request('post', domain + path, body, queryParameters, form, config);
-  };
+  }
 }
 
 export { Backend };
