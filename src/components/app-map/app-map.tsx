@@ -5,14 +5,13 @@ import { ConferenceData } from '../../providers/conference-data';
 import { cancelOrder, finishOrder, rateOrder, showMyOrders } from '../../actions/merchant';
 import { showMyOrders as showCustomerOrders } from '../../actions/customer';
 
-
 declare var google: any;
 
 @Component({
-  tag: 'page-map',
-  styleUrl: 'page-map.css',
+  tag: 'app-map',
+  styleUrl: 'app-map.css',
 })
-export class PageRoute {
+export class Route {
   private mapData: any;
   private gmapKey = 'AIzaSyC8B5IrTvSbGt9Akb5f00CiDmO86RTb1ec';
   rateOrder: Action;
@@ -99,8 +98,7 @@ export class PageRoute {
     this.role === 'MERCHANT' ? await this.showMyOrders(this.token) : await this.showCustomerOrders(this.token);
     this.startedOrders = this.orders.filter((order: any) => order.status === 'started');
     // this.awaitingOrders = this.orders.filter((order: any) => order.status === 'awaiting_for_confirmation');
-    this.finishedOrders = this.orders.filter((order: any) => order.status === 'finished' && !order.hasOwnProperty('ratings'));
-    // console.log(this.isEmpty((this.finishedOrders[0].ratings)));
+    this.finishedOrders = this.orders.filter((order: any) => order.status === 'finished' && (order.customerRate < 0 || order.merchantRate < 0));
     this.hasOrder = this.startedOrders.length > 0;
     this.hasFinishedOrder = this.finishedOrders.length > 0;
   }

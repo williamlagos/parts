@@ -48,7 +48,7 @@ export class PageTabs {
   render() {
     return [
       <ion-tabs>
-        <ion-tab tab="tab-map" component="page-map"></ion-tab>
+        <ion-tab tab="tab-map" component="app-map"></ion-tab>
         <ion-tab tab="tab-schedule" component="page-schedule"></ion-tab>
         <ion-tab tab="tab-create" component="page-create"></ion-tab>
         <ion-tab tab="tab-speakers" component="page-order-list"></ion-tab>

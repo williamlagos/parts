@@ -28,6 +28,9 @@ export namespace Components {
     'name'?: string;
   }
 
+  interface AppMap {}
+  interface AppMapAttributes extends StencilHTMLAttributes {}
+
   interface AppRoot {}
   interface AppRootAttributes extends StencilHTMLAttributes {}
 
@@ -59,9 +62,6 @@ export namespace Components {
 
   interface PageCreate {}
   interface PageCreateAttributes extends StencilHTMLAttributes {}
-
-  interface PageMap {}
-  interface PageMapAttributes extends StencilHTMLAttributes {}
 
   interface PageMerchantDetail {
     'speakerId': string;
@@ -147,6 +147,7 @@ export namespace Components {
 declare global {
   interface StencilElementInterfaces {
     'AddressInput': Components.AddressInput;
+    'AppMap': Components.AppMap;
     'AppRoot': Components.AppRoot;
     'GenericCarousel': Components.GenericCarousel;
     'AppDrawer': Components.AppDrawer;
@@ -155,7 +156,6 @@ declare global {
     'PageAccount': Components.PageAccount;
     'PageActivity': Components.PageActivity;
     'PageCreate': Components.PageCreate;
-    'PageMap': Components.PageMap;
     'PageMerchantDetail': Components.PageMerchantDetail;
     'PageMerchantList': Components.PageMerchantList;
     'PageOrderDetail': Components.PageOrderDetail;
@@ -171,6 +171,7 @@ declare global {
 
   interface StencilIntrinsicElements {
     'address-input': Components.AddressInputAttributes;
+    'app-map': Components.AppMapAttributes;
     'app-root': Components.AppRootAttributes;
     'generic-carousel': Components.GenericCarouselAttributes;
     'app-drawer': Components.AppDrawerAttributes;
@@ -179,7 +180,6 @@ declare global {
     'page-account': Components.PageAccountAttributes;
     'page-activity': Components.PageActivityAttributes;
     'page-create': Components.PageCreateAttributes;
-    'page-map': Components.PageMapAttributes;
     'page-merchant-detail': Components.PageMerchantDetailAttributes;
     'page-merchant-list': Components.PageMerchantListAttributes;
     'page-order-detail': Components.PageOrderDetailAttributes;
@@ -198,6 +198,12 @@ declare global {
   var HTMLAddressInputElement: {
     prototype: HTMLAddressInputElement;
     new (): HTMLAddressInputElement;
+  };
+
+  interface HTMLAppMapElement extends Components.AppMap, HTMLStencilElement {}
+  var HTMLAppMapElement: {
+    prototype: HTMLAppMapElement;
+    new (): HTMLAppMapElement;
   };
 
   interface HTMLAppRootElement extends Components.AppRoot, HTMLStencilElement {}
@@ -246,12 +252,6 @@ declare global {
   var HTMLPageCreateElement: {
     prototype: HTMLPageCreateElement;
     new (): HTMLPageCreateElement;
-  };
-
-  interface HTMLPageMapElement extends Components.PageMap, HTMLStencilElement {}
-  var HTMLPageMapElement: {
-    prototype: HTMLPageMapElement;
-    new (): HTMLPageMapElement;
   };
 
   interface HTMLPageMerchantDetailElement extends Components.PageMerchantDetail, HTMLStencilElement {}
@@ -322,6 +322,7 @@ declare global {
 
   interface HTMLElementTagNameMap {
     'address-input': HTMLAddressInputElement
+    'app-map': HTMLAppMapElement
     'app-root': HTMLAppRootElement
     'generic-carousel': HTMLGenericCarouselElement
     'app-drawer': HTMLAppDrawerElement
@@ -330,7 +331,6 @@ declare global {
     'page-account': HTMLPageAccountElement
     'page-activity': HTMLPageActivityElement
     'page-create': HTMLPageCreateElement
-    'page-map': HTMLPageMapElement
     'page-merchant-detail': HTMLPageMerchantDetailElement
     'page-merchant-list': HTMLPageMerchantListElement
     'page-order-detail': HTMLPageOrderDetailElement
@@ -346,6 +346,7 @@ declare global {
 
   interface ElementTagNameMap {
     'address-input': HTMLAddressInputElement;
+    'app-map': HTMLAppMapElement;
     'app-root': HTMLAppRootElement;
     'generic-carousel': HTMLGenericCarouselElement;
     'app-drawer': HTMLAppDrawerElement;
@@ -354,7 +355,6 @@ declare global {
     'page-account': HTMLPageAccountElement;
     'page-activity': HTMLPageActivityElement;
     'page-create': HTMLPageCreateElement;
-    'page-map': HTMLPageMapElement;
     'page-merchant-detail': HTMLPageMerchantDetailElement;
     'page-merchant-list': HTMLPageMerchantListElement;
     'page-order-detail': HTMLPageOrderDetailElement;
