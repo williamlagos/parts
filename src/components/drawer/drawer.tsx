@@ -12,6 +12,7 @@ import { open, openProfile, revokeToken } from '../../actions/session';
 export class Menu {
   @State() token: string;
   @State() profile: any = {};
+  @State() directions: any = {};
   @Prop({ context: 'store' }) store: Store;
   @Prop({ connect: 'ion-nav' }) nav: HTMLIonNavElement;
   @Prop({ connect: 'page-tabs' }) tabs: HTMLPageTabsElement;
@@ -21,8 +22,8 @@ export class Menu {
   revokeToken: Action;
 
   appPages = [
+    // { title: 'Mapa', url: 'map', icon: 'map', role: 'ALL' },
     { title: 'Frete', url: 'create', icon: 'cube', role: 'CUSTOMER' },
-    { title: 'Mapa', url: 'map', icon: 'map', role: 'ALL' },
     { title: 'Ofertas', url: 'speakers', icon: 'cash', role: 'ALL' },
     { title: 'Agenda', url: 'schedule', icon: 'calendar', role: 'ALL' },
     { title: 'Sobre', url: 'about', icon: 'information-circle', role: 'MERCHANT' }
@@ -30,8 +31,8 @@ export class Menu {
 
   componentWillLoad() {
     this.store.mapStateToProps(this, (state) => {
-      const { session: { token, profile } } = state;
-      return { token, profile };
+      const { session: { token, profile, directions } } = state;
+      return { token, profile, directions };
     });
     this.store.mapDispatchToProps(this, { revokeToken, openProfile, open });
     this.openProfile(this.token);
@@ -175,9 +176,18 @@ export class Menu {
     );
   }
 
-  renderNav() {
+  renderNav(dir: any) {
     const role = this.parseJwt(this.token)['_role'];
-    return (<ion-nav id="app" main><page-tabs role={role}/></ion-nav>);
+    console.log(dir.slice(-1)[0].component);
+    return (
+      <ion-nav id="app" main>
+        {
+          dir.slice(-1)[0].component !== 'DRAWER' ?
+          <page-tabs role={role}/> :
+          <page-tabs hasTabs={false} role={role}><app-map/></page-tabs>
+        }
+      </ion-nav>
+    );
   }
 
   // TODO: Add new carousel to tour customers and merchants
@@ -185,7 +195,7 @@ export class Menu {
     return (
       <ion-split-pane when="lg">
         {this.renderMenu()}
-        {this.renderNav()}
+        {this.renderNav(this.directions)}
       </ion-split-pane>
     );
   }

@@ -103,10 +103,12 @@ export namespace Components {
   interface PageSupportAttributes extends StencilHTMLAttributes {}
 
   interface PageTabs {
+    'hasTabs': boolean;
     'role': any;
     'select': (tab: string) => Promise<void>;
   }
   interface PageTabsAttributes extends StencilHTMLAttributes {
+    'hasTabs'?: boolean;
     'role'?: any;
   }
 

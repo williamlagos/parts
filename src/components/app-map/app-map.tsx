@@ -4,6 +4,7 @@ import { Action, Store } from '@stencil/redux';
 import { ConferenceData } from '../../providers/conference-data';
 import { cancelOrder, finishOrder, rateOrder, showMyOrders } from '../../actions/merchant';
 import { showMyOrders as showCustomerOrders } from '../../actions/customer';
+import { open } from '../../actions/session';
 
 declare var google: any;
 
@@ -12,8 +13,10 @@ declare var google: any;
   styleUrl: 'app-map.css',
 })
 export class Route {
+  private cycle = null;
   private mapData: any;
   private gmapKey = 'AIzaSyC8B5IrTvSbGt9Akb5f00CiDmO86RTb1ec';
+  open: Action;
   rateOrder: Action;
   cancelOrder: Action;
   finishOrder: Action;
@@ -28,14 +31,21 @@ export class Route {
   @State() hasOrder: boolean;
   @State() hasFinishedOrder: boolean;
   @State() rating: any;
+  @State() directions: any[];
   @Prop({ context: 'store' }) store: Store;
   @Element() private el: HTMLElement;
 
   async componentWillLoad() {
+    console.log('MAP generated');
+    this.cycle = setInterval(async () => this.prepareMap(), 30000);
+  }
+
+  async prepareMap() {
+    console.log('populating');
     this.mapData = await ConferenceData.getMap();
     this.store.mapStateToProps(this, (state) => {
-      const { session: { token } } = state;
-      return { token };
+      const { session: { token, directions } } = state;
+      return { token, directions };
     });
     this.role = this.parseJwt(this.token)['_role'];
     if (this.role === 'MERCHANT') {
@@ -43,16 +53,21 @@ export class Route {
         const { merchant: { orders } } = state;
         return { orders };
       });
-      this.store.mapDispatchToProps(this, { showMyOrders, cancelOrder, rateOrder, finishOrder });
+      this.store.mapDispatchToProps(this, { open, showMyOrders, cancelOrder, rateOrder, finishOrder });
     } else if (this.role === 'CUSTOMER') {
       this.store.mapStateToProps(this, (state) => {
         const { customer: { orders } } = state;
         return { orders };
       });
-      this.store.mapDispatchToProps(this, { showCustomerOrders, cancelOrder, rateOrder, finishOrder });
+      this.store.mapDispatchToProps(this, { open, showCustomerOrders, cancelOrder, rateOrder, finishOrder });
     }
     await this.populateOrders();
     await getGoogleMaps(this.gmapKey);
+    console.log(this.directions.slice(-1)[0].component);
+    if (this.directions.slice(-1)[0].component !== 'MAP') {
+      console.log('map');
+      clearInterval(this.cycle);
+    }
   }
 
   async componentDidLoad() {

@@ -13,6 +13,7 @@ export class PageTabs {
   @Prop({ connect: 'ion-tabs' }) tabCtrl: HTMLIonTabsElement;
   @Prop({ context: 'store' }) store: Store;
   @Prop() role: any;
+  @Prop() hasTabs = true;
 
   @State() directions: any[];
 
@@ -30,7 +31,7 @@ export class PageTabs {
     const menuCtlr: HTMLIonMenuControllerElement = await (this.menuCtrl as any).componentOnReady();
     const tabsCtlr: HTMLIonTabsElement = await (this.tabCtrl as any).componentOnReady();
     const dir = (this.directions.slice(-1)[0].component as string).toLowerCase();
-    const direction = dir === 'drawer' || dir === undefined ? 'map' : dir;
+    const direction = dir === 'drawer' || dir === undefined ? 'drawer' : dir;
     tabsCtlr.select('tab-' + direction);
     menuCtlr.enable(true);
   }
@@ -48,11 +49,17 @@ export class PageTabs {
   render() {
     return [
       <ion-tabs>
-        <ion-tab tab="tab-map" component="app-map"></ion-tab>
-        <ion-tab tab="tab-schedule" component="page-schedule"></ion-tab>
-        <ion-tab tab="tab-create" component="page-create"></ion-tab>
-        <ion-tab tab="tab-speakers" component="page-order-list"></ion-tab>
-        <ion-tab tab="tab-about" component="page-about"></ion-tab>
+        {/*<ion-tab tab="tab-map" component="app-map"></ion-tab>*/}
+        <slot/>
+        {
+          this.hasTabs &&
+          [
+            <ion-tab tab="tab-schedule" component="page-schedule"></ion-tab>,
+            <ion-tab tab="tab-create" component="page-create"></ion-tab>,
+            <ion-tab tab="tab-speakers" component="page-order-list"></ion-tab>,
+            <ion-tab tab="tab-about" component="page-about"></ion-tab>
+          ]
+        }
 
         <ion-tab-bar slot="bottom">
           {this.role === 'CUSTOMER' && [
@@ -83,10 +90,10 @@ export class PageTabs {
               <ion-label>Sobre</ion-label>
             </ion-tab-button>
           ]}
-          <ion-tab-button tab="tab-map" onClick={() => this.toggleOpen('map')}>
+          {/*<ion-tab-button tab="tab-map" onClick={() => this.toggleOpen('map')}>
             <ion-icon name="map"></ion-icon>
             <ion-label>Mapa</ion-label>
-          </ion-tab-button>
+          </ion-tab-button>*/}
         </ion-tab-bar>
       </ion-tabs>
     ];
