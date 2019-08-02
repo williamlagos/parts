@@ -13,7 +13,7 @@ declare var google: any;
   styleUrl: 'app-map.css',
 })
 export class Route {
-  private cycle = null;
+  // private cycle = null;
   private mapData: any;
   private gmapKey = 'AIzaSyC8B5IrTvSbGt9Akb5f00CiDmO86RTb1ec';
   open: Action;
@@ -36,12 +36,6 @@ export class Route {
   @Element() private el: HTMLElement;
 
   async componentWillLoad() {
-    console.log('MAP generated');
-    this.cycle = setInterval(async () => this.prepareMap(), 30000);
-  }
-
-  async prepareMap() {
-    console.log('populating');
     this.mapData = await ConferenceData.getMap();
     this.store.mapStateToProps(this, (state) => {
       const { session: { token, directions } } = state;
@@ -61,13 +55,14 @@ export class Route {
       });
       this.store.mapDispatchToProps(this, { open, showCustomerOrders, cancelOrder, rateOrder, finishOrder });
     }
-    await this.populateOrders();
+    // this.cycle = setInterval(async () => this.prepareMap(), 30000);
+    this.prepareMap();
+  }
+
+  async prepareMap() {
     await getGoogleMaps(this.gmapKey);
-    console.log(this.directions.slice(-1)[0].component);
-    if (this.directions.slice(-1)[0].component !== 'MAP') {
-      console.log('map');
-      clearInterval(this.cycle);
-    }
+    // if (this.directions.slice(-1)[0].component !== 'MAP') clearInterval(this.cycle);
+    await this.populateOrders();
   }
 
   async componentDidLoad() {

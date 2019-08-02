@@ -176,16 +176,17 @@ export class Menu {
     );
   }
 
-  renderNav(dir: any) {
+  renderNav(/*dir: any*/) {
     const role = this.parseJwt(this.token)['_role'];
-    console.log(dir.slice(-1)[0].component);
+    // console.log(dir.slice(-1)[0].component);
     return (
       <ion-nav id="app" main>
-        {
+        <page-tabs role={role}/>
+        {/*
           dir.slice(-1)[0].component !== 'DRAWER' ?
           <page-tabs role={role}/> :
           <page-tabs hasTabs={false} role={role}><app-map/></page-tabs>
-        }
+        */}
       </ion-nav>
     );
   }
@@ -195,7 +196,7 @@ export class Menu {
     return (
       <ion-split-pane when="lg">
         {this.renderMenu()}
-        {this.renderNav(this.directions)}
+        {this.renderNav(/*this.directions*/)}
       </ion-split-pane>
     );
   }

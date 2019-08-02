@@ -7,8 +7,8 @@ import { configureStore } from '../../store/index';
 import { toggleTour } from '../../actions/session';
 
 // Removed for while before Capacitor integration
-// import { Plugins } from '@capacitor/core';
-// const { SplashScreen } = Plugins;
+import { Plugins } from '@capacitor/core';
+const { SplashScreen } = Plugins;
 
 @Component({
   tag: 'app-root',
@@ -32,7 +32,7 @@ export class AppRoot {
   async componentDidLoad() {
     this.checkLoginStatus();
     try {
-      // await SplashScreen.hide();
+      await SplashScreen.hide();
     } catch {
       return;
     }

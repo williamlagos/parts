@@ -6,6 +6,7 @@ export const config: Config = {
     { type: 'dist' }
   ],
   globalStyle: 'src/global.css',
+  globalScript: 'src/global.ts',
   copy: [
     { src: 'robots.txt' }
   ],

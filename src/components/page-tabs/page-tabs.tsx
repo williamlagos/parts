@@ -30,9 +30,9 @@ export class PageTabs {
   async componentDidLoad() {
     const menuCtlr: HTMLIonMenuControllerElement = await (this.menuCtrl as any).componentOnReady();
     const tabsCtlr: HTMLIonTabsElement = await (this.tabCtrl as any).componentOnReady();
-    const dir = (this.directions.slice(-1)[0].component as string).toLowerCase();
-    const direction = dir === 'drawer' || dir === undefined ? 'drawer' : dir;
-    tabsCtlr.select('tab-' + direction);
+    // const dir = (this.directions.slice(-1)[0].component as string).toLowerCase();
+    // const direction = dir === 'drawer' || dir === undefined ? 'drawer' : dir;
+    tabsCtlr.select('tab-drawer');
     menuCtlr.enable(true);
   }
 
@@ -52,12 +52,13 @@ export class PageTabs {
         {/*<ion-tab tab="tab-map" component="app-map"></ion-tab>*/}
         <slot/>
         {
-          this.hasTabs &&
+          /*this.hasTabs &&*/
           [
             <ion-tab tab="tab-schedule" component="page-schedule"></ion-tab>,
             <ion-tab tab="tab-create" component="page-create"></ion-tab>,
             <ion-tab tab="tab-speakers" component="page-order-list"></ion-tab>,
-            <ion-tab tab="tab-about" component="page-about"></ion-tab>
+            <ion-tab tab="tab-about" component="page-about"></ion-tab>,
+            <ion-tab tab="tab-drawer" component="app-map"></ion-tab>
           ]
         }
 
