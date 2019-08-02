@@ -1,9 +1,13 @@
+/*app-map ion-header {
+  height: 7.5vh;
+}*/
+
 .map-canvas {
   width: 100%;
   flex: 100%;
 
   background-color: transparent;
-
+  /* height: 92.5vh; */
   opacity: 0;
   transition: opacity 150ms ease-in
 }

@@ -29,17 +29,17 @@ export class PageAccount {
   }
 
   async logout() {
-    const navCtrl: HTMLIonRouterElement = await (this.nav as any).componentOnReady();
+    // const navCtrl: HTMLIonRouterElement = await (this.nav as any).componentOnReady();
     await UserData.logout();
     this.userDidLogOut.emit({ loginStatus: false });
-    navCtrl.push('/schedule', 'root');
+    // navCtrl.push('/schedule', 'root');
     // navCtrl.setRoot('page-tabs', null, { animated: true, direction: 'forward' });
   }
 
   async support() {
-    const navCtrl: HTMLIonRouterElement = await (this.nav as any).componentOnReady();
+    // const navCtrl: HTMLIonRouterElement = await (this.nav as any).componentOnReady();
     // navCtrl.setRoot('page-support');
-    navCtrl.push('/support', 'root');
+    // navCtrl.push('/support', 'root');
   }
 
   async changeUsername() {
@@ -91,8 +91,8 @@ export class PageAccount {
             <ion-item onClick={() => this.updatePicture()}>Atualizar Foto</ion-item>
             <ion-item onClick={() => this.changeUsername()}>Mudar Nome do Usuário</ion-item>
             <ion-item onClick={() => this.changePassword()}>Mudar Senha</ion-item>
-            <ion-item onClick={() => this.support()}>Ajuda</ion-item>
-            <ion-item onClick={() => this.logout()}>Sair</ion-item>
+            {/*<ion-item onClick={() => this.support()}>Ajuda</ion-item>
+            <ion-item onClick={() => this.logout()}>Sair</ion-item>*/}
           </ion-list>
         </div>
       </ion-content>

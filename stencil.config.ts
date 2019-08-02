@@ -10,7 +10,10 @@ export const config: Config = {
   copy: [
     { src: 'robots.txt' }
   ],
+  namespace: 'clipper',
   devServer: {
-    openBrowser: false
+    openBrowser: false,
+    reloadStrategy: 'pageReload',
+    port: 4000
   }
 };

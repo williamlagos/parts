@@ -33,6 +33,7 @@ export class PageTabs {
     // const dir = (this.directions.slice(-1)[0].component as string).toLowerCase();
     // const direction = dir === 'drawer' || dir === undefined ? 'drawer' : dir;
     tabsCtlr.select('tab-drawer');
+    document.querySelector('ion-tabs').select('tab-drawer');
     menuCtlr.enable(true);
   }
 
@@ -49,16 +50,15 @@ export class PageTabs {
   render() {
     return [
       <ion-tabs>
-        {/*<ion-tab tab="tab-map" component="app-map"></ion-tab>*/}
         <slot/>
         {
           /*this.hasTabs &&*/
           [
+            <ion-tab tab="tab-drawer" component="app-map"></ion-tab>,
             <ion-tab tab="tab-schedule" component="page-schedule"></ion-tab>,
             <ion-tab tab="tab-create" component="page-create"></ion-tab>,
             <ion-tab tab="tab-speakers" component="page-order-list"></ion-tab>,
-            <ion-tab tab="tab-about" component="page-about"></ion-tab>,
-            <ion-tab tab="tab-drawer" component="app-map"></ion-tab>
+            <ion-tab tab="tab-about" component="page-about"></ion-tab>
           ]
         }
 

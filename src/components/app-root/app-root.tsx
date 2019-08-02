@@ -1,12 +1,12 @@
+import 'ionicons';
 import '@ionic/core';
 
 import { Component, Prop, State } from '@stencil/core';
-
 import { Action, Store } from '@stencil/redux';
-import { configureStore } from '../../store/index';
+
+import { App } from '../../containers/app';
 import { toggleTour } from '../../actions/session';
 
-// Removed for while before Capacitor integration
 import { Plugins } from '@capacitor/core';
 const { SplashScreen } = Plugins;
 
@@ -19,9 +19,12 @@ export class AppRoot {
   @State() explained: number;
   @Prop({ context: 'store' }) store: Store;
   toggleTour: Action;
+  app: App;
 
   async componentWillLoad() {
-    this.store.setStore(configureStore({}));
+    this.app = new App();
+    this.app.startTimer();
+    this.store.setStore(this.app._store);
     this.store.mapStateToProps(this, (state) => {
       const { session: { token, explained } } = state;
       return { token, explained };
@@ -38,16 +41,6 @@ export class AppRoot {
     }
   }
 
-  parseJwt(token: string) {
-    if (token !== '') {
-      const base64Url = token.split('.')[1];
-      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-      return JSON.parse(window.atob(base64));
-    } else {
-      return {};
-    }
-  }
-
   checkLoginStatus() {
     // Checks if the token is empty for login status
     return Boolean(this.token);
@@ -59,7 +52,7 @@ export class AppRoot {
   }
 
   render() {
-    // console.log(this.parseJwt(this.token)._role);
+    // console.log(App.parseJwt(this.token)._role);
     return (
       <ion-app>
         {this.checkLoginStatus() ? (

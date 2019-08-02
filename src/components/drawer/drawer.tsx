@@ -62,10 +62,24 @@ export class Menu {
     await navCtrl.push('page-' + page);
   }
 
+  displayRating(rating: number) {
+    const buttons = (
+      <ion-buttons class="static-stars">
+        <ion-button class={rating >= 1 ? 'marked' : 'unmarked'} id="star-1"/>
+        <ion-button class={rating >= 2 ? 'marked' : 'unmarked'} id="star-2"/>
+        <ion-button class={rating >= 3 ? 'marked' : 'unmarked'} id="star-3"/>
+        <ion-button class={rating >= 4 ? 'marked' : 'unmarked'} id="star-4"/>
+        <ion-button class={rating >= 5 ? 'marked' : 'unmarked'} id="star-5"/>
+      </ion-buttons>
+    );
+    return buttons;
+  }
+
   renderMenu() {
     const role = this.parseJwt(this.token)['_role'];
     // console.log(this.parseJwt(this.token));
-    // console.log(this.profile);
+    // console.log(this.profile.rating >= 1 && 'marked');
+    // console.log(this.profile.hasOwnProperty('rating'));
     return (
       <ion-menu contentId="app" menuId="first" type="push">
         <ion-header>
@@ -80,7 +94,14 @@ export class Menu {
             this.profile && ([
               <ion-item>
                 <ion-avatar slot="start">
-                  <img src={this.profile.hasOwnProperty('pictures') && this.profile.pictures.length > 0 ? this.profile.pictures[0] : 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y'} alt="Imagem do perfil"/>
+                  <img
+                    src={
+                      this.profile.hasOwnProperty('pictures') && this.profile.pictures.length > 0 ?
+                        this.profile.pictures[0] :
+                        'http://www.gravatar.com/avatar?d=mm&s=14'
+                    }
+                    alt="Imagem do perfil"
+                  />
                 </ion-avatar>
                 <ion-label>
                   <h5>{this.profile.name}</h5>
@@ -88,24 +109,7 @@ export class Menu {
                 </ion-label>
               </ion-item>,
               <ion-item>
-                <ion-buttons class="static-stars">
-                  {/*<ion-item/>*/}
-                  {
-                    this.profile.hasOwnProperty('rating') ? ([
-                      <ion-button class={this.profile.rating >= 1 && 'marked'} id="star-1"/>,
-                      <ion-button class={this.profile.rating >= 2 && 'marked'} id="star-2"/>,
-                      <ion-button class={this.profile.rating >= 3 && 'marked'} id="star-3"/>,
-                      <ion-button class={this.profile.rating >= 4 && 'marked'} id="star-4"/>,
-                      <ion-button class={this.profile.rating >= 5 && 'marked'} id="star-5"/>
-                    ]) : ([
-                      <ion-button id="star-1"/>,
-                      <ion-button id="star-2"/>,
-                      <ion-button id="star-3"/>,
-                      <ion-button id="star-4"/>,
-                      <ion-button id="star-5"/>
-                    ])
-                  }
-                </ion-buttons>
+                {this.displayRating(this.profile.hasOwnProperty('rating') ? this.profile.rating : 0)}
               </ion-item>
             ])
           }
@@ -126,9 +130,9 @@ export class Menu {
           <ion-list>
             <ion-list-header>Conta</ion-list-header>
 
-            {/*<ion-menu-toggle autoHide={false}>
+            <ion-menu-toggle autoHide={false}>
               {this.checkLoginStatus() ? (
-                <ion-item href="#" onClick={(e) => this.showPage(e, 'account')}>
+                <ion-item href="#" onClick={(e: any) => this.showPage(e, 'account')}>
                   <ion-icon slot="start" name="person"></ion-icon>
                   <ion-label>Perfil</ion-label>
                 </ion-item>
@@ -138,10 +142,10 @@ export class Menu {
                   <ion-label>Entrar</ion-label>
                 </ion-item>
               )}
-            </ion-menu-toggle>*/}
+            </ion-menu-toggle>
 
             <ion-menu-toggle autoHide={false}>
-              <ion-item href="#support" button onClick={(e) => this.showPage(e, 'support')}>
+              <ion-item href="#support" button onClick={(e: any) => this.showPage(e, 'support')}>
                 <ion-icon slot="start" name="help"></ion-icon>
                 <ion-label>Ajuda</ion-label>
               </ion-item>
@@ -176,17 +180,16 @@ export class Menu {
     );
   }
 
-  renderNav(/*dir: any*/) {
+  renderNav(dir: any) {
     const role = this.parseJwt(this.token)['_role'];
     // console.log(dir.slice(-1)[0].component);
     return (
       <ion-nav id="app" main>
-        <page-tabs role={role}/>
-        {/*
+        {
           dir.slice(-1)[0].component !== 'DRAWER' ?
           <page-tabs role={role}/> :
-          <page-tabs hasTabs={false} role={role}><app-map/></page-tabs>
-        */}
+          <page-tabs role={role} hasTabs={false}/>
+        }
       </ion-nav>
     );
   }
@@ -196,7 +199,7 @@ export class Menu {
     return (
       <ion-split-pane when="lg">
         {this.renderMenu()}
-        {this.renderNav(/*this.directions*/)}
+        {this.renderNav(this.directions)}
       </ion-split-pane>
     );
   }

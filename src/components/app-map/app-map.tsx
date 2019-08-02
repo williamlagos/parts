@@ -56,13 +56,8 @@ export class Route {
       this.store.mapDispatchToProps(this, { open, showCustomerOrders, cancelOrder, rateOrder, finishOrder });
     }
     // this.cycle = setInterval(async () => this.prepareMap(), 30000);
-    this.prepareMap();
-  }
-
-  async prepareMap() {
-    await getGoogleMaps(this.gmapKey);
-    // if (this.directions.slice(-1)[0].component !== 'MAP') clearInterval(this.cycle);
     await this.populateOrders();
+    await getGoogleMaps(this.gmapKey);
   }
 
   async componentDidLoad() {
@@ -104,8 +99,12 @@ export class Route {
     });
   }
 
-  async populateOrders() {
-    this.role === 'MERCHANT' ? await this.showMyOrders(this.token) : await this.showCustomerOrders(this.token);
+  async componentWillUpdate() {
+    await this.populateOrders(false);
+  }
+
+  async populateOrders(update = true) {
+    if (update) this.role === 'MERCHANT' ? await this.showMyOrders(this.token) : await this.showCustomerOrders(this.token);
     this.startedOrders = this.orders.filter((order: any) => order.status === 'started');
     // this.awaitingOrders = this.orders.filter((order: any) => order.status === 'awaiting_for_confirmation');
     this.finishedOrders = this.orders.filter((order: any) => order.status === 'finished' && (order.customerRate < 0 || order.merchantRate < 0));
@@ -185,7 +184,7 @@ export class Route {
         </ion-toolbar>
       </ion-header>,
 
-      <div style={(this.hasOrder || this.hasFinishedOrder) && { 'display': 'none' }} class="map-canvas"></div>,
+      <div style={(this.hasOrder || this.hasFinishedOrder) ? { 'display': 'none' } : { 'height': '100%' }} class="map-canvas"></div>,
 
       <div style={{ 'flex': '1', 'display': 'flex', 'flex-direction': 'column' }}>
         {
@@ -231,11 +230,11 @@ export class Route {
                 this.hasFinishedOrder && ([
                   <ion-card-content>
                     <ion-buttons class="stars">
-                      <ion-button id="star-1" onClick={(e) => this.toggleStar(e, 'star-1')}></ion-button>
-                      <ion-button id="star-2" onClick={(e) => this.toggleStar(e, 'star-2')}></ion-button>
-                      <ion-button id="star-3" onClick={(e) => this.toggleStar(e, 'star-3')}></ion-button>
-                      <ion-button id="star-4" onClick={(e) => this.toggleStar(e, 'star-4')}></ion-button>
-                      <ion-button id="star-5" onClick={(e) => this.toggleStar(e, 'star-5')}></ion-button>
+                      <ion-button id="star-1" onClick={(e: any) => this.toggleStar(e, 'star-1')}></ion-button>
+                      <ion-button id="star-2" onClick={(e: any) => this.toggleStar(e, 'star-2')}></ion-button>
+                      <ion-button id="star-3" onClick={(e: any) => this.toggleStar(e, 'star-3')}></ion-button>
+                      <ion-button id="star-4" onClick={(e: any) => this.toggleStar(e, 'star-4')}></ion-button>
+                      <ion-button id="star-5" onClick={(e: any) => this.toggleStar(e, 'star-5')}></ion-button>
                     </ion-buttons>
                   </ion-card-content>,
                   <div style={{ 'display': 'flex', 'padding': '0px 15px' }}>
