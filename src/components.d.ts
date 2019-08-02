@@ -28,9 +28,6 @@ export namespace Components {
     'name'?: string;
   }
 
-  interface AppMap {}
-  interface AppMapAttributes extends StencilHTMLAttributes {}
-
   interface AppRoot {}
   interface AppRootAttributes extends StencilHTMLAttributes {}
 
@@ -43,6 +40,9 @@ export namespace Components {
   interface AppEntrance {}
   interface AppEntranceAttributes extends StencilHTMLAttributes {}
 
+  interface AppMap {}
+  interface AppMapAttributes extends StencilHTMLAttributes {}
+
   interface PageAbout {}
   interface PageAboutAttributes extends StencilHTMLAttributes {}
 
@@ -51,27 +51,8 @@ export namespace Components {
     'onUserDidLogOut'?: (event: CustomEvent) => void;
   }
 
-  interface PageActivity {
-    'goback': string;
-    'sessionId': string;
-  }
-  interface PageActivityAttributes extends StencilHTMLAttributes {
-    'goback'?: string;
-    'sessionId'?: string;
-  }
-
   interface PageCreate {}
   interface PageCreateAttributes extends StencilHTMLAttributes {}
-
-  interface PageMerchantDetail {
-    'speakerId': string;
-  }
-  interface PageMerchantDetailAttributes extends StencilHTMLAttributes {
-    'speakerId'?: string;
-  }
-
-  interface PageMerchantList {}
-  interface PageMerchantListAttributes extends StencilHTMLAttributes {}
 
   interface PageOrderDetail {
     'order': any;
@@ -88,13 +69,6 @@ export namespace Components {
 
   interface PageOrderList {}
   interface PageOrderListAttributes extends StencilHTMLAttributes {}
-
-  interface PageScheduleFilter {
-    'excludedTracks': string[];
-  }
-  interface PageScheduleFilterAttributes extends StencilHTMLAttributes {
-    'excludedTracks'?: string[];
-  }
 
   interface PageSchedule {}
   interface PageScheduleAttributes extends StencilHTMLAttributes {}
@@ -149,20 +123,16 @@ export namespace Components {
 declare global {
   interface StencilElementInterfaces {
     'AddressInput': Components.AddressInput;
-    'AppMap': Components.AppMap;
     'AppRoot': Components.AppRoot;
     'GenericCarousel': Components.GenericCarousel;
     'AppDrawer': Components.AppDrawer;
     'AppEntrance': Components.AppEntrance;
+    'AppMap': Components.AppMap;
     'PageAbout': Components.PageAbout;
     'PageAccount': Components.PageAccount;
-    'PageActivity': Components.PageActivity;
     'PageCreate': Components.PageCreate;
-    'PageMerchantDetail': Components.PageMerchantDetail;
-    'PageMerchantList': Components.PageMerchantList;
     'PageOrderDetail': Components.PageOrderDetail;
     'PageOrderList': Components.PageOrderList;
-    'PageScheduleFilter': Components.PageScheduleFilter;
     'PageSchedule': Components.PageSchedule;
     'PageSupport': Components.PageSupport;
     'PageTabs': Components.PageTabs;
@@ -173,20 +143,16 @@ declare global {
 
   interface StencilIntrinsicElements {
     'address-input': Components.AddressInputAttributes;
-    'app-map': Components.AppMapAttributes;
     'app-root': Components.AppRootAttributes;
     'generic-carousel': Components.GenericCarouselAttributes;
     'app-drawer': Components.AppDrawerAttributes;
     'app-entrance': Components.AppEntranceAttributes;
+    'app-map': Components.AppMapAttributes;
     'page-about': Components.PageAboutAttributes;
     'page-account': Components.PageAccountAttributes;
-    'page-activity': Components.PageActivityAttributes;
     'page-create': Components.PageCreateAttributes;
-    'page-merchant-detail': Components.PageMerchantDetailAttributes;
-    'page-merchant-list': Components.PageMerchantListAttributes;
     'page-order-detail': Components.PageOrderDetailAttributes;
     'page-order-list': Components.PageOrderListAttributes;
-    'page-schedule-filter': Components.PageScheduleFilterAttributes;
     'page-schedule': Components.PageScheduleAttributes;
     'page-support': Components.PageSupportAttributes;
     'page-tabs': Components.PageTabsAttributes;
@@ -200,12 +166,6 @@ declare global {
   var HTMLAddressInputElement: {
     prototype: HTMLAddressInputElement;
     new (): HTMLAddressInputElement;
-  };
-
-  interface HTMLAppMapElement extends Components.AppMap, HTMLStencilElement {}
-  var HTMLAppMapElement: {
-    prototype: HTMLAppMapElement;
-    new (): HTMLAppMapElement;
   };
 
   interface HTMLAppRootElement extends Components.AppRoot, HTMLStencilElement {}
@@ -232,6 +192,12 @@ declare global {
     new (): HTMLAppEntranceElement;
   };
 
+  interface HTMLAppMapElement extends Components.AppMap, HTMLStencilElement {}
+  var HTMLAppMapElement: {
+    prototype: HTMLAppMapElement;
+    new (): HTMLAppMapElement;
+  };
+
   interface HTMLPageAboutElement extends Components.PageAbout, HTMLStencilElement {}
   var HTMLPageAboutElement: {
     prototype: HTMLPageAboutElement;
@@ -244,28 +210,10 @@ declare global {
     new (): HTMLPageAccountElement;
   };
 
-  interface HTMLPageActivityElement extends Components.PageActivity, HTMLStencilElement {}
-  var HTMLPageActivityElement: {
-    prototype: HTMLPageActivityElement;
-    new (): HTMLPageActivityElement;
-  };
-
   interface HTMLPageCreateElement extends Components.PageCreate, HTMLStencilElement {}
   var HTMLPageCreateElement: {
     prototype: HTMLPageCreateElement;
     new (): HTMLPageCreateElement;
-  };
-
-  interface HTMLPageMerchantDetailElement extends Components.PageMerchantDetail, HTMLStencilElement {}
-  var HTMLPageMerchantDetailElement: {
-    prototype: HTMLPageMerchantDetailElement;
-    new (): HTMLPageMerchantDetailElement;
-  };
-
-  interface HTMLPageMerchantListElement extends Components.PageMerchantList, HTMLStencilElement {}
-  var HTMLPageMerchantListElement: {
-    prototype: HTMLPageMerchantListElement;
-    new (): HTMLPageMerchantListElement;
   };
 
   interface HTMLPageOrderDetailElement extends Components.PageOrderDetail, HTMLStencilElement {}
@@ -278,12 +226,6 @@ declare global {
   var HTMLPageOrderListElement: {
     prototype: HTMLPageOrderListElement;
     new (): HTMLPageOrderListElement;
-  };
-
-  interface HTMLPageScheduleFilterElement extends Components.PageScheduleFilter, HTMLStencilElement {}
-  var HTMLPageScheduleFilterElement: {
-    prototype: HTMLPageScheduleFilterElement;
-    new (): HTMLPageScheduleFilterElement;
   };
 
   interface HTMLPageScheduleElement extends Components.PageSchedule, HTMLStencilElement {}
@@ -324,20 +266,16 @@ declare global {
 
   interface HTMLElementTagNameMap {
     'address-input': HTMLAddressInputElement
-    'app-map': HTMLAppMapElement
     'app-root': HTMLAppRootElement
     'generic-carousel': HTMLGenericCarouselElement
     'app-drawer': HTMLAppDrawerElement
     'app-entrance': HTMLAppEntranceElement
+    'app-map': HTMLAppMapElement
     'page-about': HTMLPageAboutElement
     'page-account': HTMLPageAccountElement
-    'page-activity': HTMLPageActivityElement
     'page-create': HTMLPageCreateElement
-    'page-merchant-detail': HTMLPageMerchantDetailElement
-    'page-merchant-list': HTMLPageMerchantListElement
     'page-order-detail': HTMLPageOrderDetailElement
     'page-order-list': HTMLPageOrderListElement
-    'page-schedule-filter': HTMLPageScheduleFilterElement
     'page-schedule': HTMLPageScheduleElement
     'page-support': HTMLPageSupportElement
     'page-tabs': HTMLPageTabsElement
@@ -348,20 +286,16 @@ declare global {
 
   interface ElementTagNameMap {
     'address-input': HTMLAddressInputElement;
-    'app-map': HTMLAppMapElement;
     'app-root': HTMLAppRootElement;
     'generic-carousel': HTMLGenericCarouselElement;
     'app-drawer': HTMLAppDrawerElement;
     'app-entrance': HTMLAppEntranceElement;
+    'app-map': HTMLAppMapElement;
     'page-about': HTMLPageAboutElement;
     'page-account': HTMLPageAccountElement;
-    'page-activity': HTMLPageActivityElement;
     'page-create': HTMLPageCreateElement;
-    'page-merchant-detail': HTMLPageMerchantDetailElement;
-    'page-merchant-list': HTMLPageMerchantListElement;
     'page-order-detail': HTMLPageOrderDetailElement;
     'page-order-list': HTMLPageOrderListElement;
-    'page-schedule-filter': HTMLPageScheduleFilterElement;
     'page-schedule': HTMLPageScheduleElement;
     'page-support': HTMLPageSupportElement;
     'page-tabs': HTMLPageTabsElement;

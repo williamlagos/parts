@@ -18,7 +18,7 @@ export class PageSupport {
 
   async componentDidLoad() {
     const toast = await this.toastCtrl.create({
-      message: 'O recurso ainda não está funcionando. Aguarde para utilizar.',
+      message: 'O recurso está funcionando. Pode utilizar.',
       duration: 3000
     });
     toast.present();

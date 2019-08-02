@@ -10,7 +10,7 @@ declare var google: any;
 
 @Component({
   tag: 'app-map',
-  styleUrl: 'app-map.css',
+  styleUrl: 'map.css',
 })
 export class Route {
   // private cycle = null;

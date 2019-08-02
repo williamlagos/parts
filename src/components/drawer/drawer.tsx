@@ -98,7 +98,7 @@ export class Menu {
                     src={
                       this.profile.hasOwnProperty('pictures') && this.profile.pictures.length > 0 ?
                         this.profile.pictures[0] :
-                        'http://www.gravatar.com/avatar?d=mm&s=14'
+                        'http://www.gravatar.com/avatar?d=mm&s=140'
                     }
                     alt="Imagem do perfil"
                   />

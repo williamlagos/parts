@@ -1,4 +1,5 @@
 import { Component, Event, EventEmitter, Prop, State } from '@stencil/core';
+import { Action, Store } from '@stencil/redux';
 import { UserData } from '../../providers/user-data';
 
 
@@ -7,21 +8,23 @@ import { UserData } from '../../providers/user-data';
 })
 export class PageAccount {
 
-  @State() user;
+  @State() token: string;
+  @State() profile: any;
   @Prop({ connect: 'ion-router' }) nav: HTMLIonRouterElement;
   @Prop({ connect: 'ion-alert-controller' }) alertCtrl: HTMLIonAlertControllerElement;
+  @Prop({ context: 'store' }) store: Store;
   @Event() userDidLogOut: EventEmitter;
+  changeProfile: Action;
 
-  componentDidLoad() {
-    this.getUser();
+  componentWillLoad() {
+    this.store.mapStateToProps(this, (state) => {
+      const { session: { token, profile } } = state;
+      return { token, profile };
+    });
   }
 
   updatePicture() {
     console.log('Clicked to update picture');
-  }
-
-  async getUser() {
-    this.user = await UserData.getUsername();
   }
 
   changePassword() {
@@ -51,7 +54,7 @@ export class PageAccount {
           name: 'username',
           id: 'userName',
           placeholder: 'username',
-          value: this.user
+          // value: this.user
         },
 
       ],
@@ -61,7 +64,7 @@ export class PageAccount {
           text: 'Ok',
           handler: (data) => {
             UserData.setUsername(data.username);
-            this.getUser();
+            // this.getUser();
           }
         }
       ]
@@ -85,8 +88,15 @@ export class PageAccount {
       <ion-content>
 
         <div padding-top text-center >
-          <img src="http://www.gravatar.com/avatar?d=mm&s=140" alt="avatar" />
-          <h2>{this.user}</h2>
+          <img
+            src={
+              this.profile.hasOwnProperty('pictures') && this.profile.pictures.length > 0 ?
+                this.profile.pictures[0] :
+                'http://www.gravatar.com/avatar?d=mm&s=140'
+            }
+            alt="avatar"
+          />
+          <h2>{this.profile.name} ({this.profile.username})</h2>
           <ion-list>
             <ion-item onClick={() => this.updatePicture()}>Atualizar Foto</ion-item>
             <ion-item onClick={() => this.changeUsername()}>Mudar Nome do Usuário</ion-item>
