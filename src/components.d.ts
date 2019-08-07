@@ -7,8 +7,8 @@
 
 import './stencil.core';
 
-import '@stencil/redux';
 import '@ionic/core';
+import '@stencil/redux';
 import 'ionicons';
 import {
   EventEmitter,
@@ -46,9 +46,13 @@ export namespace Components {
   interface PageAbout {}
   interface PageAboutAttributes extends StencilHTMLAttributes {}
 
-  interface PageAccount {}
+  interface PageAccount {
+    'exit': any;
+    'images': any;
+  }
   interface PageAccountAttributes extends StencilHTMLAttributes {
-    'onUserDidLogOut'?: (event: CustomEvent) => void;
+    'exit'?: any;
+    'images'?: any;
   }
 
   interface PageCreate {}

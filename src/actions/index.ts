@@ -7,7 +7,8 @@ import {
   RevokeTokenAction,
   SetTokenAction,
   SkipIntroAction,
-  SkipTourAction
+  SkipTourAction,
+  UpdateProfileAction
 } from './session';
 
 import {
@@ -56,6 +57,7 @@ export type ActionTypes =
   | FinishOrderAction
   | OpenProfileAction
   | RateOrderAction
+  | UpdateProfileAction
 ;
 
 export enum TypeKeys {
@@ -81,5 +83,6 @@ export enum TypeKeys {
   CANCEL_ORDER = 'CANCEL_ORDER',
   FINISH_ORDER = 'FINISH_ORDER',
   RATE_ORDER = 'RATE_ORDER',
-  OPEN_PROFILE = 'OPEN_PROFILE'
+  OPEN_PROFILE = 'OPEN_PROFILE',
+  UPDATE_PROFILE = 'UPDATE_PROFILE'
 }

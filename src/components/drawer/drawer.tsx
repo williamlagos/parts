@@ -57,6 +57,7 @@ export class Menu {
 
   async showPage(event: any, page: string) {
     event.preventDefault();
+    this.open(page.toUpperCase(), '/' + page);
     const navCtrl = document.querySelector('ion-nav');
     await navCtrl.setRoot('page-tabs');
     await navCtrl.push('page-' + page);

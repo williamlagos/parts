@@ -56,6 +56,25 @@ export interface CloseAction {
   directions: any[];
 }
 
+export interface UpdateProfileAction {
+  type: TypeKeys.UPDATE_PROFILE;
+}
+
+export const updateProfile = (data: any, token: string) => async (dispatch: any, _getState: any) => {
+  Backend.setDomain(endpoint);
+  if (data.hasOwnProperty('files')) {
+    const files = data.files;
+    // console.log(data.files);
+    const pictures = await (await Backend.addPicture({ 'xAccessToken': token, 'files': files })).json();
+    const picture = pictures.map((pic: any) => pic._id)[0];
+    await Backend.updateUser({ 'xAccessToken': token, 'user': { ...data, 'pictures': [picture] } });
+  } else {
+    // console.log(data);
+    await Backend.updateUser({ 'xAccessToken': token, 'user': { ...data } });
+  }
+  return dispatch({ type: TypeKeys.UPDATE_PROFILE });
+};
+
 export const openProfile = (token: string) => async (dispatch: any, _getState: any) => {
   Backend.setDomain(endpoint);
   const profile = await (await Backend.getUserProfile({ 'xAccessToken': token })).json();

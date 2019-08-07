@@ -1,75 +1,102 @@
-import { Component, Event, EventEmitter, Prop, State } from '@stencil/core';
+import { Component, Prop, State } from '@stencil/core';
 import { Action, Store } from '@stencil/redux';
-import { UserData } from '../../providers/user-data';
 
+import { updateProfile } from '../../actions/session';
 
 @Component({
   tag: 'page-account',
 })
 export class PageAccount {
+  @Prop({ connect: 'ion-router' }) nav: HTMLIonRouterElement;
+  @Prop({ connect: 'ion-alert-controller' }) alertCtrl: HTMLIonAlertControllerElement;
+  @Prop({ connect: 'ion-toast-controller' }) toastCtrl: HTMLIonToastControllerElement;
+  @Prop({ context: 'store' }) store: Store;
+  @Prop() exit: any;
+  @Prop() images: any;
 
   @State() token: string;
   @State() profile: any;
-  @Prop({ connect: 'ion-router' }) nav: HTMLIonRouterElement;
-  @Prop({ connect: 'ion-alert-controller' }) alertCtrl: HTMLIonAlertControllerElement;
-  @Prop({ context: 'store' }) store: Store;
-  @Event() userDidLogOut: EventEmitter;
-  changeProfile: Action;
+  @State() submitted = false;
+  @State() username = { valid: false, value: '' };
+  @State() password = { valid: false, value: '' };
+  @State() data = { };
+
+  updateProfile: Action;
 
   componentWillLoad() {
     this.store.mapStateToProps(this, (state) => {
       const { session: { token, profile } } = state;
       return { token, profile };
     });
+    this.store.mapDispatchToProps(this, { updateProfile });
   }
 
-  updatePicture() {
-    console.log('Clicked to update picture');
+  handleInput(ev: any) {
+    this.data[ev.target.name] = ev.target.value;
   }
 
-  changePassword() {
-    console.log('Clicked to change password');
+  handleRadio(ev: any) {
+    this.data[ev.target.name] = [ev.target.value];
   }
 
-  async logout() {
-    // const navCtrl: HTMLIonRouterElement = await (this.nav as any).componentOnReady();
-    await UserData.logout();
-    this.userDidLogOut.emit({ loginStatus: false });
-    // navCtrl.push('/schedule', 'root');
-    // navCtrl.setRoot('page-tabs', null, { animated: true, direction: 'forward' });
+  handleFile(files: FileList) {
+    this.data['files'] = [files[0]];
   }
 
-  async support() {
-    // const navCtrl: HTMLIonRouterElement = await (this.nav as any).componentOnReady();
-    // navCtrl.setRoot('page-support');
-    // navCtrl.push('/support', 'root');
+  handleAddress(ev: any) {
+    this.data['address'] = {
+      'street': ev.target.value
+    };
   }
 
-  async changeUsername() {
-    const alert = await this.alertCtrl.create({
-      header: 'Change Username',
-      inputs: [
-        {
-          type: 'text',
-          name: 'username',
-          id: 'userName',
-          placeholder: 'username',
-          // value: this.user
-        },
+  handleUsername(ev: any) {
+    this.validateUsername();
+    this.username = { ...this.username, value: ev.target.value };
+  }
 
-      ],
-      buttons: [
-        { text: 'Cancel' },
-        {
-          text: 'Ok',
-          handler: (data) => {
-            UserData.setUsername(data.username);
-            // this.getUser();
-          }
-        }
-      ]
+  handlePassword(ev: any) {
+    this.validatePassword();
+    this.password.value = ev.target.value;
+    this.password = { ...this.password, value: ev.target.value };
+  }
+
+  validateUsername() {
+    if (this.username.value && this.username.value.length > 0) {
+      this.username = { ...this.username, valid: true };
+      return;
+    }
+    this.username = { ...this.username, valid: false };
+  }
+
+  validatePassword() {
+    if (this.password.value && this.password.value.length > 0) {
+      this.password.valid = true;
+      this.password = { ...this.password, valid: true };
+      return;
+    }
+    this.password = { ...this.password, valid: false };
+  }
+
+  unload(e: any) {
+    e.preventDefault();
+    this.exit();
+  }
+
+  async submit(e: any) {
+    e.preventDefault();
+    const data = {
+      ...this.data,
+      username: this.username.value !== '' ?
+        this.username.value :
+        this.profile.username
+    };
+    // console.log(data);
+    await this.updateProfile(data, this.token);
+    const toast = await this.toastCtrl.create({
+      message: 'Perfil atualizado com sucesso.',
+      duration: 3000
     });
-    alert.present();
+    toast.present();
   }
 
   render() {
@@ -86,27 +113,54 @@ export class PageAccount {
       </ion-header>,
 
       <ion-content>
-
-        <div padding-top text-center >
-          <img
-            src={
+        <ion-list>
+          <div padding-top text-center>
+            <img
+              src={
               this.profile.hasOwnProperty('pictures') && this.profile.pictures.length > 0 ?
                 this.profile.pictures[0] :
                 'http://www.gravatar.com/avatar?d=mm&s=140'
-            }
-            alt="avatar"
-          />
-          <h2>{this.profile.name} ({this.profile.username})</h2>
-          <ion-list>
-            <ion-item onClick={() => this.updatePicture()}>Atualizar Foto</ion-item>
-            <ion-item onClick={() => this.changeUsername()}>Mudar Nome do Usuário</ion-item>
-            <ion-item onClick={() => this.changePassword()}>Mudar Senha</ion-item>
-            {/*<ion-item onClick={() => this.support()}>Ajuda</ion-item>
-            <ion-item onClick={() => this.logout()}>Sair</ion-item>*/}
-          </ion-list>
-        </div>
+              }
+              style={{ maxHeight: '120px' }}
+              alt="avatar"
+            />
+            <h2>{this.profile.name} ({this.profile.username})</h2>
+            <ion-list>
+              <ion-item>
+                <ion-label position="stacked">Atualize seu nome completo</ion-label>
+                <ion-input placeholder={this.profile.name} name="name" onInput={(ev: any) => this.handleInput(ev)}></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="stacked">Atualize seu endereço</ion-label>
+                <ion-input placeholder={this.profile.address.street} name="address" onInput={(ev: any) => this.handleAddress(ev)}></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="stacked">Atualize seu telefone para contato</ion-label>
+                <ion-input placeholder={this.profile.phone} name="phone" onInput={(ev: any) => this.handleInput(ev)}></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="stacked">Substituir imagem</ion-label>
+                <image-uploader send={(file: any) => this.handleFile(file)} id="file"/>
+              </ion-item>
+              <ion-item>
+                <ion-label position="stacked">Atualize seu e-mail para o login</ion-label>
+                <ion-input placeholder={this.profile.email} name="email" onInput={(ev: any) => this.handleInput(ev)}></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="stacked">Atualize o nome de usuário</ion-label>
+                <ion-input placeholder={this.profile.username} name="username" type="text" value={this.username.value} onInput={(ev: any) => this.handleUsername(ev)} required>
+                </ion-input>
+              </ion-item>
+              <ion-text color="danger">
+                <p hidden={this.username.valid || this.submitted === false} padding-left>
+                  Nome do usuário é requerido
+                </p>
+              </ion-text>
+              <ion-button style={{ 'flex': '1' }} onClick={(e: any) => this.submit(e)} color="primary" expand="block">Atualizar</ion-button>
+            </ion-list>
+          </div>
+        </ion-list>
       </ion-content>
-
     ];
   }
 }
