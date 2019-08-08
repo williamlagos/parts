@@ -2,6 +2,7 @@ import { Component, Prop, State } from '@stencil/core';
 // import { UserData } from '../../providers/user-data';
 
 import { closeRegister, openRegister, register, setToken, toggleIntro } from '../../actions/session';
+import { Entrance as EntranceContainer } from '../../containers/entrance';
 
 import { Action, Store } from '@stencil/redux';
 
@@ -32,8 +33,10 @@ export class Entrance {
   toggleIntro: Action;
   openRegister: Action;
   closeRegister: Action;
+  entrance: EntranceContainer;
 
-  componentWillLoad() {
+  async componentWillLoad() {
+
     this.store.mapStateToProps(this, (state) => {
       const { session: { name, introduced, registered } } = state;
       return { name, introduced, registered };
@@ -45,6 +48,14 @@ export class Entrance {
       closeRegister,
       register
     });
+    // Check for Facebook login
+    this.entrance = new EntranceContainer();
+    const registerObj: any = await this.entrance.checkFacebookCode();
+    if (registerObj !== null) {
+      const { email, password } = registerObj;
+      this.register(registerObj);
+      this.setToken(email, password);
+    }
   }
 
   handleUsername(ev: any) {
@@ -145,6 +156,11 @@ export class Entrance {
                   </ion-col>
                   <ion-col>
                     <ion-button onClick={() => this.openRegister()} color="light" expand="block">Registrar</ion-button>
+                  </ion-col>
+                </ion-row>
+                <ion-row responsive-sm>
+                  <ion-col>
+                    <ion-button onClick={() => this.entrance.openFacebook()} color="tertiary" expand="block">Entrar com o Facebook</ion-button>
                   </ion-col>
                 </ion-row>
               </form>

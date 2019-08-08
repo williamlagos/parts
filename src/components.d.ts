@@ -7,8 +7,8 @@
 
 import './stencil.core';
 
-import '@ionic/core';
 import '@stencil/redux';
+import '@ionic/core';
 import 'ionicons';
 import {
   EventEmitter,

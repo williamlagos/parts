@@ -15,10 +15,12 @@ export class App {
     this._store.subscribe(() => { storeState = this._store.getState(); });
     // const interval = setInterval(() => {});
     setInterval(() => {
-      // console.log(storeState);
+      // Check for session;
       const { token } = storeState.session;
-      const actions = this.pendingActions(storeState);
-      actions.forEach(async (a: any) => this._store.dispatch(await a(token)));
+      if (token !== '') {
+        const actions = this.pendingActions(storeState);
+        actions.forEach(async (a: any) => this._store.dispatch(await a(token)));
+      }
     }, 5000);
     // setTimeout(() => clearInterval(interval), 30000);
   }
