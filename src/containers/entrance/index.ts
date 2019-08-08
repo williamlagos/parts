@@ -1,7 +1,7 @@
 // import { App } from '../app/';
 
 const hostname = window && window.location && window.location.hostname;
-const endpoint = hostname === 'localhost' ? 'https://localhost:4000/' : 'https://api.fretefacil.net/';
+const endpoint = hostname === 'localhost' ? 'https://localhost:4000/' : 'https://app.fretefacil.net/';
 
 export class Entrance {
 
