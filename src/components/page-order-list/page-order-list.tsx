@@ -18,6 +18,8 @@ export class PageOrderList {
   @State() role: string;
   @State() token: string;
   @State() orders: any[] = [];
+  @State() orderNumberStart = 0;
+  @State() orderNumberEnd = 12;
   @Prop({ connect: 'ion-action-sheet-controller' }) actionSheetCtrl: HTMLIonActionSheetControllerElement;
   @Prop({ connect: 'ion-modal-controller' }) modalCtrl: HTMLIonModalControllerElement;
   @Prop({ context: 'store' }) store: Store;
@@ -140,7 +142,18 @@ export class PageOrderList {
     if (data.success === 0) e.target.disabled = true;
   }
 
+  previousOrders() {
+    this.orderNumberStart -= 12;
+    this.orderNumberEnd -= 12;
+  }
+
+  nextOrders() {
+    this.orderNumberStart += 12;
+    this.orderNumberEnd += 12;
+  }
+
   render() {
+    const currentOrders = this.orders.slice(this.orderNumberStart, this.orderNumberEnd);
     return [
       <ion-header>
         <ion-toolbar>
@@ -156,7 +169,13 @@ export class PageOrderList {
           <ion-grid fixed>
             <ion-row align-items-stretch>
               {
-                this.orders.map(order => (
+                this.orders.length > 12 && ([
+                  <ion-button fill="clear" disabled={this.orderNumberStart === 0} onClick={() => this.previousOrders()}>Anterior</ion-button>,
+                  <ion-button fill="clear" disabled={this.orderNumberEnd >= this.orders.length} onClick={() => this.nextOrders()}>Próximo</ion-button>
+                ])
+              }
+              {
+                currentOrders.map(order => (
                   order.status === 'created' && (
                     <ion-col size="12" size-md="6">
                       <ion-card class="speaker-card">

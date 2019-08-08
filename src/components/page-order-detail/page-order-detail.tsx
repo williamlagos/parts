@@ -116,6 +116,17 @@ export class PageOrderDetail {
                 this.role === 'MERCHANT' ? (
                   <form style={{ 'width': '100%' }}>
                   <ion-item>
+                  <ion-label>Média de preço ofertada: {
+                    Math.round((
+                      this.bids.length > 0 ? (
+                        this.bids.reduce((obj: any, bid: any) => obj.value + bid.value) / this.bids.length
+                      ) : (
+                        0.00
+                      )
+                    ) * 100) / 100
+                  }</ion-label>
+                  </ion-item>
+                  <ion-item>
                     <ion-label position="stacked" color="primary">Digite uma observação</ion-label>
                     <ion-textarea name="description" value="" onInput={(e) => this.handleInput(e)}></ion-textarea>
                     </ion-item>
