@@ -69,7 +69,7 @@ export class PageCreate {
     // console.log(this.data);
     this.registerOrder(this.data, this.token);
     const tabs: HTMLIonTabsElement = await (this.tab as any).componentOnReady();
-    tabs.select('tab-map');
+    tabs.select('tab-drawer');
     this.close();
   }
 
@@ -103,7 +103,24 @@ export class PageCreate {
     this.descriptionsLength += 1;
   }
 
+  dateInterval() {
+    const d = new Date();
+    const dd = String(d.getDate()).padStart(2, '0');
+    const mm = String(d.getMonth() + 1).padStart(2, '0'); // January is 0!
+    const yyyy = d.getFullYear();
+    const yyyy_t = d.getFullYear() + 1;
+
+    const today = yyyy + '-' + mm + '-' + dd;
+    const tomorrow = yyyy_t + '-' + mm + '-' + dd;
+    return { today, tomorrow };
+    // document.write(today);
+  }
+
   render() {
+    const { today, tomorrow } = this.dateInterval();
+    const monthNames = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+    const monthShortNames = monthNames.map(month => month.slice(0, 3));
+    // console.log(`${today} ${tomorrow}`);
     return [
       <ion-header>
         <ion-toolbar>
@@ -128,7 +145,16 @@ export class PageCreate {
             </ion-item>
             <ion-item>
               <ion-label position="stacked" color="primary">Data de saída</ion-label>
-              <ion-datetime display-format="MMM DD, YYYY HH:mm" value="" name="scheduledTo"></ion-datetime>
+              <ion-datetime
+                min={today}
+                max={tomorrow}
+                display-format="MMM DD, YYYY HH:mm"
+                value=""
+                monthNames={monthNames}
+                monthShortNames={monthShortNames}
+                cancelText="Cancelar"
+                doneText="Confirmar"
+                name="scheduledTo"></ion-datetime>
             </ion-item>
           </div>
           <div slot="step-2">

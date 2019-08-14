@@ -33,6 +33,7 @@ export class Entrance {
       name,
       email,
       address,
+      role: 'CUSTOMER',
       password: id,
       birthDate: birthday,
       files: [await (await fetch(picture.data.url)).blob()]

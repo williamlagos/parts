@@ -153,7 +153,8 @@ export class PageOrderList {
   }
 
   render() {
-    const currentOrders = this.orders.slice(this.orderNumberStart, this.orderNumberEnd);
+    const reverseOrders = this.orders.reverse();
+    const currentOrders = reverseOrders.slice(this.orderNumberStart, this.orderNumberEnd);
     return [
       <ion-header>
         <ion-toolbar>

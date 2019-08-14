@@ -183,7 +183,7 @@ export class Menu {
 
   renderNav(dir: any) {
     const role = this.parseJwt(this.token)['_role'];
-    // console.log(dir.slice(-1)[0].component);
+    console.log(dir.slice(-1)[0].component);
     return (
       <ion-nav id="app" main>
         {

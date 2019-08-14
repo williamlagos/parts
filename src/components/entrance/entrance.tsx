@@ -53,8 +53,8 @@ export class Entrance {
     const registerObj: any = await this.entrance.checkFacebookCode();
     if (registerObj !== null) {
       const { email, password } = registerObj;
-      this.register(registerObj);
-      this.setToken(email, password);
+      await this.register(registerObj);
+      await this.setToken(email, password);
     }
   }
 
