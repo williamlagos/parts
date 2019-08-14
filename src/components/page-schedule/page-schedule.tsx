@@ -7,6 +7,7 @@ import { UserData } from '../../providers/user-data';
 
 import { cancelOrder, selectOrder, showMyOrders, startOrder } from '../../actions/merchant';
 import { showMyOrders as showCustomerOrders } from '../../actions/customer';
+import { close } from '../../actions/session';
 
 
 @Component({
@@ -18,6 +19,7 @@ export class PageSchedule {
   dayIndex = 0;
   scheduleList: HTMLIonListElement;
   fab: HTMLIonFabElement;
+  close: Action;
   startOrder: Action;
   cancelOrder: Action;
   selectOrder: Action;
@@ -50,6 +52,7 @@ export class PageSchedule {
       const { session: { token } } = state;
       return { token };
     });
+    this.store.mapDispatchToProps(this, { close });
     this.role = this.parseJwt(this.token)['_role'];
     if (this.role === 'MERCHANT') {
       this.store.mapStateToProps(this, (state) => {
@@ -131,12 +134,16 @@ export class PageSchedule {
   async cancelCurrentOrder(orderId: string) {
     await this.cancelOrder(orderId, this.token);
     await this.populateOrders();
+    const tabs: HTMLIonTabsElement = await (this.tab as any).componentOnReady();
+    tabs.select('tab-drawer');
+    this.close();
   }
 
   async startCurrentOrder(orderId: string) {
     await this.startOrder(orderId, this.token);
     const tabs: HTMLIonTabsElement = await (this.tab as any).componentOnReady();
-    tabs.select('tab-map');
+    tabs.select('tab-drawer');
+    this.close();
   }
 
   async confirmOrder(orderId: string) {

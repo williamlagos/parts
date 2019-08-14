@@ -156,6 +156,7 @@ export class Route {
   toggleStar(ev: any, id: string) {
     ev.preventDefault();
     this.rating = + id.split('-')[1];
+    console.log(this.rating);
     for (let i = 1; i <= 5; i++) document.getElementById(`star-${i}`).classList.remove('marked');
     for (let i = 1; i <= this.rating; i++) {
       const cl = document.getElementById(`star-${i}`).classList;

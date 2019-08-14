@@ -5,6 +5,7 @@ import { Action, Store } from '@stencil/redux';
 
 import { placeOrder } from '../../actions/merchant';
 import { selectMerchantForOrder, showOrderBids } from '../../actions/customer';
+import { close } from '../../actions/session';
 
 @Component({
   tag: 'page-order-detail',
@@ -23,7 +24,9 @@ export class PageOrderDetail {
   @State() data = { 'value': 0.0, 'description': '' };
   @State() token: string;
   @State() bids: any;
+  @Prop({ connect: 'ion-tabs' }) tab: HTMLIonTabsElement;
 
+  close: Action;
   placeOrder: Action;
   acceptOrder: Action;
   showOrderBids: Action;
@@ -38,13 +41,16 @@ export class PageOrderDetail {
       } = state;
       return { token, bids };
     });
-    this.store.mapDispatchToProps(this, { placeOrder, showOrderBids, selectMerchantForOrder });
+    this.store.mapDispatchToProps(this, { placeOrder, showOrderBids, selectMerchantForOrder, close });
     await this.showOrderBids(this.token, this.orderId);
   }
 
-  dismiss(data?: any) {
+  async dismiss(data?: any) {
     // dismiss this modal and pass back data
     (this.el.closest('ion-modal') as any).dismiss(data === null ? { 'success': 0 } : data);
+    const tabs: HTMLIonTabsElement = await (this.tab as any).componentOnReady();
+    tabs.select('tab-drawer');
+    this.close();
   }
 
   offer() {
