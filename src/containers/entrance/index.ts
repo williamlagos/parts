@@ -11,8 +11,8 @@ export class Entrance {
   private facebook_url: string;
 
   constructor() {
-    this.client_id = '411855926099953';
-    this.client_secret = '0ac7ffb57319900adc896968f9dc9ccd';
+    this.client_id = process.env.FACEBOOK_ID;
+    this.client_secret = process.env.FACEBOOK_SECRET;
     this.facebook_url = 'https://graph.facebook.com/v4.0';
   }
 
