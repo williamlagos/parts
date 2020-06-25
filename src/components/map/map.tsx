@@ -15,7 +15,7 @@ declare var google: any;
 export class Route {
   // private cycle = null;
   private mapData: any;
-  private gmapKey = 'AIzaSyC8B5IrTvSbGt9Akb5f00CiDmO86RTb1ec';
+  private gmapKey = process.env.GOOGLE_MAP_KEY;
   open: Action;
   rateOrder: Action;
   cancelOrder: Action;
