@@ -1,14 +1,12 @@
-# Ionic Stencil Conference App
+# Components library
 
-A conference app built with Stencil to demonstrate Ionic
+An app built with Stencil reusable components
 
 ## Getting Started
 
 Clone this repo and run:
 
 ## Live Example
-
-https://ionic-stencil-conf-app.firebaseapp.com/schedule
 
 ```bash
 npm install
