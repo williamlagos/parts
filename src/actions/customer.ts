@@ -3,7 +3,7 @@ import { Backend } from '../providers/backend';
 import { TypeKeys } from '../actions/index';
 
 const hostname = window && window.location && window.location.hostname;
-const endpoint = hostname === 'localhost' ? 'http://localhost:3000' : 'https://api.fretefacil.net';
+const endpoint = hostname === 'localhost' ? 'http://localhost:3000' : 'https://api.shipping.net';
 
 export interface RegisterOrderAction {
   type: TypeKeys.REGISTER_ORDER;

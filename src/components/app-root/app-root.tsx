@@ -63,10 +63,10 @@ export class AppRoot {
                   <img src="assets/img/tour_1_clipper.svg" class="slide-image"/>
                 </div>
                 <h2 class="slide-title">
-                  Bem-vindo ao <b>Frete Fácil</b>
+                  Bem-vindo ao <b>Shipping</b>
                 </h2>
                 <p>
-                  O <b>Frete Fácil</b> é um aplicativo de serviços de mudança e fretagem, simples, prático e rápido.
+                  O <b>Shipping</b> é um aplicativo de serviços de mudança e fretagem, simples, prático e rápido.
                   Esta é uma versão para testes - poderá ter alguns problemas e pedimos sua compreensão. Pressione em continuar.
                 </p>
                 <ion-button fill="clear" href="#" onClick={() => this.toggleTour(true)}>

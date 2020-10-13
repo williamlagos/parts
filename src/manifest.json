@@ -1,6 +1,6 @@
 {
-  "name": "Frete Fácil",
-  "short_name": "Frete Fácil",
+  "name": "Shipping",
+  "short_name": "Shipping",
   "start_url": "/",
   "display": "standalone",
   "icons": [{

@@ -86,7 +86,7 @@ export class Menu {
         <ion-header>
           <ion-toolbar>
             <ion-title>
-              <img src="assets/img/applogo.svg" height="42" alt="Frete Fácil" />
+              <img src="assets/img/applogo.svg" height="42" alt="Shipping" />
             </ion-title>
           </ion-toolbar>
         </ion-header>

@@ -3,7 +3,7 @@ import { TypeKeys } from '../actions/index';
 import { Backend } from '../providers/backend';
 
 const hostname = window && window.location && window.location.hostname;
-const endpoint = hostname === 'localhost' ? 'http://localhost:3000' : 'https://api.fretefacil.net';
+const endpoint = hostname === 'localhost' ? 'http://localhost:3000' : 'https://api.shipping.net';
 
 export interface OpenProfileAction {
   type: TypeKeys.OPEN_PROFILE;

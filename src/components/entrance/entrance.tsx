@@ -181,10 +181,10 @@ export class Entrance {
               <img src="assets/img/tour_1_clipper.svg" class="slide-image"/>
             </div>
             <h2 class="slide-title">
-              Bem-vindo ao <b>Frete Fácil</b>
+              Bem-vindo ao <b>Shipping</b>
             </h2>
             <p>
-              O <b>Frete Fácil</b> é um aplicativo de serviços de mudança e fretagem, simples, prático e rápido.
+              O <b>Shipping</b> é um aplicativo de serviços de mudança e fretagem, simples, prático e rápido.
             </p>
             <ion-button fill="clear" href="#" onClick={() => this.toggleIntro(true)}>
               Continuar
@@ -196,9 +196,9 @@ export class Entrance {
             <div class="slide-image-container">
               <img src="assets/img/tour_2_map.svg" class="slide-image"/>
             </div>
-            <h2 class="slide-title">Por que usar o Frete Fácil?</h2>
+            <h2 class="slide-title">Por que usar o Shipping?</h2>
             <p>
-              <b>Frete Fácil</b> conta com prestadores de entrega e mudança bem selecionados e revisados pela nossa equipe.</p>
+              <b>Shipping</b> conta com prestadores de entrega e mudança bem selecionados e revisados pela nossa equipe.</p>
               <ion-button fill="clear" href="#" onClick={() => this.toggleIntro(true)}>
                 Continuar
                 <ion-icon slot="end" name="arrow-forward"></ion-icon>

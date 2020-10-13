@@ -37,7 +37,7 @@ export class PageAbout {
           <img src="assets/img/ionic-logo-white.svg" alt="ionic logo"/>
         </div>
         <div padding class="about-info">
-          <h4>Frete Fácil App</h4>
+          <h4>Shipping App</h4>
 
           {/*<ion-list no-lines>
             <ion-item>
@@ -59,7 +59,7 @@ export class PageAbout {
           </ion-list>*/}
 
           <p>
-            O aplicativo Frete Fácil veio para facilitar seu dia-a-dia quando está precisando levar objetos,
+            O aplicativo Shipping veio para facilitar seu dia-a-dia quando está precisando levar objetos,
             de todos os tamanhos de um ponto para o outro, com a seleção dos melhores freteiros da plataforma.
           </p>
         </div>
