@@ -18,6 +18,7 @@
     "@ionic/core": "4.4.0",
     "@stencil/core": "^0.18.1",
     "@stencil/redux": "^0.1.1",
+    "@types/node": "^10.14.0",
     "@types/qs": "^6.5.3",
     "axios": "^0.18.0",
     "redux": "^4.0.1",
