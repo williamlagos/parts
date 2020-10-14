@@ -4,6 +4,7 @@ export const config: Config = {
   outputTargets: [
     { 
       type: 'www',
+      baseUrl: '/kombi/',
       serviceWorker: null 
     },
     { type: 'dist' }
