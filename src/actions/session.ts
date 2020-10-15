@@ -3,7 +3,7 @@ import { TypeKeys } from '../actions/index';
 import { Backend } from '../providers/backend';
 
 const hostname = window && window.location && window.location.hostname;
-const endpoint = hostname === 'localhost' ? 'http://localhost:3000' : 'https://api.shipping.net';
+const endpoint = hostname === 'localhost' ? 'http://localhost:3000' : 'https://wasserboxer.herokuapp.com';
 
 export interface OpenProfileAction {
   type: TypeKeys.OPEN_PROFILE;
