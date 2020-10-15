@@ -5,6 +5,7 @@ import { ConferenceData } from '../../providers/conference-data';
 import { cancelOrder, finishOrder, rateOrder, showMyOrders } from '../../actions/merchant';
 import { showMyOrders as showCustomerOrders } from '../../actions/customer';
 import { open } from '../../actions/session';
+import config from '../../../config';
 
 declare var google: any;
 
@@ -15,7 +16,7 @@ declare var google: any;
 export class Route {
   // private cycle = null;
   private mapData: any;
-  private gmapKey = require('../config').env.GOOGLE_MAP_KEY;
+  private gmapKey = config.env.GOOGLE_MAP_KEY;
   open: Action;
   rateOrder: Action;
   cancelOrder: Action;

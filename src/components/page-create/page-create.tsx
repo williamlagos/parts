@@ -3,6 +3,7 @@ import { Action, Store } from '@stencil/redux';
 
 import { registerOrder } from '../../actions/customer';
 import { close } from '../../actions/session';
+import config from '../../../config'
 
 // const omapURL = 'https://nominatim.openstreetmap.org/search?';
 const gmapURL = 'https://maps.googleapis.com/maps/api/geocode/json?';
@@ -58,7 +59,7 @@ export class PageCreate {
     const origAddr = origAddrObj['street'] + ', ' + origAddrObj['number'];
     const destAddr = destAddrObj['street'] + ', ' + destAddrObj['number'];
     /* Code for geocoding API on Google Maps */
-    const apiKey = require('../config').env.GOOGLE_MAP_KEY;
+    const apiKey = config.env.GOOGLE_MAP_KEY;
     const origResponse = await fetch(gmapURL + 'key=' + apiKey + '&address=' + origAddr);
     const destResponse = await fetch(gmapURL + 'key=' + apiKey + '&address=' + destAddr);
     const origPlace = (await origResponse.json()).results[0].geometry.location;

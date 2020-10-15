@@ -1,4 +1,5 @@
 // import { App } from '../app/';
+import config from '../../../config';
 
 const hostname = window && window.location && window.location.hostname;
 const endpoint = hostname === 'localhost' ? 'https://localhost:4000/' : 'https://app.shipping.net/';
@@ -11,7 +12,6 @@ export class Entrance {
   private facebook_url: string;
 
   constructor() {
-    let config = require("../config");	
     this.client_id = config.env.FACEBOOK_ID;
     this.client_secret = config.env.FACEBOOK_SECRET;
     this.facebook_url = 'https://graph.facebook.com/v4.0';
