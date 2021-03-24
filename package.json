@@ -20,7 +20,7 @@
     "@stencil/redux": "^0.1.1",
     "@types/node": "^10.14.0",
     "@types/qs": "^6.5.3",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0"
