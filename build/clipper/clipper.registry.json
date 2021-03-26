@@ -1,0 +1,566 @@
+{
+  "namespace": "clipper",
+  "fsNamespace": "clipper",
+  "loader": "../clipper.js",
+  "global": "clipper.global.js",
+  "core": "clipper.vhmohz5z.js",
+  "corePolyfilled": "clipper.zrab98og.js",
+  "components": {
+    "address-input": {
+      "bundleIds": {
+        "ios": "a1cxycmn",
+        "md": "sifiry51"
+      }
+    },
+    "app-drawer": {
+      "bundleIds": {
+        "ios": "qkc1b82d",
+        "md": "tek6fe2i"
+      }
+    },
+    "app-entrance": {
+      "bundleIds": {
+        "$": "czb0vpmo"
+      }
+    },
+    "app-map": {
+      "bundleIds": {
+        "$": "ha6mrr6y"
+      }
+    },
+    "app-root": {
+      "bundleIds": {
+        "ios": "qkc1b82d",
+        "md": "tek6fe2i"
+      }
+    },
+    "generic-carousel": {
+      "bundleIds": {
+        "ios": "lo5utgp4",
+        "md": "zg2hym1y"
+      }
+    },
+    "generic-wizard": {
+      "bundleIds": {
+        "ios": "lo5utgp4",
+        "md": "zg2hym1y"
+      }
+    },
+    "image-uploader": {
+      "bundleIds": {
+        "ios": "lo5utgp4",
+        "md": "zg2hym1y"
+      },
+      "encapsulation": "shadow"
+    },
+    "ion-action-sheet": {
+      "bundleIds": {
+        "ios": "kv4qzeko",
+        "md": "7sb6phts"
+      },
+      "encapsulation": "scoped"
+    },
+    "ion-action-sheet-controller": {
+      "bundleIds": {
+        "$": "cuuwuxds"
+      }
+    },
+    "ion-alert": {
+      "bundleIds": {
+        "ios": "fy35oyb5",
+        "md": "gimokweo"
+      },
+      "encapsulation": "scoped"
+    },
+    "ion-alert-controller": {
+      "bundleIds": {
+        "ios": "lo5utgp4",
+        "md": "zg2hym1y"
+      }
+    },
+    "ion-app": {
+      "bundleIds": {
+        "ios": "qkc1b82d",
+        "md": "tek6fe2i"
+      }
+    },
+    "ion-avatar": {
+      "bundleIds": {
+        "ios": "qkc1b82d",
+        "md": "tek6fe2i"
+      },
+      "encapsulation": "shadow"
+    },
+    "ion-back-button": {
+      "bundleIds": {
+        "ios": "lo5utgp4",
+        "md": "zg2hym1y"
+      },
+      "encapsulation": "scoped"
+    },
+    "ion-backdrop": {
+      "bundleIds": {
+        "ios": "pi0htjti",
+        "md": "tkkkkhhj"
+      },
+      "encapsulation": "shadow"
+    },
+    "ion-button": {
+      "bundleIds": {
+        "ios": "lo5utgp4",
+        "md": "zg2hym1y"
+      },
+      "encapsulation": "shadow"
+    },
+    "ion-buttons": {
+      "bundleIds": {
+        "ios": "pvbkrmzu",
+        "md": "7lthljrq"
+      },
+      "encapsulation": "scoped"
+    },
+    "ion-card": {
+      "bundleIds": {
+        "ios": "lo5utgp4",
+        "md": "zg2hym1y"
+      },
+      "encapsulation": "scoped"
+    },
+    "ion-card-content": {
+      "bundleIds": {
+        "ios": "lo5utgp4",
+        "md": "zg2hym1y"
+      }
+    },
+    "ion-card-header": {
+      "bundleIds": {
+        "ios": "lo5utgp4",
+        "md": "zg2hym1y"
+      },
+      "encapsulation": "shadow"
+    },
+    "ion-card-subtitle": {
+      "bundleIds": {
+        "ios": "lo5utgp4",
+        "md": "zg2hym1y"
+      },
+      "encapsulation": "shadow"
+    },
+    "ion-card-title": {
+      "bundleIds": {
+        "ios": "lo5utgp4",
+        "md": "zg2hym1y"
+      },
+      "encapsulation": "shadow"
+    },
+    "ion-col": {
+      "bundleIds": {
+        "ios": "n5kmxtai",
+        "md": "fzmn4dxg"
+      },
+      "encapsulation": "shadow"
+    },
+    "ion-content": {
+      "bundleIds": {
+        "ios": "lo5utgp4",
+        "md": "zg2hym1y"
+      },
+      "encapsulation": "shadow"
+    },
+    "ion-datetime": {
+      "bundleIds": {
+        "ios": "a1cxycmn",
+        "md": "sifiry51"
+      },
+      "encapsulation": "shadow"
+    },
+    "ion-grid": {
+      "bundleIds": {
+        "ios": "n5kmxtai",
+        "md": "fzmn4dxg"
+      },
+      "encapsulation": "shadow"
+    },
+    "ion-header": {
+      "bundleIds": {
+        "ios": "pvbkrmzu",
+        "md": "7lthljrq"
+      }
+    },
+    "ion-icon": {
+      "bundleIds": {
+        "$": "llioykrp"
+      },
+      "encapsulation": "shadow"
+    },
+    "ion-input": {
+      "bundleIds": {
+        "ios": "lo5utgp4",
+        "md": "zg2hym1y"
+      },
+      "encapsulation": "scoped"
+    },
+    "ion-item": {
+      "bundleIds": {
+        "ios": "n5kmxtai",
+        "md": "fzmn4dxg"
+      },
+      "encapsulation": "shadow"
+    },
+    "ion-item-group": {
+      "bundleIds": {
+        "ios": "gnrt3ccx",
+        "md": "5x6knktc"
+      }
+    },
+    "ion-item-option": {
+      "bundleIds": {
+        "ios": "gnrt3ccx",
+        "md": "5x6knktc"
+      },
+      "encapsulation": "shadow"
+    },
+    "ion-item-options": {
+      "bundleIds": {
+        "ios": "gnrt3ccx",
+        "md": "5x6knktc"
+      }
+    },
+    "ion-item-sliding": {
+      "bundleIds": {
+        "ios": "gnrt3ccx",
+        "md": "5x6knktc"
+      }
+    },
+    "ion-label": {
+      "bundleIds": {
+        "ios": "qri2ztgy",
+        "md": "rupykkkb"
+      },
+      "encapsulation": "scoped"
+    },
+    "ion-list": {
+      "bundleIds": {
+        "ios": "lrg5rp8f",
+        "md": "0j78u9yl"
+      }
+    },
+    "ion-list-header": {
+      "bundleIds": {
+        "ios": "lo5utgp4",
+        "md": "zg2hym1y"
+      },
+      "encapsulation": "shadow"
+    },
+    "ion-loading": {
+      "bundleIds": {
+        "ios": "w3z4xs2b",
+        "md": "joa20wpf"
+      },
+      "encapsulation": "scoped"
+    },
+    "ion-loading-controller": {
+      "bundleIds": {
+        "ios": "gnrt3ccx",
+        "md": "5x6knktc"
+      }
+    },
+    "ion-menu": {
+      "bundleIds": {
+        "ios": "sjaft7bv",
+        "md": "zqwwvsgf"
+      },
+      "encapsulation": "shadow"
+    },
+    "ion-menu-button": {
+      "bundleIds": {
+        "ios": "hhq8a0vy",
+        "md": "b8m8qgpg"
+      },
+      "encapsulation": "shadow"
+    },
+    "ion-menu-controller": {
+      "bundleIds": {
+        "$": "8goqp9ew"
+      }
+    },
+    "ion-menu-toggle": {
+      "bundleIds": {
+        "ios": "sjaft7bv",
+        "md": "zqwwvsgf"
+      },
+      "encapsulation": "shadow"
+    },
+    "ion-modal": {
+      "bundleIds": {
+        "ios": "usvky9u5",
+        "md": "7fqxffpk"
+      },
+      "encapsulation": "scoped"
+    },
+    "ion-modal-controller": {
+      "bundleIds": {
+        "ios": "lo5utgp4",
+        "md": "zg2hym1y"
+      }
+    },
+    "ion-nav": {
+      "bundleIds": {
+        "ios": "lo5utgp4",
+        "md": "zg2hym1y"
+      },
+      "encapsulation": "shadow"
+    },
+    "ion-nav-pop": {
+      "bundleIds": {
+        "ios": "lo5utgp4",
+        "md": "zg2hym1y"
+      }
+    },
+    "ion-nav-push": {
+      "bundleIds": {
+        "ios": "lo5utgp4",
+        "md": "zg2hym1y"
+      }
+    },
+    "ion-nav-set-root": {
+      "bundleIds": {
+        "ios": "lo5utgp4",
+        "md": "zg2hym1y"
+      }
+    },
+    "ion-picker": {
+      "bundleIds": {
+        "ios": "a1cxycmn",
+        "md": "sifiry51"
+      },
+      "encapsulation": "scoped"
+    },
+    "ion-picker-column": {
+      "bundleIds": {
+        "ios": "a1cxycmn",
+        "md": "sifiry51"
+      }
+    },
+    "ion-picker-controller": {
+      "bundleIds": {
+        "ios": "a1cxycmn",
+        "md": "sifiry51"
+      }
+    },
+    "ion-popover": {
+      "bundleIds": {
+        "ios": "qf6djyul",
+        "md": "lxvzg6md"
+      },
+      "encapsulation": "scoped"
+    },
+    "ion-popover-controller": {
+      "bundleIds": {
+        "$": "mqifehje"
+      }
+    },
+    "ion-radio": {
+      "bundleIds": {
+        "ios": "lo5utgp4",
+        "md": "zg2hym1y"
+      },
+      "encapsulation": "shadow"
+    },
+    "ion-radio-group": {
+      "bundleIds": {
+        "ios": "lo5utgp4",
+        "md": "zg2hym1y"
+      }
+    },
+    "ion-ripple-effect": {
+      "bundleIds": {
+        "$": "znncbg6c"
+      },
+      "encapsulation": "shadow"
+    },
+    "ion-route": {
+      "bundleIds": {
+        "$": "xgytobj1"
+      }
+    },
+    "ion-route-redirect": {
+      "bundleIds": {
+        "$": "xgytobj1"
+      }
+    },
+    "ion-router": {
+      "bundleIds": {
+        "$": "xgytobj1"
+      }
+    },
+    "ion-router-outlet": {
+      "bundleIds": {
+        "$": "xgytobj1"
+      },
+      "encapsulation": "shadow"
+    },
+    "ion-row": {
+      "bundleIds": {
+        "ios": "n5kmxtai",
+        "md": "fzmn4dxg"
+      },
+      "encapsulation": "shadow"
+    },
+    "ion-segment": {
+      "bundleIds": {
+        "ios": "gnrt3ccx",
+        "md": "5x6knktc"
+      },
+      "encapsulation": "scoped"
+    },
+    "ion-segment-button": {
+      "bundleIds": {
+        "ios": "gnrt3ccx",
+        "md": "5x6knktc"
+      },
+      "encapsulation": "shadow"
+    },
+    "ion-slide": {
+      "bundleIds": {
+        "$": "tddwos8l"
+      }
+    },
+    "ion-slides": {
+      "bundleIds": {
+        "ios": "lo5utgp4",
+        "md": "zg2hym1y"
+      }
+    },
+    "ion-spinner": {
+      "bundleIds": {
+        "ios": "w3z4xs2b",
+        "md": "joa20wpf"
+      },
+      "encapsulation": "shadow"
+    },
+    "ion-split-pane": {
+      "bundleIds": {
+        "ios": "qkc1b82d",
+        "md": "tek6fe2i"
+      }
+    },
+    "ion-tab": {
+      "bundleIds": {
+        "ios": "lo5utgp4",
+        "md": "zg2hym1y"
+      },
+      "encapsulation": "shadow"
+    },
+    "ion-tab-bar": {
+      "bundleIds": {
+        "ios": "qkc1b82d",
+        "md": "tek6fe2i"
+      },
+      "encapsulation": "shadow"
+    },
+    "ion-tab-button": {
+      "bundleIds": {
+        "ios": "qkc1b82d",
+        "md": "tek6fe2i"
+      },
+      "encapsulation": "shadow"
+    },
+    "ion-tabs": {
+      "bundleIds": {
+        "ios": "lo5utgp4",
+        "md": "zg2hym1y"
+      },
+      "encapsulation": "shadow"
+    },
+    "ion-text": {
+      "bundleIds": {
+        "ios": "lo5utgp4",
+        "md": "zg2hym1y"
+      },
+      "encapsulation": "shadow"
+    },
+    "ion-textarea": {
+      "bundleIds": {
+        "ios": "lo5utgp4",
+        "md": "zg2hym1y"
+      },
+      "encapsulation": "scoped"
+    },
+    "ion-title": {
+      "bundleIds": {
+        "ios": "lo5utgp4",
+        "md": "zg2hym1y"
+      },
+      "encapsulation": "shadow"
+    },
+    "ion-toast": {
+      "bundleIds": {
+        "ios": "xekvs2lp",
+        "md": "wc0qlvcy"
+      },
+      "encapsulation": "shadow"
+    },
+    "ion-toast-controller": {
+      "bundleIds": {
+        "ios": "lo5utgp4",
+        "md": "zg2hym1y"
+      }
+    },
+    "ion-toolbar": {
+      "bundleIds": {
+        "ios": "pvbkrmzu",
+        "md": "7lthljrq"
+      },
+      "encapsulation": "shadow"
+    },
+    "page-about": {
+      "bundleIds": {
+        "$": "mqifehje"
+      }
+    },
+    "page-account": {
+      "bundleIds": {
+        "$": "xgytobj1"
+      }
+    },
+    "page-create": {
+      "bundleIds": {
+        "ios": "a1cxycmn",
+        "md": "sifiry51"
+      }
+    },
+    "page-order-detail": {
+      "bundleIds": {
+        "$": "gixy90hz"
+      }
+    },
+    "page-order-list": {
+      "bundleIds": {
+        "$": "cuuwuxds"
+      }
+    },
+    "page-schedule": {
+      "bundleIds": {
+        "ios": "gnrt3ccx",
+        "md": "5x6knktc"
+      }
+    },
+    "page-support": {
+      "bundleIds": {
+        "$": "r2krucva"
+      }
+    },
+    "page-tabs": {
+      "bundleIds": {
+        "ios": "qkc1b82d",
+        "md": "tek6fe2i"
+      }
+    },
+    "register-wizard": {
+      "bundleIds": {
+        "$": "czb0vpmo"
+      }
+    }
+  }
+}

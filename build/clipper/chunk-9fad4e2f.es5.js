@@ -1,0 +1,1 @@
+clipper.loadBundle("chunk-9fad4e2f.js",["exports"],function(n){n.startStatusTap=function(n,t){n.addEventListener("statusTap",function(){t.read(function(){var e=n.document.elementFromPoint(n.innerWidth/2,n.innerHeight/2);if(e){var o=e.closest("ion-content");o&&o.componentOnReady().then(function(){t.write(function(){return o.scrollToTop(300)})})}})})}});

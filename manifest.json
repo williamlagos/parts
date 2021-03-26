@@ -1,0 +1,13 @@
+{
+  "name": "Shipping",
+  "short_name": "Shipping",
+  "start_url": "/",
+  "display": "standalone",
+  "icons": [{
+    "src": "assets/icon/icon.png",
+    "sizes": "512x512",
+    "type": "image/png"
+  }],
+  "background_color": "#ff6f00",
+  "theme_color": "#ff6f00"
+}
